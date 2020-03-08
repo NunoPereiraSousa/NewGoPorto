@@ -131,7 +131,8 @@ export default {
                 "https://www.correiodoestado.com.br/upload/dn_noticia/2020/01/kobe-bryant.jpg",
               id_user_type: 2,
               blocked: false,
-              password: "gigi2"
+              password: "gigi2",
+              birth: "23-08-1978"
             },
             {
               id: 5,

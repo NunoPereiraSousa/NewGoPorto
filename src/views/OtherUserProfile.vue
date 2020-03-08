@@ -9,6 +9,21 @@
             alt="ProfilePicture"
           />
           <form class="pt-3">
+            <!-- <div class="form-group">
+              <input
+                type="file"
+                class="custom-file-input"
+                id="customFile"
+                readonly
+              />
+              <img
+                :src="Form.image"
+                id="picture"
+                alt="Image"
+                class="img-fluid"
+                readonly
+              />
+            </div> -->
             <div class="form-row">
               <div class="form-group col-lg-12">
                 <i class="fas fa-user pr-2 d-inline-block"></i>
@@ -16,6 +31,7 @@
                   type="text"
                   class="form-control d-inline-block"
                   placeholder="Name"
+                  v-model="Form.name"
                   readonly
                 />
               </div>
@@ -25,6 +41,7 @@
                   type="text"
                   class="form-control d-inline-block"
                   placeholder="Location"
+                  v-model="Form.location"
                   readonly
                 />
               </div>
@@ -35,6 +52,7 @@
                   class="form-control d-inline-block"
                   placeholder="Date of Birth"
                   onfocus="(this.type='date')"
+                  v-model="Form.birth"
                   readonly
                 />
               </div>
@@ -47,6 +65,7 @@
                   type="text"
                   class="form-control d-inline-block"
                   placeholder="Email"
+                  v-model="Form.email"
                   readonly
                 />
               </div>
@@ -95,8 +114,43 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
-  name: "profile"
+  data: function() {
+    return {
+      user: [],
+      visitedUser: "",
+      users: [],
+      Form: {
+        id: "",
+        name: "",
+        email: "",
+        birth: "",
+        image: ""
+      }
+    };
+  },
+  created() {
+    if (JSON.parse(localStorage.getItem("visitedUser"))) {
+      this.$store.commit(
+        "SET_VISITED_USER",
+        JSON.parse(localStorage.getItem("visitedUser"))
+      );
+    }
+
+    this.visitedUser = this.getVisitedUser;
+    this.Form.id = this.visitedUser.id;
+    this.Form.name = this.visitedUser.name;
+    this.Form.birth = this.visitedUser.birth;
+    this.Form.email = this.visitedUser.email;
+    this.Form.image = this.visitedUser.photo;
+  },
+  computed: {
+    ...mapGetters({
+      getVisitedUser: "getVisitedUser"
+    })
+  }
 };
 </script>
 

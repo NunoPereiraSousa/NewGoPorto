@@ -350,6 +350,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 0.6rem;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(151, 151, 151, 0.4);
+  border-radius: 0.5rem;
+}
 .container {
   h2 {
     margin: 3em 0;
@@ -436,5 +450,20 @@ export default {
       box-shadow: none !important;
     }
   }
+  .col-12.map2 {
+    height: 70vh;
+    margin-bottom: 5em;
+    #myMap {
+      width: 100%;
+      height: 100%;
+      border-radius: 4px;
+    }
+  }
+}
+.modal-content {
+  max-height: 80vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 </style>

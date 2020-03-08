@@ -308,6 +308,8 @@ export default {
     },
     showUserData() {
       this.editForm.name = this.loggedUser.name;
+      this.editForm.email = this.loggedUser.email;
+      this.editForm.birth = this.loggedUser.birth;
       this.editForm.image = this.loggedUser.photo;
       // alert(this.editForm.image); THIS ALERT RETURNS THE EXACTLY SRC OF THE USER IMAGE !!!!
     },

@@ -4,8 +4,8 @@
       <div class="row">
         <div class="col-12">
           <h2>
-            <span>Most Followed </span>
-            <span>Itineraries</span>
+            <span>My </span>
+            <span>Route</span>
           </h2>
         </div>
       </div>
@@ -26,7 +26,7 @@
             </button>
           </form>
         </div>
-        <div class="col-lg-6 col-12 text-right">
+        <div class="col-lg-6 col-12">
           <button
             class="btn btn-primary"
             type="submit"
@@ -39,7 +39,7 @@
       </div>
       <div class="row">
         <div class="col-12 map2">
-          <div class="google-map" id="myMap"></div>
+          <div class="google-map h-100" id="myMap"></div>
         </div>
       </div>
     </div>

@@ -2,13 +2,14 @@
   <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
-        <router-link :to="{ name: 'home' }" class="navbar-brand p-0 m-0"
-          ><img
+        <router-link :to="{ name: 'home' }" class="navbar-brand p-0 m-0">
+          <img
             class="img-fluid"
             id="logo"
             src="../assets/logo.png"
             alt="GoPorto"
-        /></router-link>
+          />
+        </router-link>
         <button
           class="navbar-toggler"
           type="button"
@@ -40,9 +41,8 @@
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                >Catalogs</a
               >
-                Catalogs
-              </a>
               <div
                 class="dropdown-menu slideIn2 pb-0"
                 aria-labelledby="navbarDropdown"
@@ -53,7 +53,8 @@
                       <router-link
                         :to="{ name: 'itineraries-catalog' }"
                         class="nav-link ml-lg-2"
-                        ><div class="cardContainer text-center">
+                      >
+                        <div class="cardContainer text-center">
                           <img
                             class="img-fluid navImages"
                             src="../assets/hostel.jpg"
@@ -62,14 +63,15 @@
                           <div class="banner text-center">
                             <p class="lead p-0">Itineraries</p>
                           </div>
-                        </div></router-link
-                      >
+                        </div>
+                      </router-link>
                     </div>
                     <div class="col-6">
                       <router-link
                         :to="{ name: 'places-catalog' }"
                         class="nav-link ml-lg-2"
-                        ><div class="cardContainer text-center">
+                      >
+                        <div class="cardContainer text-center">
                           <img
                             class="img-fluid navImages"
                             src="../assets/hotels.jpg"
@@ -78,8 +80,8 @@
                           <div class="banner text-center">
                             <p class="lead p-0">Places</p>
                           </div>
-                        </div></router-link
-                      >
+                        </div>
+                      </router-link>
                     </div>
                   </div>
                 </div>
@@ -107,9 +109,8 @@
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                >Catalogs</a
               >
-                Catalogs
-              </a>
               <div
                 class="dropdown-menu slideIn"
                 style="padding-top: 0; margin-top: 0; border: none !important"
@@ -131,9 +132,8 @@
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                >Transportation</a
               >
-                Transportation
-              </a>
               <div
                 class="dropdown-menu slideIn pb-0"
                 aria-labelledby="navbarDropdown"
@@ -228,9 +228,8 @@
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                >Transportation</a
               >
-                Transportation
-              </a>
               <div
                 class="dropdown-menu slideIn"
                 style="padding-top: 0; margin-top: 0; border: none !important"
@@ -253,9 +252,8 @@
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                >Gastronomy</a
               >
-                Gastronomy
-              </a>
               <div
                 class="dropdown-menu slideIn"
                 style="padding-top: 0; margin-top: 0; border: none !important"
@@ -276,9 +274,8 @@
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                >Book Now</a
               >
-                Book Now
-              </a>
               <div
                 class="dropdown-menu slideIn"
                 style="padding-top: 0; margin-top: 0; border: none !important"
@@ -301,9 +298,8 @@
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                >Gastronomy</a
               >
-                Gastronomy
-              </a>
               <div
                 class="dropdown-menu slideIn2 pb-0"
                 aria-labelledby="navbarDropdown"
@@ -370,9 +366,8 @@
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                >Book Now</a
               >
-                Book Now
-              </a>
               <div
                 class="dropdown-menu slideIn pb-0"
                 aria-labelledby="navbarDropdown"
@@ -504,7 +499,7 @@
                 ></i>
                 <span
                   style="font-weight: 400; color: #74accf; padding-left: 5px; font-size: 18px;"
-                  >27</span
+                  >{{ totalNotifications }}</span
                 >
               </a>
               <div
@@ -512,12 +507,38 @@
                 style="padding-top: 0; margin-top: 0; border: none !important"
                 aria-labelledby="navbarDropdown"
               >
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Cras justo odio</li>
-                  <li class="list-group-item">Dapibus ac facilisis in</li>
-                  <li class="list-group-item">Morbi leo risus</li>
-                  <li class="list-group-item">Porta ac consectetur ac</li>
-                  <li class="list-group-item">Vestibulum at eros</li>
+                <ul
+                  class="list-group list-group-flush"
+                  v-for="notification in notifications"
+                  :key="notification.id"
+                >
+                  <li class="list-group-item">
+                    <p>
+                      Your suggestion:
+                      <span>"{{ notification.relatedTo }}"</span>.
+                      <br />
+                      <span>{{ notification.answear }}</span>
+                    </p>
+
+                    <button
+                      type="button"
+                      class="btn btn-primary btnIcon"
+                      @click="checkNotification(notification.id)"
+                    >
+                      <div v-if="notification.status == 'not-read'">
+                        <i
+                          class="fas fa-eye"
+                          style="color: #5085a5; font-size: 30px"
+                        ></i>
+                      </div>
+                      <div v-else>
+                        <i
+                          class="fas fa-eye-slash"
+                          style="color: #dbc924; font-size: 30px"
+                        ></i>
+                      </div>
+                    </button>
+                  </li>
                 </ul>
               </div>
             </li>
@@ -547,11 +568,12 @@
                 <a class="dropdown-item" href="#">ESP</a>
                 <a class="dropdown-item" href="#">FR</a>
               </div>
-            </li> -->
+            </li>-->
           </ul>
         </div>
       </div>
     </nav>
+    <vue-snotify></vue-snotify>
   </div>
 </template>
 
@@ -562,7 +584,8 @@ export default {
     return {
       user: {},
       notifications: [],
-      totalNotifications: 0
+      totalNotifications: 0,
+      allNotiffications: []
     };
   },
   computed: {
@@ -570,7 +593,9 @@ export default {
       getNotificationsByUser: "getNotificationsByUser",
       getLoggedUser: "getLoggedUser",
       getNotificationStatus: "getNotificationStatus",
-      getAmountNotificationsNotReadById: "getAmountNotificationsNotReadById"
+      getAmountNotificationsNotReadById: "getAmountNotificationsNotReadById",
+      getNotificationIndexById: "getNotificationIndexById",
+      getNotifications: "getNotifications"
     })
   },
   created() {
@@ -589,6 +614,9 @@ export default {
       });
     }
     this.user = this.getLoggedUser;
+
+    this.allNotiffications = this.getNotifications;
+
     this.notifications = this.getNotificationsByUser(this.user.id);
 
     this.totalNotifications = this.getAmountNotificationsNotReadById(
@@ -601,8 +629,26 @@ export default {
       this.$store.commit("SET_LOGGED_USER_LOG_OUT", { loggedUser: "" });
       this.$router.push({ name: "sign-in" });
     },
-    notificationChecked() {
-      this.notifications.status = "checked";
+    // notificationChecked() {
+    //   this.notifications.status = "checked";
+    // },
+    checkNotification(id) {
+      if (
+        this.allNotiffications[this.getNotificationIndexById(id)].status ===
+        "not-read"
+      ) {
+        this.allNotiffications[this.getNotificationIndexById(id)].status =
+          "checked";
+        this.$snotify.success("Notification checked!", "Done", {
+          timeout: 2000,
+          showProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true
+        });
+      }
+      this.$store.commit("SET_NOTIFICATIONS", {
+        notifications: this.allNotiffications
+      });
     }
   }
 };

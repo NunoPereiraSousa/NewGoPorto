@@ -51,8 +51,8 @@
     <div class="container" id="section2">
       <div class="row" id="location">
         <div class="col-12">
-          <h3 class="secondTitle">Location</h3>
-          <div class="google-map h-100" id="myMap"></div>
+          <h3 class="secondTitle" style="margin-top: 2em">Location</h3>
+          <div class="google-map" id="myMap"></div>
         </div>
       </div>
       <div class="row" id="information">
@@ -190,7 +190,7 @@ export default {
     };
   },
   mounted() {
-    // this.renderMap();
+    this.renderMap();
     $(document).scroll(function() {
       var y = $(this).scrollTop();
       if (y > 500) {
@@ -261,11 +261,9 @@ export default {
 
       const myMapOptions = {
         center: location,
-        zoom: 19,
+        zoom: 17,
         mapTypeId: "hybrid"
       };
-
-      //  alert(myMapOptions.center)
 
       const map = new google.maps.Map(
         document.getElementById("myMap"),
@@ -483,6 +481,9 @@ a:hover {
   .row:last-child {
     margin-bottom: 4em;
   }
+  h3 {
+    margin-top: 1em;
+  }
   .row {
     &:hover {
       h3 {
@@ -498,8 +499,12 @@ a:hover {
       // }
     }
   }
+  #myMap {
+    height: 400px !important;
+    border-radius: 4px;
+  }
   .secondTitle {
-    margin: 6em 0 1em 0;
+    margin: 4em 0 1em 0;
     font-family: "Geared Slab";
     font-size: 1.8em;
     color: #363636;

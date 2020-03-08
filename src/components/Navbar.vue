@@ -507,37 +507,42 @@
                 style="padding-top: 0; margin-top: 0; border: none !important"
                 aria-labelledby="navbarDropdown"
               >
-                <ul
-                  class="list-group list-group-flush"
-                  v-for="notification in notifications"
-                  :key="notification.id"
-                >
+                <ul class="list-group list-group-flush" id="notificationsList">
                   <li class="list-group-item">
-                    <p>
-                      Your suggestion:
-                      <span>"{{ notification.relatedTo }}"</span>.
-                      <br />
-                      <span>{{ notification.answear }}</span>
-                    </p>
-
-                    <button
-                      type="button"
-                      class="btn btn-primary btnIcon"
-                      @click="checkNotification(notification.id)"
+                    <div
+                      v-for="notification in notifications"
+                      :key="notification.id"
                     >
-                      <div v-if="notification.status == 'not-read'">
-                        <i
-                          class="fas fa-eye"
-                          style="color: #5085a5; font-size: 30px"
-                        ></i>
-                      </div>
-                      <div v-else>
-                        <i
-                          class="fas fa-eye-slash"
-                          style="color: #dbc924; font-size: 30px"
-                        ></i>
-                      </div>
-                    </button>
+                      <p class="d-inline-block">
+                        Your suggestion:
+                        <span class="font-italic d-inline-block"
+                          >"{{ notification.relatedTo }}"</span
+                        >.
+                        <br />
+                        <span class="d-inline-block"
+                          >{{ notification.answear }}.</span
+                        >
+                        <button
+                          type="button"
+                          class="btn btn-primary btnIcon d-inline-block"
+                          @click="checkNotification(notification.id)"
+                        >
+                          <div v-if="notification.status == 'not-read'">
+                            <i
+                              class="fas fa-eye"
+                              style="color: #5085a5; font-size: 16px"
+                            ></i>
+                          </div>
+                          <div v-else>
+                            <i
+                              class="fas fa-eye-slash"
+                              style="color: #dbc924; font-size: 16px"
+                            ></i>
+                          </div>
+                        </button>
+                      </p>
+                      <hr class="mt-1" />
+                    </div>
                   </li>
                 </ul>
               </div>
@@ -625,13 +630,9 @@ export default {
   },
   methods: {
     logOut() {
-      // localStorage.removeItem("loggedUser");
       this.$store.commit("SET_LOGGED_USER_LOG_OUT", { loggedUser: "" });
       this.$router.push({ name: "sign-in" });
     },
-    // notificationChecked() {
-    //   this.notifications.status = "checked";
-    // },
     checkNotification(id) {
       if (
         this.allNotiffications[this.getNotificationIndexById(id)].status ===
@@ -639,12 +640,12 @@ export default {
       ) {
         this.allNotiffications[this.getNotificationIndexById(id)].status =
           "checked";
-        this.$snotify.success("Notification checked!", "Done", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
-        });
+        // this.$snotify.success("Notification checked!", "Done", {
+        //   timeout: 2000,
+        //   showProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true
+        // });
       }
       this.$store.commit("SET_NOTIFICATIONS", {
         notifications: this.allNotiffications
@@ -655,6 +656,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  margin-top: 1em;
+  background-color: rgba(151, 151, 151, 0.4);
+  border-radius: 10px;
+}
 nav {
   font-family: "Geared Slab";
   background: #fefefa !important;
@@ -789,6 +805,29 @@ nav {
           }
         }
       }
+    }
+  }
+  #notificationsList {
+    max-height: 30vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    button:hover,
+    button:focus,
+    button:active,
+    button:active:focus:not(:disabled):not(.disabled),
+    button:focus,
+    button:active,
+    button:hover {
+      box-shadow: none !important;
+      outline: 0;
+      background-color: transparent !important;
+    }
+    button {
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      margin: 0;
     }
   }
 }

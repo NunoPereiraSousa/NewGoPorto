@@ -1,23 +1,20 @@
 <template>
   <div class="identity-info">
     <div class="container-fluid p-0 section1 position-relative">
-      <img :src="identity.image" alt="" class="img-fluid" />
+      <img :src="identity.image" alt class="img-fluid" />
       <div class="container section1">
         <div class="position-absolute" id="aboveImage">
           <div class="row">
             <div class="col-12 position-absolute">
-              <h2>
-                {{ identity.name }}
-              </h2>
+              <h2>{{ identity.name }}</h2>
               <a href="#" id="backpackAddBtn" @click="addTobackpack()">
                 <i
                   class="fas fa-hiking d-inline-block"
                   style="color: #ebecec; font-size: 30px"
                 ></i>
-                <h3 class="ml-lg-3 d-inline-block">
-                  Add to backpack
-                </h3> </a
-              ><a href="#section2" id="arrowDown">
+                <h3 class="ml-lg-3 d-inline-block">Add to backpack</h3>
+              </a>
+              <a href="#section2" id="arrowDown">
                 <i
                   class="fas fa-chevron-down"
                   style="font-size: 2em; color: #fefefa"
@@ -37,8 +34,8 @@
       <a href="#information">
         <p>
           <i class="fas fa-angle-right" style="color: #6a8ca1"></i> Information
-        </p></a
-      >
+        </p>
+      </a>
       <a href="#comments">
         <p>
           <i class="fas fa-angle-right" style="color: #6a8ca1"></i> Comments
@@ -48,14 +45,14 @@
         <p>
           <i class="fas fa-angle-right" style="color: #6a8ca1"></i> Share
           Comment
-        </p></a
-      >
+        </p>
+      </a>
     </a>
     <div class="container" id="section2">
       <div class="row" id="location">
         <div class="col-12">
           <h3 class="secondTitle">Location</h3>
-          <div class="google-map" id="myMap"></div>
+          <div class="google-map h-100" id="myMap"></div>
         </div>
       </div>
       <div class="row" id="information">
@@ -65,34 +62,7 @@
             class="lead text-justify"
             style="color: #363636; font-family: 'Muli'; font-weight: 300; padding-right: 2em"
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in
-            voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-            officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum. Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
+            {{ identity.information }}
           </p>
         </div>
       </div>
@@ -261,6 +231,7 @@ export default {
     this.comments = this.getCommentsByIdentity(this.identity.id);
     this.favouritesList = this.getFavoritesList;
     this.identities = this.getIdentities;
+    this.renderMap();
   },
   computed: {
     ...mapGetters({
@@ -282,39 +253,41 @@ export default {
     }
   },
   methods: {
-    // renderMap() {
-    //   const location = new google.maps.LatLng(
-    //     this.identity.lat,
-    //     this.identity.lng
-    //   );
+    renderMap() {
+      const location = new google.maps.LatLng(
+        this.identity.lat,
+        this.identity.lng
+      );
 
-    //   const myMapOptions = {
-    //     center: location,
-    //     zoom: 19,
-    //     mapTypeId: "hybrid"
-    //   };
+      const myMapOptions = {
+        center: location,
+        zoom: 19,
+        mapTypeId: "hybrid"
+      };
 
-    //   const map = new google.maps.Map(
-    //     document.getElementById("myMap"),
-    //     myMapOptions
-    //   );
+      //  alert(myMapOptions.center)
 
-    //   const contentString = `
-    //       <div id="content">
-    //         <h5>${this.identity.name}</h5>
-    //       </div>
-    //     `;
+      const map = new google.maps.Map(
+        document.getElementById("myMap"),
+        myMapOptions
+      );
 
-    //   const infowindow = new google.maps.InfoWindow({ content: contentString });
+      const contentString = `
+          <div id="content">
+            <h5>${this.identity.name}</h5>
+          </div>
+        `;
 
-    //   const marker = new google.maps.Marker({
-    //     position: location,
-    //     map: map,
-    //     animation: google.maps.Animation.BOUNCE
-    //   });
+      const infowindow = new google.maps.InfoWindow({ content: contentString });
 
-    //   marker.addListener("click", () => infowindow.open(map, marker));
-    // },
+      const marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        animation: google.maps.Animation.BOUNCE
+      });
+
+      marker.addListener("click", () => infowindow.open(map, marker));
+    },
     getCurrentDateTime() {
       let today = new Date();
       let date =
@@ -426,6 +399,7 @@ export default {
 a:hover {
   text-decoration: none;
 }
+
 #manual {
   display: none;
   position: fixed;
@@ -634,6 +608,13 @@ a:hover {
   button:hover {
     box-shadow: none !important;
     outline: 0;
+  }
+
+  #myMap {
+    width: 87%;
+    height: 87%;
+    border-radius: 4px;
+    box-shadow: 1px 1px 2px rgba(151, 151, 151, 0.4);
   }
 }
 </style>

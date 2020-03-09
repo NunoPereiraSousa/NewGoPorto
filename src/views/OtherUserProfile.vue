@@ -23,7 +23,7 @@
                 class="img-fluid"
                 readonly
               />
-            </div> -->
+            </div>-->
             <div class="form-row">
               <div class="form-group col-lg-12">
                 <i class="fas fa-user pr-2 d-inline-block"></i>
@@ -72,41 +72,25 @@
             </div>
           </form>
         </div>
-        <div class="col-lg-6 col-12">
-          <form>
-            <div class="form-group">
-              <textarea
-                class="form-control mx-auto"
-                rows="4"
-                placeholder="What are you thinking of?"
-              ></textarea>
-            </div>
-          </form>
-          <div id="stories">
+        <div class="col-lg-6 col-12" v-if="visitedUserPublications.length > 0">
+          <div
+            id="stories"
+            v-for="publication in visitedUserPublications"
+            :key="publication.id"
+          >
             <img
               src="../assets/OurTeam/Nuno.jpg"
               class="d-inline-block"
               alt="person"
             />
-            <p class="d-inline-block pl-3">Nuno Sousa</p>
-            <p style="font-size: 14px">21-12-2020</p>
-            <p class="lead text-justify">
-              Hello! asibfdvadsfbsadbfasbldfsdfasdfaisdfbyasdbfa
-              sdvfasfddasibfdvadsfbsadbfasbldfsdfasdfaisdfbyasd
-              bfasdvfasfddasibfdvadsfbsadbfasbldfsdfasdfaisdfbya
-              sdbfasdvfasfddasibfdvadsfbsadbfasbldfsdfasdfais
-              dfbyasdbfasdvfasfddasibfdvadsfbsadbfasbldfsdfasd
-              faisdfbyasdbfasdvfasfddasibfdvadsfbsadbfasbldfsd
-              fasdfaisdfbyasdbfasdvfasfddasibfdvadsfbsadbfasbld
-              fsdfasdfaisdfbyasdbfasdvfasfddasibfdvadsfbsadbfasbld
-              fsdfasdfaisdfbyasdbfasdvfasfddasibfdvadsfbsadbfasbl
-              dfsdfasdfaisdfbyasdbfasdvfasfddasibfdvadsfbsadbfasb
-              ldfsdfasdfaisdfbyasdbfasdvfasfddasibfdvadsfbsadbfas
-              bldfsdfasdfaisdfbyasdbfasdvfasfddasibfdvadsfbsadbfas
-              bldfsdfasdfaisdfbyasdbfasdvfasfdd
-            </p>
+            <p class="d-inline-block pl-3">{{ publication.username }}</p>
+            <p style="font-size: 14px">{{ publication.date }}</p>
+            <p class="lead text-justify">{{ publication.content }}</p>
             <hr />
           </div>
+        </div>
+        <div class="col-lg-6 col-12" v-else>
+          <h1>Notting to show here</h1>
         </div>
       </div>
     </div>
@@ -122,6 +106,7 @@ export default {
       user: [],
       visitedUser: "",
       users: [],
+      visitedUserPublications: [],
       Form: {
         id: "",
         name: "",
@@ -139,17 +124,38 @@ export default {
       );
     }
 
+    if (JSON.parse(localStorage.getItem("publications"))) {
+      this.$store.commit("SET_PUBLICATIONS", {
+        publications: JSON.parse(localStorage.getItem("publications"))
+      });
+    }
+
     this.visitedUser = this.getVisitedUser;
     this.Form.id = this.visitedUser.id;
     this.Form.name = this.visitedUser.name;
     this.Form.birth = this.visitedUser.birth;
     this.Form.email = this.visitedUser.email;
     this.Form.image = this.visitedUser.photo;
+
+    this.getUserPublications();
   },
   computed: {
     ...mapGetters({
-      getVisitedUser: "getVisitedUser"
+      getVisitedUser: "getVisitedUser",
+
+      // todo
+      getPublicationsLastId: "getPublicationsLastId",
+      getPublications: "getPublications",
+      getPublicationByUser: "getPublicationByUser"
     })
+  },
+
+  methods: {
+    getUserPublications() {
+      this.visitedUserPublications = this.getPublicationByUser(
+        this.visitedUser.id
+      );
+    }
   }
 };
 </script>

@@ -21,7 +21,8 @@ export default new Vuex.Store({
     visitedUser: "",
     category: "Monuments",
     favoritesList: [],
-    followedItinerary: [] // follow system like on instagram
+    followedItinerary: [], // follow system like on instagram,
+    publications: []
   },
   getters: {
     getUserById: state => id => {
@@ -331,7 +332,32 @@ export default new Vuex.Store({
         return state.emails[state.emails.length - 1].id + 1;
       }
       return 1;
+    },
+
+    // * <publications getters
+
+    getPublicationsLastId(state) {
+      if (state.publications.length > 0) {
+        return state.publications[state.publications.length - 1].id + 1;
+      }
+      return 1;
+    },
+
+    getPublications: state => {
+      return state.publications;
+    },
+
+    getPublicationByUser: state => userId => {
+      return state.publications.filter(
+        publication => publication.userId === userId
+      );
+    },
+    // !in case of delete
+    getPublicationIndexById: state => id => {
+      return state.publications.findIndex(publication => publication.id === id);
     }
+
+    // *publications getters>
   },
   mutations: {
     NEW_USER(state, payload) {
@@ -549,6 +575,12 @@ export default new Vuex.Store({
     SET_EMAILS(state, payload) {
       state.emails = payload.emails;
       localStorage.setItem("emails", JSON.stringify(state.emails));
+    },
+
+    //* publications setters
+    SET_PUBLICATIONS(state, payload) {
+      state.publications = payload.publications;
+      localStorage.setItem("publications", JSON.stringify(state.publications));
     }
   },
   actions: {},

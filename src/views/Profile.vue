@@ -18,7 +18,7 @@
                 data-toggle="modal"
                 data-target="#profilePicChange"
               />
-            </div> -->
+            </div>-->
             <div class="form-row">
               <div class="form-group col-lg-12">
                 <i class="fas fa-user pr-2 d-inline-block"></i>
@@ -64,42 +64,41 @@
           </form>
         </div>
         <div class="col-lg-6 col-12">
-          <form>
+          <form @submit.prevent="addPublication()">
             <div class="form-group">
               <textarea
+                v-model="newPublication"
                 class="form-control mx-auto"
                 rows="4"
                 placeholder="What are you thinking of?"
               ></textarea>
             </div>
+
+            <button type="submit">Publicate</button>
           </form>
-          <div id="stories">
-            <img
-              src="../assets/OurTeam/Nuno.jpg"
-              class="d-inline-block"
-              alt="person"
-            />
-            <p class="d-inline-block pl-3">Nuno Sousa</p>
-            <p style="font-size: 14px">21-12-2020</p>
-            <p
-              class="lead text-left"
-              style="color: #363636; font-family: 'Muli'; font-weight: 300;"
-            >
-              Hello! asibfdvadsfbsadbfasbldfsdfasdfaisdfbyasdbfa
-              sdvfasfddasibfdvadsfbsadbfasbldfsdfasdfaisdfbyasd
-              bfasdvfasfddasibfdvadsfbsadbfasbldfsdfasdfaisdfbya
-              sdbfasdvfasfddasibfdvadsfbsadbfasbldfsdfasdfais
-              dfbyasdbfasdvfasfddasibfdvadsfbsadbfasbldfsdfasd
-              faisdfbyasdbfasdvfasfddasibfdvadsfbsadbfasbldfsd
-              fasdfaisdfbyasdbfasdvfasfddasibfdvadsfbsadbfasbld
-              fsdfasdfaisdfbyasdbfasdvfasfddasibfdvadsfbsadbfasbld
-              fsdfasdfaisdfbyasdbfasdvfasfddasibfdvadsfbsadbfasbl
-              dfsdfasdfaisdfbyasdbfasdvfasfddasibfdvadsfbsadbfasb
-              ldfsdfasdfaisdfbyasdbfasdvfasfddasibfdvadsfbsadbfas
-              bldfsdfasdfaisdfbyasdbfasdvfasfddasibfdvadsfbsadbfas
-              bldfsdfasdfaisdfbyasdbfasdvfasfdd
-            </p>
-            <hr />
+          <div
+            id="stories"
+            v-for="publication in myPublications"
+            :key="publication.id"
+          >
+            <div>
+              <img
+                src="../assets/OurTeam/Nuno.jpg"
+                class="d-inline-block"
+                alt="person"
+              />
+              <p class="d-inline-block pl-3">{{ publication.username }}</p>
+              <p style="font-size: 14px">{{ publication.date }}</p>
+              <p
+                class="lead text-left"
+                style="color: #363636; font-family: 'Muli'; font-weight: 300;"
+              >
+                {{ publication.content }}
+              </p>
+
+              <button @click="deletePublication(publication.id)">delete</button>
+              <hr />
+            </div>
           </div>
         </div>
       </div>
@@ -108,7 +107,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Suggest & </span>
+            <span>Suggest &</span>
             <span>Places</span>
           </h2>
         </div>
@@ -229,6 +228,11 @@ export default {
         photo: "",
         content: ""
       },
+
+      newPublication: "",
+      myPublications: [],
+      allPublications: [], //only usesd if needed
+
       editForm: {
         id: "",
         name: "",
@@ -252,6 +256,14 @@ export default {
         JSON.parse(localStorage.getItem("loggedUser"))
       );
     }
+
+    if (JSON.parse(localStorage.getItem("publications"))) {
+      this.$store.commit("SET_PUBLICATIONS", {
+        publications: JSON.parse(localStorage.getItem("publications"))
+      });
+
+      this.myPublications = this.getPublicationByUser(this.loggedUser.id);
+    }
   },
   computed: {
     ...mapGetters({
@@ -259,7 +271,12 @@ export default {
       getSuggestionsLastId: "getSuggestionsLastId",
       getSuggestionByName: "getSuggestionByName",
       getUsers: "getUsers",
-      getLoggedUser: "getLoggedUser"
+      getLoggedUser: "getLoggedUser",
+
+      // todo
+      getPublicationsLastId: "getPublicationsLastId",
+      getPublications: "getPublications",
+      getPublicationByUser: "getPublicationByUser"
     })
   },
   methods: {
@@ -390,6 +407,58 @@ export default {
       this.form.name = "";
       this.form.photo = "";
       this.form.content = "";
+    },
+
+    addPublication() {
+      this.allPublications = this.getPublications;
+      // alert(this.getPublications.length)
+
+      if (this.newPublication === "") {
+        alert("Please write something before publishing");
+      } else {
+        this.allPublications.push({
+          id: this.getPublicationsLastId,
+          userId: this.loggedUser.id,
+          content: this.newPublication,
+          username: this.loggedUser.username,
+          date: this.getCurrentDate()
+        });
+
+        this.$store.commit("SET_PUBLICATIONS", {
+          publications: this.allPublications
+        });
+
+        this.myPublications = this.getPublicationByUser(this.loggedUser.id);
+        this.newPublication = "";
+      }
+    },
+
+    getCurrentDateTime() {
+      let today = new Date();
+      let date =
+        today.getDate() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getFullYear();
+      let time =
+        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      let dateTime = date + ", " + time;
+      return dateTime;
+    },
+
+    deletePublication(id) {
+      // alert("here");
+      this.allPublications = this.getPublications;
+      this.allPublications = this.allPublications.filter(
+        publication => publication.id != id
+      );
+
+      this.$store.commit("SET_PUBLICATIONS", {
+        publications: this.allPublications
+      });
+
+      this.myPublications = this.getPublicationByUser(this.loggedUser.id);
     }
   }
 };

@@ -3,11 +3,7 @@
     <div class="container">
       <div class="row" id="pictureRow">
         <div class="col-lg-6 col-12">
-          <img
-            src="../assets/OurTeam/Nuno.jpg"
-            class="img-fluid"
-            alt="ProfilePicture"
-          />
+          <img :src="Form.image" class="img-fluid" alt="ProfilePicture" />
           <form class="pt-3">
             <!-- <div class="form-group">
               <input
@@ -78,11 +74,7 @@
             v-for="publication in visitedUserPublications"
             :key="publication.id"
           >
-            <img
-              src="../assets/OurTeam/Nuno.jpg"
-              class="d-inline-block"
-              alt="person"
-            />
+            <img :src="Form.image" class="d-inline-block" alt="person" />
             <p class="d-inline-block pl-3">{{ publication.username }}</p>
             <p style="font-size: 14px">{{ publication.date }}</p>
             <p class="lead text-justify">{{ publication.content }}</p>

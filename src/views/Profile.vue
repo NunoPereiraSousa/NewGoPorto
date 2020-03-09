@@ -3,11 +3,7 @@
     <div class="container" id="mainArea">
       <div class="row" id="pictureRow">
         <div class="col-lg-6 col-12">
-          <img
-            src="../assets/OurTeam/Nuno.jpg"
-            class="img-fluid"
-            alt="ProfilePicture"
-          />
+          <img :src="editForm.image" class="img-fluid" alt="ProfilePicture" />
           <form @submit.prevent="editProfile()" class="pt-3">
             <!-- <div class="form-group">
               <img
@@ -82,11 +78,7 @@
             :key="publication.id"
           >
             <div>
-              <img
-                src="../assets/OurTeam/Nuno.jpg"
-                class="d-inline-block"
-                alt="person"
-              />
+              <img :src="editForm.image" class="d-inline-block" alt="person" />
               <p class="d-inline-block pl-3">{{ publication.username }}</p>
               <p style="font-size: 14px">{{ publication.date }}</p>
               <p
@@ -124,7 +116,7 @@
           <button
             class="btn btn-primary w-25"
             data-toggle="modal"
-            data-target="#suggestion"
+            data-target="#suggestionModal"
           >
             Suggest
           </button>
@@ -134,7 +126,7 @@
     <!-- Suggest Modal -->
     <div
       class="modal fade"
-      id="suggestion"
+      id="suggestionModal"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -207,6 +199,7 @@
         </div>
       </div>
     </div>
+
     <!-- Suggest Modal -->
   </div>
 </template>

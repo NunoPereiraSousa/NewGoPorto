@@ -3,7 +3,13 @@
     <div class="container" id="mainArea">
       <div class="row" id="pictureRow">
         <div class="col-lg-6 col-12">
-          <img :src="editForm.image" class="img-fluid" alt="ProfilePicture" />
+          <img
+            :src="editForm.image"
+            class="img-fluid"
+            alt="ProfilePicture"
+            data-toggle="modal"
+            data-target="#profilePicChange"
+          />
           <form @submit.prevent="editProfile()" class="pt-3">
             <!-- <div class="form-group">
               <img
@@ -199,8 +205,58 @@
         </div>
       </div>
     </div>
-
     <!-- Suggest Modal -->
+
+    <!-- <profile Picture modal  -->
+    <div
+      class="modal fade"
+      id="profilePicChange"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h5 class="modal-title" id="modelTitle">
+              Add your profile picture Url here
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- !!!!!!!!!!!!!!!!@submit.prevent="editProfile()" tava a dar um erro -->
+            <form>
+              <div class="form-group">
+                <input
+                  type="url"
+                  class="form-control"
+                  placeholder="Photo"
+                  v-model="editForm.image"
+                />
+              </div>
+              <button
+                @click="editProfile()"
+                type="submit"
+                class="btn btn-primary w-75 submitForm"
+                data-dismiss="modal"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- profile Picture modal> -->
   </div>
 </template>
 
@@ -324,11 +380,13 @@ export default {
       // alert(this.editForm.image); THIS ALERT RETURNS THE EXACTLY SRC OF THE USER IMAGE !!!!
     },
     editProfile() {
+      alert("here");
       this.editForm.id = this.loggedUser.id;
       this.loggedUser.name = this.editForm.name;
       this.loggedUser.age = this.editForm.birth;
       this.loggedUser.email = this.editForm.email;
       this.loggedUser.photo = this.editForm.image;
+      alert(this.loggedUser.photo);
 
       this.users[this.loggedUser.id - 1].id = this.editForm.id;
       this.users[this.loggedUser.id - 1].name = this.editForm.name;

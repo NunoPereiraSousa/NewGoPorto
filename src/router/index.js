@@ -16,6 +16,11 @@ import MyTrip from "../views/MyTrip.vue";
 import CreateTrip from "../views/CreateTrip.vue";
 import IdentityInfo from "../views/IdentityInfo.vue";
 import MyBackpack from "../views/MyBackpack.vue";
+import AdminLandingPage from "@/views/BackOffice/AdminLandingPage.vue";
+import BackOfficeUsers from "@/views/BackOffice/BackOfficeUsers.vue";
+import BackOfficeCatalog from "@/views/BackOffice/BackOfficeCatalog.vue";
+import BackOfficeSuggestions from "@/views/BackOffice/BackOfficeSuggestions.vue";
+import BackOfficeRoutes from "@/views/BackOffice/BackOfficeRoutes.vue";
 
 import store from "../store/index.js";
 Vue.use(VueRouter);
@@ -464,6 +469,162 @@ const routes = [
         next("/");
       } else {
         next();
+      }
+    }
+  },
+  {
+    path: "/adminLandingPage",
+    name: "adminLandingPage",
+    component: AdminLandingPage,
+    meta: {
+      requireAuth: true,
+      mustBeAdmin: true
+    },
+    beforeEnter: (to, from, next) => {
+      if (JSON.parse(localStorage.getItem("loggedUser"))) {
+        store.commit(
+          "SET_LOGGED_USER",
+          JSON.parse(localStorage.getItem("loggedUser"))
+        );
+      } else {
+        store.commit("SET_LOGGED_USER_LOG_OUT", {
+          loggedUser: ""
+        });
+      }
+      let loggedUser = store.getters.getLoggedUser;
+      if (loggedUser == "") {
+        next("/");
+      } else {
+        if (loggedUser.id_user_type == 2) {
+          next("/");
+        } else {
+          next();
+        }
+      }
+    }
+  },
+  {
+    path: "/backOfficeUsers",
+    name: "backOfficeUsers",
+    component: BackOfficeUsers,
+    meta: {
+      requireAuth: true,
+      mustBeAdmin: true
+    },
+    beforeEnter: (to, from, next) => {
+      if (JSON.parse(localStorage.getItem("loggedUser"))) {
+        store.commit(
+          "SET_LOGGED_USER",
+          JSON.parse(localStorage.getItem("loggedUser"))
+        );
+      } else {
+        store.commit("SET_LOGGED_USER_LOG_OUT", {
+          loggedUser: ""
+        });
+      }
+      let loggedUser = store.getters.getLoggedUser;
+      if (loggedUser == "") {
+        next("/");
+      } else {
+        if (loggedUser.id_user_type == 2) {
+          next("/");
+        } else {
+          next();
+        }
+      }
+    }
+  },
+  {
+    path: "/backOfficeCatalog",
+    name: "backOfficeCatalog",
+    component: BackOfficeCatalog,
+    meta: {
+      requireAuth: true,
+      mustBeAdmin: true
+    },
+    beforeEnter: (to, from, next) => {
+      if (JSON.parse(localStorage.getItem("loggedUser"))) {
+        store.commit(
+          "SET_LOGGED_USER",
+          JSON.parse(localStorage.getItem("loggedUser"))
+        );
+      } else {
+        store.commit("SET_LOGGED_USER_LOG_OUT", {
+          loggedUser: ""
+        });
+      }
+      let loggedUser = store.getters.getLoggedUser;
+
+      if (loggedUser == "") {
+        next("/");
+      } else {
+        if (loggedUser.id_user_type == 2) {
+          next("/");
+        } else {
+          next();
+        }
+      }
+    }
+  },
+  {
+    path: "/backOfficeSuggestion",
+    name: "backOfficeSuggestion",
+    component: BackOfficeSuggestions,
+    meta: {
+      requireAuth: true,
+      mustBeAdmin: true
+    },
+    beforeEnter: (to, from, next) => {
+      if (JSON.parse(localStorage.getItem("loggedUser"))) {
+        store.commit(
+          "SET_LOGGED_USER",
+          JSON.parse(localStorage.getItem("loggedUser"))
+        );
+      } else {
+        store.commit("SET_LOGGED_USER_LOG_OUT", {
+          loggedUser: ""
+        });
+      }
+      let loggedUser = store.getters.getLoggedUser;
+      if (loggedUser == "") {
+        next("/");
+      } else {
+        if (loggedUser.id_user_type == 2) {
+          next("/");
+        } else {
+          next();
+        }
+      }
+    }
+  },
+  {
+    path: "/backOfficeRoutes",
+    name: "backOfficeRoutes",
+    component: BackOfficeRoutes,
+    meta: {
+      requireAuth: true,
+      mustBeAdmin: true
+    },
+    beforeEnter: (to, from, next) => {
+      if (JSON.parse(localStorage.getItem("loggedUser"))) {
+        store.commit(
+          "SET_LOGGED_USER",
+          JSON.parse(localStorage.getItem("loggedUser"))
+        );
+      } else {
+        store.commit("SET_LOGGED_USER_LOG_OUT", {
+          loggedUser: ""
+        });
+      }
+      let loggedUser = store.getters.getLoggedUser;
+      if (loggedUser == "") {
+        next("/");
+      } else {
+        if (loggedUser.id_user_type == 2) {
+          next("/");
+        } else {
+          next();
+        }
       }
     }
   }

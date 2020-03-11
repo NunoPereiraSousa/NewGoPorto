@@ -30,6 +30,9 @@
                   placeholder="Name"
                   v-model="editForm.name"
                 />
+                <button type="submit" class="btn btn-primary save">
+                  <i class="far fa-save"></i>
+                </button>
               </div>
               <div class="form-group col-lg-12">
                 <i class="fas fa-map-marker-alt pr-2 d-inline-block"></i>
@@ -39,6 +42,9 @@
                   placeholder="Location"
                   v-model="editForm.location"
                 />
+                <button type="submit" class="ml-1 btn btn-primary save">
+                  <i class="far fa-save"></i>
+                </button>
               </div>
               <div class="form-group col-lg-12">
                 <i class="fas fa-calendar-alt pr-1 d-inline-block"></i>
@@ -49,6 +55,9 @@
                   onfocus="(this.type='date')"
                   v-model="editForm.birth"
                 />
+                <button type="submit" class="ml-1 btn btn-primary save">
+                  <i class="far fa-save"></i>
+                </button>
               </div>
               <div class="form-group col-lg-12">
                 <i
@@ -61,6 +70,9 @@
                   placeholder="Email"
                   v-model="editForm.email"
                 />
+                <button type="submit" class="ml-1 btn btn-primary save">
+                  <i class="far fa-save"></i>
+                </button>
               </div>
             </div>
           </form>
@@ -374,19 +386,21 @@ export default {
     },
     showUserData() {
       this.editForm.name = this.loggedUser.name;
-      this.editForm.email = this.loggedUser.email;
+      this.editForm.location = this.loggedUser.location;
       this.editForm.birth = this.loggedUser.birth;
       this.editForm.image = this.loggedUser.photo;
+      this.editForm.email = this.loggedUser.email;
       // alert(this.editForm.image); THIS ALERT RETURNS THE EXACTLY SRC OF THE USER IMAGE !!!!
     },
     editProfile() {
       alert("here");
       this.editForm.id = this.loggedUser.id;
       this.loggedUser.name = this.editForm.name;
-      this.loggedUser.age = this.editForm.birth;
+      this.loggedUser.location = this.editForm.location;
+      this.loggedUser.birth = this.editForm.birth;
       this.loggedUser.email = this.editForm.email;
       this.loggedUser.photo = this.editForm.image;
-      alert(this.loggedUser.photo);
+      // alert(this.loggedUser.photo);
 
       this.users[this.loggedUser.id - 1].id = this.editForm.id;
       this.users[this.loggedUser.id - 1].name = this.editForm.name;
@@ -530,6 +544,18 @@ export default {
   background-color: rgba(151, 151, 151, 0.4);
   border-radius: 0.5rem;
 }
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:active:focus:not(:disabled):not(.disabled),
+.btn:focus,
+.btn:active,
+.btn:hover {
+  box-shadow: none !important;
+  outline: 0;
+  border: none;
+}
 #mainArea {
   margin-top: 2em;
   margin-bottom: 2em;
@@ -561,6 +587,12 @@ export default {
           color: #5085a5;
           background: transparent;
           width: 80%;
+        }
+        .save {
+          background-color: transparent;
+          border: none;
+          color: #363636;
+          font-size: 1.2em;
         }
       }
       #stories {

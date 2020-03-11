@@ -82,7 +82,9 @@ export default {
               username: "NunoPereiraSousa",
               email: "nunosousa@gmail.com",
               age: 19,
+              birth: "09-10-2000",
               id_nationality: "Portuguese",
+              location: "Porto, Portugal",
               description:
                 "Hello! My name is Nuno and currently studying at ESMAD.",
               photo: "../src/assets/OurTeam/Nuno.jpg",
@@ -95,9 +97,11 @@ export default {
               name: "Tiago",
               surname: "de Pina",
               username: "Titas",
+              birth: "14-03-2000",
               email: "tiagopina@gmail.com",
               age: 19,
               id_nationality: "Cape Verdean",
+              location: "Vila do Conde, Portugal",
               description: "Concordo com o Nuno na descrição",
               photo: "../src/assets/OurTeam/Titas.png",
               id_user_type: 2,
@@ -110,8 +114,10 @@ export default {
               surname: "",
               username: "admin1",
               email: "admin@gmail.com",
-              age: "",
+              age: "19",
+              birth: "09-10-2000",
               id_nationality: "Portuguese",
+              location: "Porto, Portugal",
               description: "",
               photo: "",
               id_user_type: 1,
@@ -126,6 +132,7 @@ export default {
               email: "kobe24@gmail.com",
               age: "41",
               id_nationality: "American",
+              location: "United States of America",
               description: "5x NBA Champion. 17x NBA All-Star",
               photo:
                 "https://www.correiodoestado.com.br/upload/dn_noticia/2020/01/kobe-bryant.jpg",
@@ -142,12 +149,14 @@ export default {
               email: "anna@gmail.com",
               age: "18",
               id_nationality: "French",
+              location: "Paris, France",
               description: "French traveller :)",
               photo:
                 "https://images.squarespace-cdn.com/content/v1/570283d39f72667cfc9ccc8b/1554519481891-KLF6FNI41KK4H5LUGB3I/ke17ZwdGBToddI8pDm48kLkXF2pIyv_F2eUT9F60jBl7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0iyqMbMesKd95J-X4EagrgU9L3Sa3U8cogeb0tjXbfawd0urKshkc5MgdBeJmALQKw/Anna%2BPancaldi-5.jpg?format=2500w",
               id_user_type: 2,
               blocked: true,
-              password: "anna123"
+              password: "anna123",
+              birth: "17-10-2001"
             },
             {
               id: 6,
@@ -157,12 +166,14 @@ export default {
               email: "julieee@gmail.com",
               age: "26",
               id_nationality: "American",
+              location: "United States of America",
               description: "American travelling around the world",
               photo:
                 "https://media.rtp.pt/thevoiceportugal/wp-content/uploads/sites/76/2019/11/JoanaAbreu.jpg",
               id_user_type: 2,
               blocked: false,
-              password: "julieee"
+              password: "julieee",
+              birth: "15-05-1994"
             },
             {
               id: 7,
@@ -176,8 +187,10 @@ export default {
               photo:
                 "https://www.theplayoffs.com.br/wp-content/uploads/2019/01/Curry-em-vit%C3%B3ria-do-Golden-State-Warriors.jpg",
               id_user_type: 2,
+              location: "United States of America",
               blocked: false,
-              password: "curry30"
+              password: "curry30",
+              birth: "14-03-1988"
             }
           ]
         });

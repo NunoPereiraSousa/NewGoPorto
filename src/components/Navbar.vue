@@ -522,7 +522,9 @@
                         <span class="d-inline-block"
                           >{{ notification.answear }}.</span
                         >
-                        <button
+                        <span class="pr-4">
+                          {{ notification.sugestionDate }} </span
+                        ><button
                           type="button"
                           class="btn btn-primary btnIcon d-inline-block"
                           @click="checkNotification(notification.id)"

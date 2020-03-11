@@ -1,28 +1,38 @@
 <template>
   <div class="profile">
     <div class="container" id="mainArea">
-      <div class="row" id="pictureRow">
-        <div class="col-lg-6 col-12">
-          <img
+      <div class="row">
+        <div class="col-12 text-left">
+          <h2>
+            <span>{{ loggedUser.username }} </span>
+            <span>Bio</span>
+          </h2>
+        </div>
+      </div>
+      <div class="row pictureRow">
+        <div class="col-6">
+          <!-- <img
             :src="editForm.image"
             class="img-fluid"
             alt="ProfilePicture"
             data-toggle="modal"
             data-target="#profilePicChange"
-          />
+          /> -->
           <form @submit.prevent="editProfile()" class="pt-3">
-            <!-- <div class="form-group">
-              <img
-                :src="editForm.image"
-                id="picture"
-                alt="Image"
-                class="img-fluid"
-                data-toggle="modal"
-                data-target="#profilePicChange"
-              />
-            </div>-->
+            <div class="form-group">
+              <div class="form-group col-12 pl-0 pb-3">
+                <img
+                  :src="editForm.image"
+                  id="picture"
+                  alt="Image"
+                  class="img-fluid"
+                  data-toggle="modal"
+                  data-target="#profilePicChange"
+                />
+              </div>
+            </div>
             <div class="form-row">
-              <div class="form-group col-lg-12">
+              <div class="form-group col-12">
                 <i class="fas fa-user pr-2 d-inline-block"></i>
                 <input
                   type="text"
@@ -34,7 +44,7 @@
                   <i class="far fa-save"></i>
                 </button>
               </div>
-              <div class="form-group col-lg-12">
+              <div class="form-group col-12">
                 <i class="fas fa-map-marker-alt pr-2 d-inline-block"></i>
                 <input
                   type="text"
@@ -46,7 +56,7 @@
                   <i class="far fa-save"></i>
                 </button>
               </div>
-              <div class="form-group col-lg-12">
+              <div class="form-group col-12">
                 <i class="fas fa-calendar-alt pr-1 d-inline-block"></i>
                 <input
                   type="text"
@@ -59,7 +69,7 @@
                   <i class="far fa-save"></i>
                 </button>
               </div>
-              <div class="form-group col-lg-12">
+              <div class="form-group col-12">
                 <i
                   class="fas fa-envelope d-inline-block"
                   style="padding-right: 1px;"
@@ -77,36 +87,54 @@
             </div>
           </form>
         </div>
-        <div class="col-lg-6 col-12">
+      </div>
+      <div class="row">
+        <div class="col-12 text-left">
+          <h2>
+            <span>{{ loggedUser.username }} </span>
+            <span>Shares</span>
+          </h2>
+        </div>
+      </div>
+      <div class="row pictureRow">
+        <div class="col-6">
           <form @submit.prevent="addPublication()">
-            <div class="form-group">
+            <div class="form-group textarea-container">
               <textarea
                 v-model="newPublication"
                 class="form-control mx-auto"
                 rows="4"
                 placeholder="What are you thinking of?"
               ></textarea>
+              <button class="btn btn-primary" type="submit">Publicate</button>
             </div>
-
-            <button type="submit">Publicate</button>
           </form>
-          <div
-            id="stories"
-            v-for="publication in myPublications"
-            :key="publication.id"
-          >
-            <div>
-              <img :src="editForm.image" class="d-inline-block" alt="person" />
-              <p class="d-inline-block pl-3">{{ publication.username }}</p>
-              <p style="font-size: 14px">{{ publication.date }}</p>
+          <div id="stories">
+            <div v-for="publication in myPublications" :key="publication.id">
+              <div class=" d-flex justify-content-between align-items-center">
+                <img :src="editForm.image" alt="person" />
+                <p class="">{{ publication.username }}</p>
+                <p class="font-italic" style="font-size: 14px">
+                  {{ publication.date }}
+                </p>
+                <button
+                  id="delete"
+                  class="btn btn-primary d-inline-block mb-3"
+                  @click="deletePublication(publication.id)"
+                >
+                  <i
+                    class="far fa-times-circle"
+                    style="color: #363636; font-size: 1.2em"
+                  ></i>
+                </button>
+              </div>
+
               <p
-                class="lead text-left"
+                class="lead text-left pt-4 pb-4"
                 style="color: #363636; font-family: 'Muli'; font-weight: 300;"
               >
                 {{ publication.content }}
               </p>
-
-              <button @click="deletePublication(publication.id)">delete</button>
               <hr />
             </div>
           </div>
@@ -117,7 +145,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Suggest &</span>
+            <span>Suggest </span>
             <span>Places</span>
           </h2>
         </div>
@@ -133,6 +161,7 @@
 
           <button
             class="btn btn-primary w-25"
+            style="margin-bottom: 3em"
             data-toggle="modal"
             data-target="#suggestionModal"
           >
@@ -556,14 +585,36 @@ export default {
   outline: 0;
   border: none;
 }
+h2 {
+  margin: 2em 0 2em 0;
+  font-family: "Geared Slab";
+  font-size: 1.8em;
+  color: #363636;
+  position: relative;
+  padding: 0px 0px 20px 0px;
+  &:after {
+    position: absolute;
+    content: "";
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 10%;
+    height: 3px;
+    background: #5085a5;
+  }
+  span:first-child {
+    font-weight: 200;
+  }
+  span:nth-child(2) {
+    font-weight: 400;
+    color: #5085a5;
+  }
+}
 #mainArea {
   margin-top: 2em;
   margin-bottom: 2em;
-  background: #ebecec;
-  padding: 6em 6em 2em 6em;
-
-  #pictureRow {
-    .col-lg-6 {
+  .pictureRow {
+    .col-6 {
       img {
         width: 12em;
         height: 12em;
@@ -572,6 +623,11 @@ export default {
       form {
         font-family: "Muli";
         font-size: 1.4em;
+        #picture {
+          width: 8em;
+          height: 8em;
+          margin-left: 0;
+        }
         textarea {
           border-radius: 2%;
           box-shadow: none;
@@ -594,19 +650,39 @@ export default {
           color: #363636;
           font-size: 1.2em;
         }
+        .textarea-container {
+          position: relative;
+        }
+        .textarea-container textarea {
+          width: 100%;
+          height: 100%;
+          box-sizing: border-box;
+        }
+        .textarea-container button {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          border: 1px solid #363636;
+          background-color: transparent;
+          color: #363636;
+        }
+      }
+      #delete {
+        background-color: transparent;
+        border: none;
       }
       #stories {
         padding: 1em;
         background: #fefefa;
-        max-height: 40vh;
+        max-height: 60vh;
         overflow-y: scroll;
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
         border-radius: 2%;
         img {
-          width: 2em;
-          height: 2em;
-          border-radius: 50%;
+          width: 3em;
+          height: 3em;
+          border-radius: 8px;
         }
         p {
           font-size: 16px;
@@ -620,31 +696,6 @@ export default {
   }
 }
 #suggestion {
-  h2 {
-    margin: 2em 0 2em 0;
-    font-family: "Geared Slab";
-    font-size: 1.8em;
-    color: #363636;
-    position: relative;
-    padding: 0px 0px 20px 0px;
-    &:after {
-      position: absolute;
-      content: "";
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 10%;
-      height: 3px;
-      background: #5085a5;
-    }
-    span:first-child {
-      font-weight: 200;
-    }
-    span:nth-child(2) {
-      font-weight: 400;
-      color: #5085a5;
-    }
-  }
   .btn {
     background-color: #fefefa;
     border: none;

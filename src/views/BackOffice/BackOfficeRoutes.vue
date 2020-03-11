@@ -74,7 +74,7 @@
                   >
                     <i
                       class="fa fa-times"
-                      style="font-size: 34px; color: rgba(227, 170, 2, .5);"
+                      style="font-size: 34px; color: rgba(200, 170, 2, .8);"
                     ></i>
                   </button>
                 </div>

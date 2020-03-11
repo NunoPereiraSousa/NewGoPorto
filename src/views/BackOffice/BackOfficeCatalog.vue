@@ -226,7 +226,7 @@
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-body">
             <h5 class="pb-4 pt-1 mx-auto d-inline-block">Edit Identity</h5>
@@ -579,6 +579,26 @@ export default {
   background-color: #f0f0f0;
   width: 100vw;
 
+  .form-control {
+    border: 0;
+    border-bottom: 1.5px solid #5085a5;
+    box-shadow: none !important;
+    color: #5085a5;
+    background: transparent;
+    font-family: "Geared Slab";
+    font-size: 1.4em;
+    select {
+      color: #20252b;
+      option {
+        background: #f0f0f0 !important;
+        color: #5085a5;
+        text-transform: capitalize;
+      }
+    }
+    input:focus {
+      border: 1px solid #5085a5 !important;
+    }
+  }
   #searchBar {
     border-bottom: 1px solid #20252b;
   }
@@ -736,27 +756,6 @@ export default {
   }
 }
 
-.form-control {
-  border: 0;
-  border-bottom: 1.5px solid #5085a5;
-  box-shadow: none !important;
-  color: #5085a5;
-  background: transparent;
-  font-family: "Geared Slab";
-  font-size: 1.4em;
-  select {
-    color: #20252b;
-    option {
-      background: #f0f0f0 !important;
-      color: #5085a5;
-      text-transform: capitalize;
-    }
-  }
-  input:focus {
-    border: 1px solid #5085a5 !important;
-  }
-}
-
 .modal-content {
   background-color: #ebecec;
   border-radius: 4px;
@@ -764,6 +763,26 @@ export default {
     font-family: "Geared Slab";
     font-size: 1.6em;
     color: #20252b;
+  }
+  form {
+    max-height: 50vh;
+    overflow-y: scroll;
+    border: none;
+    border-radius: 4px;
+    color: #363636;
+    box-shadow: none !important;
+    padding-right: 1em;
+    .form-group {
+      padding-top: 0.5rem;
+    }
+
+    input {
+      &:focus {
+        border: 1px solid #5085a5 !important;
+        font-family: "Muli";
+        box-shadow: none !important;
+      }
+    }
   }
 }
 

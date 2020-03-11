@@ -19,7 +19,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto text-center">
           <li class="nav-item">
-            <a class="nav-link" @click="logOut()">
+            <a class="nav-link" style="cursor: pointer;" @click="logOut()">
               LogOut
             </a>
           </li>
@@ -38,7 +38,7 @@ export default {
   methods: {
     logOut() {
       localStorage.removeItem("loggedUser");
-      this.$router.push({ name: "signIn" });
+      this.$router.push({ name: "sign-in" });
     }
   }
 };

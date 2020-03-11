@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button type="submit" class="btn btn-primary w-50 mt-lg-3">
+    <button type="submit" class="btn btn-primary w-100 mt-lg-3">
       Submit
     </button>
   </div>

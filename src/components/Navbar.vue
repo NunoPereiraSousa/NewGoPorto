@@ -116,8 +116,16 @@
                 style="padding-top: 0; margin-top: 0; border: none !important"
                 aria-labelledby="navbarDropdown"
               >
-                <a class="dropdown-item" href="#">Itineraries</a>
-                <a class="dropdown-item" href="#">Places</a>
+                <router-link
+                  :to="{ name: 'itineraries-catalog' }"
+                  class="dropdown-item"
+                  >Itineraries
+                </router-link>
+                <router-link
+                  :to="{ name: 'places-catalog' }"
+                  class="dropdown-item"
+                  >Places
+                </router-link>
               </div>
             </li>
             <!-- TRANSPORTATION FOR - LG -->

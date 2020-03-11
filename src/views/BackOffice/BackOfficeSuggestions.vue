@@ -106,18 +106,18 @@
                   <td>
                     <button
                       type="button"
-                      class="btn btn-primary table"
+                      class="btn btn-primary table text-center"
                       @click="acceptSuggestion(suggestion.id)"
                     >
                       <i
                         class="fas fa-check"
-                        style="font-size: 34px; color: #32CD32	;"
+                        style="font-size: 30px; color: #32CD32	;"
                       ></i>
                     </button>
                   </td>
                   <td>
                     <button
-                      class="btn btn-primary table"
+                      class="btn btn-primary table text-center"
                       @click="refuseSuggestion(suggestion.id)"
                     >
                       <i
@@ -149,7 +149,7 @@
                           suggestion.content.slice(1)
                       }}
                     </div>
-                    <div v-else>
+                    <div class="text-center" v-else>
                       -----
                     </div>
                   </td>
@@ -159,13 +159,13 @@
                         suggestion.status.slice(1)
                     }}
                   </td>
-                  <td>
+                  <td class="text-center">
                     <i
                       class="fas fa-check"
-                      style="font-size: 34px; color: rgba(32, 37, 43, 0.4);"
+                      style="font-size: 30px; color: rgba(32, 37, 43, 0.4);"
                     ></i>
                   </td>
-                  <td>
+                  <td class="text-center">
                     <i
                       class="fa fa-times"
                       style="font-size: 34px; color: rgba(32, 37, 43, 0.4);"

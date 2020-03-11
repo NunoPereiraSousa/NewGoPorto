@@ -229,7 +229,10 @@
                       v-model="form.password"
                     />
                   </div>
-                  <button type="submit" class="btn btn-primary w-75 submitForm">
+                  <button
+                    type="submit"
+                    class="btn btn-primary w-100 submitForm"
+                  >
                     Submit
                   </button>
                 </form>
@@ -333,7 +336,10 @@
                       v-model="form.password"
                     />
                   </div>
-                  <button type="submit" class="btn btn-primary w-75 submitForm">
+                  <button
+                    type="submit"
+                    class="btn btn-primary w-100 submitForm"
+                  >
                     Submit
                   </button>
                 </form>
@@ -801,25 +807,24 @@ button.btnIcons {
   width: 100vw;
 }
 
-.form-control {
-  border: 0;
-  border-bottom: 1.5px solid #5085a5;
+form {
+  max-height: 50vh;
+  overflow-y: scroll;
+  border: none;
+  border-radius: 4px;
+  color: #363636;
   box-shadow: none !important;
-  color: #5085a5;
-  background: transparent;
-  font-family: "Geared Slab";
-  font-size: 1.4em;
-  select {
-    color: #20252b;
-    option {
-      background: #f0f0f0 !important;
-      color: #5085a5;
-      text-transform: capitalize;
-    }
+  padding-right: 1em;
+  .form-group {
+    padding-top: 0.5rem;
   }
-  input:focus {
-    border: 1px solid #5085a5 !important;
-    font-family: "Muli";
+
+  input {
+    &:focus {
+      border: 1px solid #5085a5 !important;
+      font-family: "Muli";
+      box-shadow: none !important;
+    }
   }
 }
 

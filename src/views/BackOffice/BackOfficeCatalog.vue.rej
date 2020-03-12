@@ -1,0 +1,115 @@
+diff a/src/views/BackOffice/BackOfficeCatalog.vue b/src/views/BackOffice/BackOfficeCatalog.vue	(rejected hunks)
+@@ -8,2 +8,7 @@
+-          <i style="font-size: 44px; color: #5085a5;" class="fa fa-user pt-xl-5"></i>
+-          <h4 class="text-center pb-4 pt-5 mx-auto w-75">{{ getIdentities.length }} Places</h4>
++          <i
++            style="font-size: 44px; color: #5085a5;"
++            class="fa fa-user pt-xl-5"
++          ></i>
++          <h4 class="text-center pb-4 pt-5 mx-auto w-75">
++            {{ getIdentities.length }} Places
++          </h4>
+@@ -12,2 +17,7 @@
+-          <i style="font-size: 44px; color: #5085a5;" class="fa fa-user pt-xl-5"></i>
+-          <h4 class="text-center pb-4 pt-5 mx-auto w-75">{{ getCategories.length }} Categories</h4>
++          <i
++            style="font-size: 44px; color: #5085a5;"
++            class="fa fa-user pt-xl-5"
++          ></i>
++          <h4 class="text-center pb-4 pt-5 mx-auto w-75">
++            {{ getCategories.length }} Categories
++          </h4>
+@@ -30 +40,2 @@
+-              >{{ category.name }}</option>
++                >{{ category.name }}</option
++              >
+@@ -47 +58,3 @@
+-            >Order By By A - Z</button>
++            >
++              Order By By A - Z
++            </button>
+@@ -51 +64,5 @@
+-          <div class="col-4" v-for="identity in filterByCategory" :key="identity.id">
++          <div
++            class="col-4"
++            v-for="identity in filterByCategory"
++            :key="identity.id"
++          >
+@@ -55,2 +72,7 @@
+-                <p class="lead pt-3 pb-4 text-center font-italic">{{ identity.category }}</p>
+-                <div class="pt-2 d-flex justify-content-around" style="border-top: 2px solid #fff">
++                <p class="lead pt-3 pb-4 text-center font-italic">
++                  {{ identity.category }}
++                </p>
++                <div
++                  class="pt-2 d-flex justify-content-around"
++                  style="border-top: 2px solid #fff"
++                >
+@@ -64 +86,4 @@
+-                    <i class="fa fa-wrench" style="font-size: 30px; color: rgba(32, 37, 43, 0.4);"></i>
++                    <i
++                      class="fa fa-wrench"
++                      style="font-size: 30px; color: rgba(32, 37, 43, 0.4);"
++                    ></i>
+@@ -70 +95,4 @@
+-                    <i class="fa fa-times" style="font-size: 34px; color: rgba(32, 37, 43, 0.4);"></i>
++                    <i
++                      class="fa fa-times"
++                      style="font-size: 34px; color: rgba(32, 37, 43, 0.4);"
++                    ></i>
+@@ -147 +175,6 @@
+-                <input type="text" class="form-control" placeholder="Name" v-model="form.name" />
++                <input
++                  type="text"
++                  class="form-control"
++                  placeholder="Name"
++                  v-model="form.name"
++                />
+@@ -156 +189,2 @@
+-                  >{{ category.name }}</option>
++                    >{{ category.name }}</option
++                  >
+@@ -168 +202,6 @@
+-                <input type="url" class="form-control" placeholder="Image" v-model="form.image" />
++                <input
++                  type="url"
++                  class="form-control"
++                  placeholder="Image"
++                  v-model="form.image"
++                />
+@@ -188 +227,6 @@
+-                <input type="number" class="form-control" placeholder="latitude" v-model="form.lat" />
++                <input
++                  type="number"
++                  class="form-control"
++                  placeholder="latitude"
++                  v-model="form.lat"
++                />
+@@ -230 +274,6 @@
+-                <input type="text" class="form-control" placeholder="Name" v-model="form.name" />
++                <input
++                  type="text"
++                  class="form-control"
++                  placeholder="Name"
++                  v-model="form.name"
++                />
+@@ -249 +298,6 @@
+-                <input type="url" class="form-control" placeholder="Image" v-model="form.image" />
++                <input
++                  type="url"
++                  class="form-control"
++                  placeholder="Image"
++                  v-model="form.image"
++                />
+@@ -269 +323,6 @@
+-                <input type="number" class="form-control" placeholder="latitude" v-model="form.lat" />
++                <input
++                  type="number"
++                  class="form-control"
++                  placeholder="latitude"
++                  v-model="form.lat"
++                />
+@@ -356 +415,2 @@
+-                  >{{ category.name }}</option>
++                    >{{ category.name }}</option
++                  >

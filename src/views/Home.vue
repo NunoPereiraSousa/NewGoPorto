@@ -45,14 +45,14 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Know More About</span>
+            <span>Know More About </span>
             <span>Porto</span>
           </h2>
         </div>
       </div>
       <div class="row cards">
         <div
-          class="col-lg-3 col-md-6 col-12 mt-lg-0 mt-4"
+          class="col-lg-3 col-md-6 col-12 mt-lg-2 mt-4"
           v-for="category in myCategories"
           :key="category.id"
         >
@@ -71,7 +71,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Most Followed</span>
+            <span>Most Followed </span>
             <span>Itineraries</span>
           </h2>
         </div>

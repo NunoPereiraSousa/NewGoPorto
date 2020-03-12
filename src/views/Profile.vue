@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser.username }}</span>
+            <span>{{ loggedUser.username }} </span>
             <span>Bio</span>
           </h2>
         </div>
@@ -91,7 +91,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser.username }}</span>
+            <span>{{ loggedUser.username }} </span>
             <span>Shares</span>
           </h2>
         </div>
@@ -145,7 +145,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Suggest</span>
+            <span>Suggest </span>
             <span>Places</span>
           </h2>
         </div>
@@ -199,6 +199,7 @@
               <div class="form-group">
                 <select
                   class="form-control"
+                  style="box-shadow: none !important;"
                   id="exampleFormControlSelect1"
                   v-model="form.category"
                 >
@@ -229,6 +230,7 @@
               </div>
               <div class="form-group">
                 <textarea
+                  style="box-shadow: none !important;"
                   class="form-control"
                   id="exampleFormControlTextarea1"
                   placeholder="Information"
@@ -747,6 +749,43 @@ h2 {
         &:hover {
           background-color: #363636 !important;
         }
+      }
+    }
+  }
+}
+.modal-content {
+  background-color: #ebecec;
+  border-radius: 4px;
+  h5 {
+    font-family: "Geared Slab";
+    font-size: 1.6em;
+    color: #20252b;
+  }
+  form {
+    max-height: 50vh;
+    overflow-y: scroll;
+    border: none;
+    border-radius: 4px;
+    color: #363636;
+    box-shadow: none !important;
+    padding-right: 1em;
+    .form-group {
+      padding-top: 0.5rem;
+    }
+
+    input {
+      &:focus {
+        border: 1px solid #5085a5 !important;
+        font-family: "Muli";
+        box-shadow: none !important;
+      }
+    }
+    option {
+      box-shadow: none !important;
+      background-color: #fefefa !important;
+      color: #363636;
+      &:hover {
+        background-color: #363636 !important;
       }
     }
   }

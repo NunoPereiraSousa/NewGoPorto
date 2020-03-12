@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Trip </span>
+            <span>Trip</span>
             <span>Details</span>
           </h2>
         </div>
@@ -135,7 +135,7 @@
                   <div class="input-group-prepend">
                     <div class="input-group-text">
                       <i
-                        class="fas fa-utensils pr-1 d-inline-block "
+                        class="fas fa-utensils pr-1 d-inline-block"
                         style="font-size: 1.5em;"
                         for="inputGroupSelect01"
                       ></i>
@@ -146,9 +146,7 @@
                     id="inputGroupSelect01"
                     v-model="form.food"
                   >
-                    <option value="" selected
-                      >Do you want to stop to eat?</option
-                    >
+                    <option value selected>Do you want to stop to eat?</option>
                     <option value="yes">Of Course!</option>
                     <option value="no">No, thank you!</option>
                   </select>
@@ -171,7 +169,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Choose </span>
+            <span>Choose</span>
             <span>Places to Visit</span>
           </h2>
         </div>
@@ -188,124 +186,25 @@
         </div>
         <div class="col-9">
           <ul class="list-unstyled list-inline d-flex justify-content-between">
-            <li class="list-inline-item">
+            <li
+              class="list-inline-item"
+              v-for="category in categories"
+              :key="category.id"
+            >
               <a
-                v-if="selectedCategory != 'Beach'"
+                v-if="selectedCategory != `${category.name}`"
+                href="#"
                 class="btn-floating active btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Beach')"
-                >Beach</a
+                @click="setCategory(category.name)"
+                >{{ category.name }}</a
               >
               <a
                 v-else
                 id="painted"
+                href="#"
                 class="btn-floating active btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Beach')"
-                >Beach</a
-              >
-            </li>
-            <li class="list-inline-item">
-              <a
-                v-if="selectedCategory != 'Bridges'"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Bridges')"
-                >Bridges</a
-              >
-              <a
-                v-else
-                id="painted"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Bridges')"
-                >Bridges</a
-              >
-            </li>
-            <li class="list-inline-item">
-              <a
-                v-if="selectedCategory != 'Gastronomy'"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Gastronomy')"
-                >Gastronomy</a
-              >
-              <a
-                v-else
-                id="painted"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Gastronomy')"
-                >Gastronomy</a
-              >
-            </li>
-            <li class="list-inline-item">
-              <a
-                v-if="selectedCategory != 'Monuments'"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Monuments')"
-                >Monuments</a
-              >
-              <a
-                v-else
-                id="painted"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Monuments')"
-                >Monuments</a
-              >
-            </li>
-            <li class="list-inline-item">
-              <a
-                v-if="selectedCategory != 'Rivers'"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Rivers')"
-                >Rivers</a
-              >
-              <a
-                v-else
-                id="painted"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Rivers')"
-                >Rivers</a
-              >
-            </li>
-            <li class="list-inline-item">
-              <a
-                v-if="selectedCategory != 'Sports'"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Sports')"
-                >Sports</a
-              >
-              <a
-                v-else
-                id="painted"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Sports')"
-                >Sports</a
-              >
-            </li>
-            <li class="list-inline-item">
-              <a
-                v-if="selectedCategory != 'Streets'"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Streets')"
-                >Streets</a
-              >
-              <a
-                v-else
-                id="painted"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Streets')"
-                >Streets</a
-              >
-            </li>
-            <li class="list-inline-item">
-              <a
-                v-if="selectedCategory != 'Wine'"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Wine')"
-                >Wine</a
-              >
-              <a
-                v-else
-                id="painted"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Wine')"
-                >Wine</a
+                @click="setCategory(category.name)"
+                >{{ category.name }}</a
               >
             </li>
           </ul>
@@ -340,7 +239,7 @@
             class="btn btn-primary mt-5"
             @click="addItinerary()"
           >
-            <span class="btn-label"> Generate Trip</span>
+            <span class="btn-label">Generate Trip</span>
           </button>
         </div>
       </div>
@@ -360,7 +259,8 @@ export default {
   data: function() {
     return {
       letToDosOutput: "",
-      myCategories: [],
+      myCategories: [], //* this category is important to do some effects an organizations please be carfull when changing it
+      categories: [],
       itineraries: [],
       identities: [],
       selectedCategory: "Monuments",
@@ -382,6 +282,7 @@ export default {
     this.itineraries = this.getItineraries;
     this.identities = this.getIdentities;
     this.loggedUser = this.getLoggedUser;
+    this.categories = this.getCategories;
   },
   computed: {
     ...mapGetters({
@@ -389,7 +290,8 @@ export default {
       getItineraries: "getItineraries",
       getIdentities: "getIdentities",
       getIdentityByIds: "getIdentityByIds",
-      getLoggedUser: "getLoggedUser"
+      getLoggedUser: "getLoggedUser",
+      getCategories: "getCategories"
     }),
 
     filterCatalog() {

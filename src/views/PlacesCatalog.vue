@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Places </span>
+            <span>Places</span>
             <span>Catalog</span>
           </h2>
         </div>
@@ -12,140 +12,25 @@
       <div class="row">
         <div class="col-12">
           <ul class="list-unstyled list-inline d-flex justify-content-between">
-            <li class="list-inline-item">
+            <li
+              class="list-inline-item"
+              v-for="category in myCategories"
+              :key="category.id"
+            >
               <a
-                v-if="selectedCategory != 'Beach'"
+                v-if="selectedCategory != `${category.name}`"
                 href="#"
                 class="btn-floating active btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Beach')"
-                >Beach</a
+                @click="setCategory(category.name)"
+                >{{ category.name }}</a
               >
               <a
                 v-else
                 id="painted"
                 href="#"
                 class="btn-floating active btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Beach')"
-                >Beach</a
-              >
-            </li>
-            <li class="list-inline-item">
-              <a
-                v-if="selectedCategory != 'Bridges'"
-                href="#"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Bridges')"
-                >Bridges</a
-              >
-              <a
-                v-else
-                id="painted"
-                href="#"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Bridges')"
-                >Bridges</a
-              >
-            </li>
-            <li class="list-inline-item">
-              <a
-                v-if="selectedCategory != 'Gastronomy'"
-                href="#"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Gastronomy')"
-                >Gastronomy</a
-              >
-              <a
-                v-else
-                id="painted"
-                href="#"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Gastronomy')"
-                >Gastronomy</a
-              >
-            </li>
-            <li class="list-inline-item">
-              <a
-                v-if="selectedCategory != 'Monuments'"
-                href="#"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Monuments')"
-                >Monuments</a
-              >
-              <a
-                v-else
-                id="painted"
-                href="#"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Monuments')"
-                >Monuments</a
-              >
-            </li>
-            <li class="list-inline-item">
-              <a
-                v-if="selectedCategory != 'Rivers'"
-                href="#"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Rivers')"
-                >Rivers</a
-              >
-              <a
-                v-else
-                id="painted"
-                href="#"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Rivers')"
-                >Rivers</a
-              >
-            </li>
-            <li class="list-inline-item">
-              <a
-                v-if="selectedCategory != 'Sports'"
-                href="#"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Sports')"
-                >Sports</a
-              >
-              <a
-                v-else
-                id="painted"
-                href="#"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Sports')"
-                >Sports</a
-              >
-            </li>
-            <li class="list-inline-item">
-              <a
-                v-if="selectedCategory != 'Streets'"
-                href="#"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Streets')"
-                >Streets</a
-              >
-              <a
-                v-else
-                id="painted"
-                href="#"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Streets')"
-                >Streets</a
-              >
-            </li>
-            <li class="list-inline-item">
-              <a
-                v-if="selectedCategory != 'Wine'"
-                href="#"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Wine')"
-                >Wine</a
-              >
-              <a
-                v-else
-                id="painted"
-                href="#"
-                class="btn-floating btn-sm rgba-white-slight mx-1"
-                @click="setCategory('Wine')"
-                >Wine</a
+                @click="setCategory(category.name)"
+                >{{ category.name }}</a
               >
             </li>
           </ul>
@@ -182,7 +67,8 @@ export default {
     return {
       identities: [],
       identity: {},
-      selectedCategory: "Monuments"
+      selectedCategory: "Monuments",
+      myCategories: []
     };
   },
   created() {
@@ -196,6 +82,8 @@ export default {
     } else {
       this.setIdentitiesByCategory();
     }
+
+    this.myCategories = this.getCategories;
   },
   computed: {
     ...mapGetters({
@@ -203,7 +91,8 @@ export default {
       getIdentity: "getIdentity",
       getIdentityByIds: "getIdentityByIds",
       getIdentitiesByCategory: "getIdentitiesByCategory",
-      getIdentitiesSelectedCategory: "getIdentitiesSelectedCategory"
+      getIdentitiesSelectedCategory: "getIdentitiesSelectedCategory",
+      getCategories: "getCategories"
     })
   },
   methods: {

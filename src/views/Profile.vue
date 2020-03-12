@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser.username }} </span>
+            <span>{{ loggedUser.username }}</span>
             <span>Bio</span>
           </h2>
         </div>
@@ -17,7 +17,7 @@
             alt="ProfilePicture"
             data-toggle="modal"
             data-target="#profilePicChange"
-          /> -->
+          />-->
           <form @submit.prevent="editProfile()" class="pt-3">
             <div class="form-group">
               <div class="form-group col-12 pl-0 pb-3">
@@ -91,7 +91,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser.username }} </span>
+            <span>{{ loggedUser.username }}</span>
             <span>Shares</span>
           </h2>
         </div>
@@ -111,9 +111,9 @@
           </form>
           <div id="stories">
             <div v-for="publication in myPublications" :key="publication.id">
-              <div class=" d-flex justify-content-between align-items-center">
+              <div class="d-flex justify-content-between align-items-center">
                 <img :src="editForm.image" alt="person" />
-                <p class="">{{ publication.username }}</p>
+                <p class>{{ publication.username }}</p>
                 <p class="font-italic" style="font-size: 14px">
                   {{ publication.date }}
                 </p>
@@ -145,7 +145,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Suggest </span>
+            <span>Suggest</span>
             <span>Places</span>
           </h2>
         </div>
@@ -203,14 +203,12 @@
                   v-model="form.category"
                 >
                   <option value>Choose the Category</option>
-                  <option value="beach">Beach</option>
-                  <option value="bridge">Bridge</option>
-                  <option value="sports">Sports</option>
-                  <option value="gastronomy">Gastronomy</option>
-                  <option value="monuments">Monuments</option>
-                  <option value="rivers">Rivers</option>
-                  <option value="streets">Streets</option>
-                  <option value="wine">Wine</option>
+                  <option
+                    v-for="category in categories"
+                    :key="category.id"
+                    :value="category.name"
+                    >{{ category.name }}</option
+                  >
                 </select>
               </div>
               <div class="form-group">
@@ -318,7 +316,7 @@ export default {
         photo: "",
         content: ""
       },
-
+      categories: [],
       newPublication: "",
       myPublications: [],
       allPublications: [], //only usesd if needed
@@ -354,6 +352,8 @@ export default {
 
       this.myPublications = this.getPublicationByUser(this.loggedUser.id);
     }
+
+    this.categories = this.getCategories;
   },
   computed: {
     ...mapGetters({
@@ -366,7 +366,8 @@ export default {
       // todo
       getPublicationsLastId: "getPublicationsLastId",
       getPublications: "getPublications",
-      getPublicationByUser: "getPublicationByUser"
+      getPublicationByUser: "getPublicationByUser",
+      getCategories: "getCategories"
     })
   },
   methods: {

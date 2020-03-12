@@ -547,6 +547,27 @@ export default {
       this.$store.commit("SET_IDENTITY", {
         identities: this.identities
       });
+
+      this.itineraries = this.getItineraries;
+
+      // alert(this.getItineraries.length);
+
+      // *Delete in the itineraries the identities that have been already delected based on the id
+      for (const itinerarie of this.itineraries) {
+        itinerarie.Visitelocations = itinerarie.Visitelocations.filter(
+          location => location.id !== id
+        );
+      }
+
+      // * Delete itineraries with no places to visite
+      this.itineraries = this.itineraries.filter(
+        itinerary => itinerary.Visitelocations.length !== 0
+      );
+
+      this.$store.commit("SET_ITINERARIES", {
+        itineraries: this.itineraries
+      });
+
       this.$snotify.success("Removed successfully", "Done", {
         timeout: 2000,
         showProgressBar: false,
@@ -661,7 +682,7 @@ export default {
 
       this.itineraries = this.getItineraries;
 
-      alert(this.getItineraries.length);
+      // alert(this.getItineraries.length);
 
       // *Delete in the itineraries the identities that have been already delected
       for (const itinerarie of this.itineraries) {

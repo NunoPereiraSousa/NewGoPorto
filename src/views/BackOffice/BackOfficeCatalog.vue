@@ -439,6 +439,7 @@ export default {
     return {
       identities: [],
       categories: [],
+      itineraries: [],
       form: {
         name: "",
         information: "",
@@ -476,7 +477,8 @@ export default {
       "getIdentityById",
       "getCategories",
       "getCategoryByName",
-      "getCategoriesLastId"
+      "getCategoriesLastId",
+      "getItineraries"
     ]),
     filterByCategory() {
       return this.identities.filter(identity => {
@@ -644,6 +646,28 @@ export default {
       });
 
       this.identities = this.getIdentities;
+
+      this.itineraries = this.getItineraries;
+
+      alert(this.getItineraries.length);
+
+      // *Delete in the itineraries the identities that have been already delected
+      for (const itinerarie of this.itineraries) {
+        itinerarie.Visitelocations = itinerarie.Visitelocations.filter(
+          location => location.category !== this.form.category
+        );
+      }
+
+      // * Delete itineraries with no places to visite
+      this.itineraries = this.itineraries.filter(
+        itinerary => itinerary.Visitelocations.length !== 0
+      );
+
+      this.$store.commit("SET_ITINERARIES", {
+        itineraries: this.itineraries
+      });
+
+      // SET_ITINERARIES;
 
       // todo (ideia de ultima hora)
       //*eliminar nos itinerarios entidades que ja foram eliminadas durante o processo

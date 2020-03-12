@@ -643,7 +643,7 @@ export default {
         identities: this.identitiesController
       });
 
-      this.identities = this.identities;
+      this.identities = this.getIdentities;
 
       // todo (ideia de ultima hora)
       //*eliminar nos itinerarios entidades que ja foram eliminadas durante o processo

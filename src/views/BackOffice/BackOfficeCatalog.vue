@@ -68,9 +68,7 @@
           >
             <div class="card" style="width: 18rem;">
               <div class="card-body">
-                <h5 class="card-title text-center">
-                  {{ identity.name }}
-                </h5>
+                <h5 class="card-title text-center">{{ identity.name }}</h5>
                 <p class="lead pt-3 pb-4 text-center font-italic">
                   {{ identity.category }}
                 </p>
@@ -133,6 +131,21 @@
               </button>
             </div>
           </div>
+
+          <div class="col-lg-6">
+            <div class="pb-lg-5 pb-5">
+              <button
+                type="button"
+                class="btn btn-primary w-50 border"
+                id="removeCategory"
+                data-toggle="modal"
+                data-target="#removeCategoryModal"
+              >
+                <span></span>
+                Remove Category
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -168,7 +181,7 @@
               </div>
               <div class="form-group pb-3">
                 <select class="form-control" v-model="form.category">
-                  <option value="">Choose the identity category</option>
+                  <option value>Choose the identity category</option>
                   <option
                     v-for="category in categories"
                     :key="category.id"
@@ -207,6 +220,24 @@
                   class="form-control"
                   placeholder="Kids Allowed?"
                   v-model="form.kids_allowed"
+                />
+              </div>
+
+              <div class="form-group pb-3">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="latitude"
+                  v-model="form.lat"
+                />
+              </div>
+
+              <div class="form-group pb-3">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="longitude"
+                  v-model="form.lng"
                 />
               </div>
               <SubmitModalForm />
@@ -287,6 +318,24 @@
                   v-model="form.kids_allowed"
                 />
               </div>
+
+              <div class="form-group pb-3">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="latitude"
+                  v-model="form.lat"
+                />
+              </div>
+
+              <div class="form-group pb-3">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="longitude"
+                  v-model="form.lng"
+                />
+              </div>
               <SubmitModalForm />
             </form>
           </div>
@@ -332,6 +381,49 @@
       </div>
     </div>
     <!-- Add Category Modal -->
+
+    <!-- Remove Catgory modal -->
+
+    <div
+      class="modal fade"
+      id="removeCategoryModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h5 class="pb-4 pt-1 mx-auto d-inline-block">Remove Category</h5>
+            <button
+              type="button"
+              class="close d-inline-block"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <form class="pb-4 w-75 mx-auto" @submit.prevent="removeCategory()">
+              <div class="form-group">
+                <select class="form-control" v-model="form.category">
+                  <option value>Choose the identity category</option>
+                  <option
+                    v-for="category in categories"
+                    :key="category.id"
+                    :value="category.name"
+                    >{{ category.name }}</option
+                  >
+                </select>
+              </div>
+              <SubmitModalForm />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Remove Catgory modal -->
   </div>
 </template>
 
@@ -354,14 +446,18 @@ export default {
         image: "",
         webite_link: "",
         kids_allowed: "",
-        editId: 0
+        editId: 0,
+        rating: 0,
+        lat: 0,
+        lng: 0
       },
       categoryForm: {
         id: "",
         categoryName: ""
       },
       filterCategories: "all",
-      search: ""
+      search: "",
+      identitiesController: ""
     };
   },
   created() {
@@ -411,7 +507,10 @@ export default {
           category: this.form.category,
           image: this.form.image,
           webite_link: this.form.webite_link,
-          kids_allowed: this.form.kids_allowed
+          kids_allowed: this.form.kids_allowed,
+          rating: this.rating,
+          lat: this.lat,
+          lng: this.lng
         });
         this.$snotify.success("Added successfully", "Done", {
           timeout: 2000,
@@ -459,6 +558,8 @@ export default {
       this.form.image = identity.image;
       this.form.webite_link = identity.webite_link;
       this.form.kids_allowed = identity.kids_allowed;
+      this.form.lat = identity.lat;
+      this.form.lng = identity.lng;
     },
     updateIdentity() {
       this.identities[
@@ -479,6 +580,14 @@ export default {
       this.identities[
         this.getIdentityById(this.form.editId)
       ].kids_allowed = this.form.kids_allowed;
+
+      this.identities[
+        this.getIdentityById(this.form.editId)
+      ].lat = this.form.lat;
+
+      this.identities[
+        this.getIdentityById(this.form.editId)
+      ].lng = this.form.lng;
 
       this.$store.commit("SET_IDENTITY", {
         identities: this.identities
@@ -507,6 +616,37 @@ export default {
           pauseOnHover: true
         });
       }
+
+      // todo (ideia de ultima hora)
+      // *Fazer com que as categorias adicionadas afectam areas na plataforma
+    },
+
+    removeCategory() {
+      this.categories = this.getCategories;
+
+      this.categories = this.categories.filter(
+        category => category.name !== this.form.category
+      );
+
+      this.$store.commit("SET_CATEGORIES", {
+        categories: this.categories
+      });
+      this.categories = this.getCategories;
+
+      this.identitiesController = this.getIdentities;
+
+      this.identitiesController = this.identitiesController.filter(
+        identity => identity.category !== this.form.category
+      );
+
+      this.$store.commit("SET_IDENTITY", {
+        identities: this.identitiesController
+      });
+
+      this.identities = this.identities;
+
+      // todo (ideia de ultima hora)
+      //*eliminar nos itinerarios entidades que ja foram eliminadas durante o processo
     },
     compareCategory(a, b) {
       if (a.category.toLowerCase() < b.category.toLowerCase()) return -1;
@@ -694,6 +834,7 @@ export default {
     color: #ffc20f;
   }
   #addIdentity,
+  #removeCategory,
   #addCategory {
     margin-top: 3%;
     cursor: pointer;

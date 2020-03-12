@@ -323,6 +323,14 @@ export default new Vuex.Store({
       return 1;
     },
 
+    // getCategoryByName: state => name => {
+    //   return state.categories.find(
+    //     category => category.name.toLowerCase() === name.toLowerCase()
+    //   );
+    // },
+
+    // * Categories Getters>
+
     getEmails: state => {
       return state.emails;
     },

@@ -372,6 +372,16 @@
                   class="form-control"
                   placeholder="New Category Name"
                   v-model="categoryForm.categoryName"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="url"
+                  class="form-control"
+                  placeholder="Image"
+                  v-model="form.img"
+                  required
                 />
               </div>
               <SubmitModalForm />
@@ -441,6 +451,7 @@ export default {
       categories: [],
       itineraries: [],
       form: {
+        img: "", //* related to the category
         name: "",
         information: "",
         category: "",
@@ -606,7 +617,8 @@ export default {
         this.categoryForm.id = this.getCategoriesLastId;
         this.$store.commit("NEW_CATEGORY", {
           id: this.categoryForm.id,
-          name: this.categoryForm.categoryName
+          name: this.categoryForm.categoryName,
+          img: this.form.img
         });
         this.clearCategoryForm();
       } else {

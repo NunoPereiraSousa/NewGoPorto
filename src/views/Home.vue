@@ -18,15 +18,11 @@
             <router-link
               :to="{ name: 'create-trip' }"
               class="btn btn-primary mt-3"
-              ><i
-                class="fas fa-chevron-right pr-4"
-                style="font-size: 0.8em;"
-              ></i
-              >Plan Now<i
-                class="fas fa-chevron-left pl-4"
-                style="font-size: 0.8em;"
-              ></i
-            ></router-link>
+            >
+              <i class="fas fa-chevron-right pr-4" style="font-size: 0.8em;"></i
+              >Plan Now
+              <i class="fas fa-chevron-left pl-4" style="font-size: 0.8em;"></i>
+            </router-link>
           </div>
         </div>
         <div class="position-absolute">
@@ -49,7 +45,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Know More About </span>
+            <span>Know More About</span>
             <span>Porto</span>
           </h2>
         </div>
@@ -57,83 +53,16 @@
       <div class="row cards">
         <div
           class="col-lg-3 col-md-6 col-12 mt-lg-0 mt-4"
-          @click="setCatalogCategory('Beach')"
+          v-for="category in myCategories"
+          :key="category.id"
         >
-          <CategoryCard
-            image="assets\CategoyCards/beach.jpg"
-            title="Beaches"
-            class="text-center"
-          />
-        </div>
-        <div
-          class="col-lg-3 col-md-6 col-12 mt-lg-0 mt-4"
-          @click="setCatalogCategory('Bridges')"
-        >
-          <CategoryCard
-            image="assets\CategoyCards/bridge.jpg"
-            title="Bridges"
-            class="text-center"
-          />
-        </div>
-        <div
-          class="col-lg-3 col-md-6 col-12 mt-lg-0 mt-4"
-          @click="setCatalogCategory('Sports')"
-        >
-          <CategoryCard
-            image="assets\CategoyCards/football.jpg"
-            title="Sports"
-            class="text-center"
-          />
-        </div>
-        <div
-          class="col-lg-3 col-md-6 col-12 mt-lg-0 mt-4"
-          @click="setCatalogCategory('Gastronomy')"
-        >
-          <CategoryCard
-            image="assets\CategoyCards/gastronomy.jpg"
-            title="Gastronomy"
-            class="text-center"
-          />
-        </div>
-        <div
-          class="col-lg-3 col-md-6 col-12 mt-4"
-          @click="setCatalogCategory('Monuments')"
-        >
-          <CategoryCard
-            image="assets\CategoyCards/monuments.jpg"
-            title="Monuments"
-            class="text-center"
-          />
-        </div>
-        <div
-          class="col-lg-3 col-md-6 col-12 mt-4"
-          @click="setCatalogCategory('Rivers')"
-        >
-          <CategoryCard
-            image="assets\CategoyCards/river.jpg"
-            title="Rivers"
-            class="text-center"
-          />
-        </div>
-        <div
-          class="col-lg-3 col-md-6 col-12 mt-4"
-          @click="setCatalogCategory('Streets')"
-        >
-          <CategoryCard
-            image="assets\CategoyCards/street.jpg"
-            title="Streets"
-            class="text-center"
-          />
-        </div>
-        <div
-          class="col-lg-3 col-md-6 col-12 mt-4"
-          @click="setCatalogCategory('Wine')"
-        >
-          <CategoryCard
-            image="assets\CategoyCards/wine.jpg"
-            title="Wine"
-            class="text-center"
-          />
+          <div @click="setCatalogCategory(category.name)">
+            <CategoryCard
+              :image="category.img"
+              :title="category.name"
+              class="text-center"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -142,7 +71,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Most Followed </span>
+            <span>Most Followed</span>
             <span>Itineraries</span>
           </h2>
         </div>
@@ -188,7 +117,8 @@ export default {
   computed: {
     ...mapGetters({
       getItineraryById: "getItineraryById",
-      getItineraries: "getItineraries"
+      getItineraries: "getItineraries",
+      getCategories: "getCategories"
     })
   },
   created() {
@@ -212,6 +142,8 @@ export default {
         this.famouseItinerary.push(this.itineraies[i]);
       }
     }
+
+    this.myCategories = this.getCategories;
   },
   methods: {
     setCatalogCategory(selectedCategory) {

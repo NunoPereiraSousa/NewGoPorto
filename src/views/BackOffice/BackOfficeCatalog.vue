@@ -103,11 +103,11 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-6">
+          <div class="col-lg-4">
             <div class="pb-lg-5 pb-5">
               <button
                 type="button"
-                class="btn btn-primary w-50 border"
+                class="btn btn-primary w-75 border"
                 id="addIdentity"
                 data-toggle="modal"
                 data-target="#addIdentityModal"
@@ -117,11 +117,11 @@
               </button>
             </div>
           </div>
-          <div class="col-lg-6">
+          <div class="col-lg-4">
             <div class="pb-lg-5 pb-5">
               <button
                 type="button"
-                class="btn btn-primary w-50 border"
+                class="btn btn-primary w-75 border"
                 id="addCategory"
                 data-toggle="modal"
                 data-target="#addCategoryModal"
@@ -132,11 +132,11 @@
             </div>
           </div>
 
-          <div class="col-lg-6">
+          <div class="col-lg-4">
             <div class="pb-lg-5 pb-5">
               <button
                 type="button"
-                class="btn btn-primary w-50 border"
+                class="btn btn-primary w-75 border"
                 id="removeCategory"
                 data-toggle="modal"
                 data-target="#removeCategoryModal"

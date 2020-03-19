@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser.username }} </span>
+            <span>{{ loggedUser.username }}</span>
             <span>Bio</span>
           </h2>
         </div>
@@ -91,7 +91,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser.username }} </span>
+            <span>{{ loggedUser.username }}</span>
             <span>Shares</span>
           </h2>
         </div>
@@ -145,7 +145,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Suggest </span>
+            <span>Suggest</span>
             <span>Places</span>
           </h2>
         </div>
@@ -323,6 +323,8 @@ export default {
       myPublications: [],
       allPublications: [], //only usesd if needed
 
+      permition: true,
+
       editForm: {
         id: "",
         name: "",
@@ -364,6 +366,9 @@ export default {
       getSuggestionByName: "getSuggestionByName",
       getUsers: "getUsers",
       getLoggedUser: "getLoggedUser",
+
+      // *Email Edition confirm
+      getUserByInput: "getUserByInput",
 
       // todo
       getPublicationsLastId: "getPublicationsLastId",
@@ -425,44 +430,49 @@ export default {
       // alert(this.editForm.image); THIS ALERT RETURNS THE EXACTLY SRC OF THE USER IMAGE !!!!
     },
     editProfile() {
-      alert("here");
-      this.editForm.id = this.loggedUser.id;
-      this.loggedUser.name = this.editForm.name;
-      this.loggedUser.location = this.editForm.location;
-      this.loggedUser.birth = this.editForm.birth;
-      this.loggedUser.email = this.editForm.email;
-      this.loggedUser.photo = this.editForm.image;
-      // alert(this.loggedUser.photo);
+      this.confirmEmailTaken();
 
-      this.users[this.loggedUser.id - 1].id = this.editForm.id;
-      this.users[this.loggedUser.id - 1].name = this.editForm.name;
-      this.users[this.loggedUser.id - 1].birth = this.editForm.birth;
-      this.users[this.loggedUser.id - 1].email = this.editForm.email;
-      this.users[this.loggedUser.id - 1].photo = this.editForm.image;
+      if (this.permition == false) {
+        alert("Email Already Taken");
+      } else {
+        this.editForm.id = this.loggedUser.id;
+        this.loggedUser.name = this.editForm.name;
+        this.loggedUser.location = this.editForm.location;
+        this.loggedUser.birth = this.editForm.birth;
+        this.loggedUser.email = this.editForm.email;
+        this.loggedUser.photo = this.editForm.image;
+        // alert(this.loggedUser.photo);
 
-      this.$store.commit("SET_USERS", {
-        users: this.users
-      });
+        this.users[this.loggedUser.id - 1].id = this.editForm.id;
+        this.users[this.loggedUser.id - 1].name = this.editForm.name;
+        this.users[this.loggedUser.id - 1].birth = this.editForm.birth;
+        this.users[this.loggedUser.id - 1].email = this.editForm.email;
+        this.users[this.loggedUser.id - 1].photo = this.editForm.image;
 
-      this.$store.commit("SET_LOGGED_USER", this.loggedUser);
+        this.$store.commit("SET_USERS", {
+          users: this.users
+        });
 
-      if (JSON.parse(localStorage.getItem("comments"))) {
-        this.$store.commit("SET_COMMENTS", {
-          comments: JSON.parse(localStorage.getItem("comments"))
+        this.$store.commit("SET_LOGGED_USER", this.loggedUser);
+
+        if (JSON.parse(localStorage.getItem("comments"))) {
+          this.$store.commit("SET_COMMENTS", {
+            comments: JSON.parse(localStorage.getItem("comments"))
+          });
+        }
+
+        this.$store.commit("CHANGE_COMMENT_PHOTO_BY_USER", {
+          id: this.loggedUser.id,
+          photo: this.loggedUser.photo
+        });
+
+        this.$snotify.success("changes saved successfully", "Done", {
+          timeout: 2000,
+          showProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true
         });
       }
-
-      this.$store.commit("CHANGE_COMMENT_PHOTO_BY_USER", {
-        id: this.loggedUser.id,
-        photo: this.loggedUser.photo
-      });
-
-      this.$snotify.success("changes saved successfully", "Done", {
-        timeout: 2000,
-        showProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true
-      });
     },
     onFileChange(e) {
       let files = e.target.files || e.dataTransfer.files;
@@ -556,6 +566,17 @@ export default {
       });
 
       this.myPublications = this.getPublicationByUser(this.loggedUser.id);
+    },
+
+    confirmEmailTaken() {
+      this.permition = true;
+      if (this.getUserByInput(this.editForm.email)) {
+        let user = this.getUserByInput(this.editForm.email);
+
+        if (user.id !== this.getLoggedUser.id) {
+          this.permition = false;
+        }
+      }
     }
   }
 };

@@ -173,7 +173,8 @@
           </div>
           <div class="modal-footer d-flex justify-content-center">
             <button type="submit" class="btn btn-primary" @click="signUpForm()">
-              I Agree <i class="far fa-arrow-alt-circle-right pl-2"></i>
+              I Agree
+              <i class="far fa-arrow-alt-circle-right pl-2"></i>
             </button>
           </div>
         </div>
@@ -226,12 +227,14 @@ export default {
             this.$store.commit("NEW_USER", {
               id: this.id,
               name: this.name,
-              surname: this.surname,
+              // surname: this.surname,
               username: this.username,
               email: this.email,
-              age: this.age,
-              id_nationality: this.id_nationality,
-              description: this.description,
+              // age: this.age,
+              // id_nationality: this.id_nationality,
+              location: this.location,
+              birth: "",
+              // description: this.description,
               photo: this.photo,
               id_user_type: this.id_user_type,
               blocked: this.blocked,

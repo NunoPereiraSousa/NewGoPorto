@@ -72,67 +72,103 @@ export default {
     this.setStorage();
   },
   methods: {
-    signInForm() {
-      if ((this.emailOrUsername, this.password)) {
-        if (this.$store.getters.getUserByInput(this.emailOrUsername)) {
-          if (
-            !this.$store.getters.getUserByPasswordInput(
-              this.emailOrUsername,
-              this.password
-            )
-          ) {
-            this.$snotify.warning(
-              "The email, username or password is incorret",
-              "Oh...",
-              {
-                timeout: 2000,
-                showProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true
-              }
-            );
-          } else {
-            this.loggedUser = this.$store.getters.getUserByInput(
-              this.emailOrUsername
-            );
+    async signInForm() {
+      //! this.$store.commit("SET_LOGGED_USER", this.loggedUser);
 
-            if (this.loggedUser.blocked) {
-              this.$snotify.error("Your account is blocked", "Oh...", {
-                timeout: 2000,
-                showProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true
-              });
-            } else {
-              this.$store.commit("SET_LOGGED_USER", this.loggedUser);
+      this.$store.commit("SET_LOGIN_FORM", {
+        input: this.emailOrUsername,
+        password: this.password
+      });
+      alert("you are in!");
 
-              this.$store.commit("SET_IN_LOG_IN_AND_REG", { bool: false });
-
-              if (this.loggedUser.id_user_type === 2) {
-                this.resetForm();
-                this.$router.push({ name: "loading" }); // *CHANGES THE LOCATION
-              } else {
-                this.$router.push({ name: "adminLandingPage" }); // !CHANGES THE LOCATION
-              }
-            }
-          }
-        } else {
-          this.$snotify.warning("Incorrect data", "Oh...", {
-            timeout: 2000,
-            showProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-          });
-        }
-      } else {
-        this.$snotify.warning("Please fill all the input form", "Oh...", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
-        });
+      try {
+        await this.$store.dispatch("signIn");
+      } catch (err) {
+        alert(err);
       }
     },
+    // signInForm() {
+    //   if ((this.emailOrUsername, this.password)) {
+    //     if (this.$store.getters.getUserByInput(this.emailOrUsername)) {
+    //       //! this.$store.commit("SET_LOGGED_USER", this.loggedUser);
+    //       this.$store.commit("SET_LOGIN_FORM", {
+    //         input: this.emailOrUsername,
+    //         password: this.password
+    //       });
+
+    //       alert("you are in!");
+
+    //       // this.$store.commit("SET_IN_LOG_IN_AND_REG", { bool: false });
+
+    //       // if (this.loggedUser.id_user_type === 2) {
+    //       //   this.resetForm();
+    //       //   this.$router.push({ name: "loading" }); // *CHANGES THE LOCATION
+    //       // } else {
+    //       //   this.$router.push({ name: "adminLandingPage" }); // !CHANGES THE LOCATION
+    //       // }
+    //       // if (
+    //       //   !this.$store.getters.getUserByPasswordInput(
+    //       //     this.emailOrUsername,
+    //       //     this.password
+    //       //   )
+    //       // ) {
+    //       //   this.$snotify.warning(
+    //       //     "The email, username or password is incorret",
+    //       //     "Oh...",
+    //       //     {
+    //       //       timeout: 2000,
+    //       //       showProgressBar: false,
+    //       //       closeOnClick: true,
+    //       //       pauseOnHover: true
+    //       //     }
+    //       //   );
+    //       //   alert("wrong inputs");
+    //       // } else {
+    //       //   this.loggedUser = this.$store.getters.getUserByInput(
+    //       //     this.emailOrUsername
+    //       //   );
+    //       //   alert("Blocked");
+    //       //   if (this.loggedUser.blocked) {
+    //       //     this.$snotify.error("Your account is blocked", "Oh...", {
+    //       //       timeout: 2000,
+    //       //       showProgressBar: false,
+    //       //       closeOnClick: true,
+    //       //       pauseOnHover: true
+    //       //     });
+    //       //   } else {
+    //       //     //! this.$store.commit("SET_LOGGED_USER", this.loggedUser);
+    //       //     this.$store.commit("SET_LOGIN_FORM", {
+    //       //       input: this.emailOrUsername,
+    //       //       password: this.password
+    //       //     });
+    //       //     alert("you are in!");
+    //       //     this.$store.commit("SET_IN_LOG_IN_AND_REG", { bool: false });
+    //       //     if (this.loggedUser.id_user_type === 2) {
+    //       //       this.resetForm();
+    //       //       this.$router.push({ name: "loading" }); // *CHANGES THE LOCATION
+    //       //     } else {
+    //       //       this.$router.push({ name: "adminLandingPage" }); // !CHANGES THE LOCATION
+    //       //     }
+    //       //   }
+    //       // }
+    //     } else {
+    //       this.$snotify.warning("Incorrect data", "Oh...", {
+    //         timeout: 2000,
+    //         showProgressBar: false,
+    //         closeOnClick: true,
+    //         pauseOnHover: true
+    //       });
+    //       alert("Oh");
+    //     }
+    //   } else {
+    //     this.$snotify.warning("Please fill all the input form", "Oh...", {
+    //       timeout: 2000,
+    //       showProgressBar: false,
+    //       closeOnClick: true,
+    //       pauseOnHover: true
+    //     });
+    //   }
+    // },
     resetForm() {
       this.emailOrUsername = "";
       this.password = "";

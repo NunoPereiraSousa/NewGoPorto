@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import userService from "@/api/users.config";
 
 Vue.use(Vuex);
 
@@ -22,7 +23,11 @@ export default new Vuex.Store({
     category: "Monuments",
     favoritesList: [],
     followedItinerary: [], // follow system like on instagram,
-    publications: []
+    publications: [],
+    loginForm: {
+      input: null,
+      password: null
+    }
   },
   getters: {
     getUserById: state => id => {
@@ -378,10 +383,12 @@ export default new Vuex.Store({
       localStorage.setItem("users", JSON.stringify(state.users));
     },
 
+    //!
     SET_LOGGED_USER(state, payload) {
       state.loggedUser = payload;
-      localStorage.setItem("loggedUser", JSON.stringify(state.loggedUser));
+      // localStorage.setItem("loggedUser", JSON.stringify(state.loggedUser));
     },
+    //!
 
     SET_LOGGED_USER_LOG_OUT(state, payload) {
       state.loggedUser = payload.loggedUser;
@@ -589,8 +596,26 @@ export default new Vuex.Store({
     SET_PUBLICATIONS(state, payload) {
       state.publications = payload.publications;
       localStorage.setItem("publications", JSON.stringify(state.publications));
+    },
+
+    // ?
+    SET_LOGIN_FORM(state, payload) {
+      state.loginForm.input = payload.input;
+      state.loginForm.password = payload.password;
+    }
+    // ?
+  },
+  actions: {
+    async signIn({ commit }) {
+      alert(this.state.loginForm.input + " " + this.state.loginForm.password);
+      commit(
+        "SET_LOGGED_USER",
+        await userService.signIn(
+          this.state.loginForm.input,
+          this.state.loginForm.password
+        )
+      );
     }
   },
-  actions: {},
   modules: {}
 });

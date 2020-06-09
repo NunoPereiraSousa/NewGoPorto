@@ -8,6 +8,13 @@ import StarRating from "vue-star-rating";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Snotify, { SnotifyPosition } from "vue-snotify";
+import axios from "axios";
+
+const HTTP = axios.create({
+  baseURL: "https://goporto.herokuapp.com"
+});
+
+Vue.prototype.$http = HTTP;
 
 const options = {
   toast: {

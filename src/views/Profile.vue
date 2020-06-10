@@ -435,6 +435,12 @@ export default {
     editProfile() {
       this.confirmEmailTaken();
 
+      try {
+        alert(1);
+      } catch (err) {
+        alert(err);
+      }
+
       if (this.permition == false) {
         alert("Email Already Taken");
       } else {

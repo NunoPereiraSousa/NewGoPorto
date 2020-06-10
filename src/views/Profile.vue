@@ -329,14 +329,15 @@ export default {
         id: "",
         name: "",
         email: "",
-        location: "",
-        birth: "",
         image: ""
       }
     };
   },
   created() {
     this.loggedUser = this.getLoggedUser;
+    // !!!!!!!!!!!!!!!!!!!!!!!!!
+    this.loggedUser = this.loggedUser[0];
+    // alert(this.loggedUser[0].name);
     this.user = this.getUserById(this.loggedUser);
     this.users = this.getUsers;
     this.showUserData();
@@ -423,29 +424,12 @@ export default {
       }
       this.clearForm();
     },
-    async showUserData() {
-      // // this.editForm.image = this.loggedUser.photo;
-      try {
-        this.editForm.name = this.loggedUser[0].username;
-        this.editForm.location = this.loggedUser[0].location;
-        this.editForm.birth = this.loggedUser[0].birth;
-        this.editForm.email = this.loggedUser[0].email;
-
-        await this.$store.dispatch("profileData");
-        this.$store.commit("SET_LOGGED_USER_INFO", {
-          username: this.editForm.name,
-          birth: this.editForm.birth,
-          location: this.editForm.location,
-          email: this.editForm.email
-        });
-      } catch (err) {
-        return err;
-      }
-      // this.editForm.name = this.loggedUser.name;
-      // this.editForm.location = this.loggedUser.location;
-      // this.editForm.birth = this.loggedUser.birth;
-      // this.editForm.image = this.loggedUser.photo;
-      // this.editForm.email = this.loggedUser.email;
+    showUserData() {
+      this.editForm.name = this.loggedUser.name;
+      this.editForm.location = this.loggedUser.location;
+      this.editForm.birth = this.loggedUser.birth;
+      this.editForm.image = this.loggedUser.photo;
+      this.editForm.email = this.loggedUser.email;
       // alert(this.editForm.image); THIS ALERT RETURNS THE EXACTLY SRC OF THE USER IMAGE !!!!
     },
     editProfile() {

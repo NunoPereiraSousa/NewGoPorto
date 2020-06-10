@@ -126,6 +126,7 @@ export default {
         alert("fill in the fields");
       }
     },
+    //
 
     // signInForm() {
     //   if ((this.emailOrUsername, this.password)) {

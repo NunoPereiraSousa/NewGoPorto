@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser.username }}</span>
+            <span>{{ loggedUser.username }} </span>
             <span>Bio</span>
           </h2>
         </div>
@@ -91,7 +91,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser.username }}</span>
+            <span>{{ loggedUser.username }} </span>
             <span>Shares</span>
           </h2>
         </div>
@@ -145,7 +145,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Suggest</span>
+            <span>Suggest </span>
             <span>Places</span>
           </h2>
         </div>
@@ -329,7 +329,9 @@ export default {
         id: "",
         name: "",
         email: "",
-        image: ""
+        image: "",
+        location: "",
+        birth: ""
       }
     };
   },
@@ -432,56 +434,69 @@ export default {
       this.editForm.email = this.loggedUser.email;
       // alert(this.editForm.image); THIS ALERT RETURNS THE EXACTLY SRC OF THE USER IMAGE !!!!
     },
-    editProfile() {
-      this.confirmEmailTaken();
-
+    async editProfile() {
+      // this.confirmEmailTaken();
+      this.$store.commit("SET_PROFILE_EDIT_FORM", {
+        name: this.editForm.name,
+        location: this.editForm.location,
+        birth: this.editForm.birth,
+        email: this.editForm.email
+      });
+      this.editForm.id = this.loggedUser.id;
+      this.loggedUser.name = this.editForm.name;
+      this.loggedUser.location = this.editForm.location;
+      this.loggedUser.birth = this.editForm.birth;
+      this.loggedUser.email = this.editForm.email;
+      this.loggedUser.photo = this.editForm.image;
+      // this.$store.commit("SET_LOGGED_USER", this.loggedUser);
       try {
-        alert(1);
+        await this.$store.dispatch("editProfile");
+        alert("Done editing");
       } catch (err) {
-        alert(err);
+        return err;
       }
 
-      if (this.permition == false) {
-        alert("Email Already Taken");
-      } else {
-        this.editForm.id = this.loggedUser.id;
-        this.loggedUser.name = this.editForm.name;
-        this.loggedUser.location = this.editForm.location;
-        this.loggedUser.birth = this.editForm.birth;
-        this.loggedUser.email = this.editForm.email;
-        this.loggedUser.photo = this.editForm.image;
-        // alert(this.loggedUser.photo);
+      // if (this.permition == false) {
+      //   alert("Email Already Taken");
+      // } else {
+      //   this.editForm.id = this.loggedUser.id;
+      //   this.loggedUser.name = this.editForm.name;
+      //   this.loggedUser.location = this.editForm.location;
+      //   this.loggedUser.birth = this.editForm.birth;
+      //   this.loggedUser.email = this.editForm.email;
+      //   this.loggedUser.photo = this.editForm.image;
+      //   // alert(this.loggedUser.photo);
 
-        this.users[this.loggedUser.id - 1].id = this.editForm.id;
-        this.users[this.loggedUser.id - 1].name = this.editForm.name;
-        this.users[this.loggedUser.id - 1].birth = this.editForm.birth;
-        this.users[this.loggedUser.id - 1].email = this.editForm.email;
-        this.users[this.loggedUser.id - 1].photo = this.editForm.image;
+      //   this.users[this.loggedUser.id - 1].id = this.editForm.id;
+      //   this.users[this.loggedUser.id - 1].name = this.editForm.name;
+      //   this.users[this.loggedUser.id - 1].birth = this.editForm.birth;
+      //   this.users[this.loggedUser.id - 1].email = this.editForm.email;
+      //   this.users[this.loggedUser.id - 1].photo = this.editForm.image;
 
-        this.$store.commit("SET_USERS", {
-          users: this.users
-        });
+      //   this.$store.commit("SET_USERS", {
+      //     users: this.users
+      //   });
 
-        this.$store.commit("SET_LOGGED_USER", this.loggedUser);
+      //   this.$store.commit("SET_LOGGED_USER", this.loggedUser);
 
-        if (JSON.parse(localStorage.getItem("comments"))) {
-          this.$store.commit("SET_COMMENTS", {
-            comments: JSON.parse(localStorage.getItem("comments"))
-          });
-        }
+      //   if (JSON.parse(localStorage.getItem("comments"))) {
+      //     this.$store.commit("SET_COMMENTS", {
+      //       comments: JSON.parse(localStorage.getItem("comments"))
+      //     });
+      //   }
 
-        this.$store.commit("CHANGE_COMMENT_PHOTO_BY_USER", {
-          id: this.loggedUser.id,
-          photo: this.loggedUser.photo
-        });
+      //   this.$store.commit("CHANGE_COMMENT_PHOTO_BY_USER", {
+      //     id: this.loggedUser.id,
+      //     photo: this.loggedUser.photo
+      //   });
 
-        this.$snotify.success("changes saved successfully", "Done", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
-        });
-      }
+      //   this.$snotify.success("changes saved successfully", "Done", {
+      //     timeout: 2000,
+      //     showProgressBar: false,
+      //     closeOnClick: true,
+      //     pauseOnHover: true
+      //   });
+      // }
     },
     onFileChange(e) {
       let files = e.target.files || e.dataTransfer.files;

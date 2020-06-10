@@ -29,12 +29,18 @@ export default new Vuex.Store({
       input: null,
       password: null
     },
-
+    editProfileForm: {
+      name: null,
+      location: null,
+      birth: null,
+      email: null
+    },
     registerForm: {
       name: null,
       username: null,
       email: null,
-      password: null
+      password: null,
+      photo: null
     },
     sharesCard: {
       title: null,
@@ -651,9 +657,9 @@ export default new Vuex.Store({
 
     SET_REGISTER_FORM(state, payload) {
       state.registerForm.name = payload.name;
-      state.registerForm.password = payload.password;
-      state.registerForm.email = payload.email;
       state.registerForm.username = payload.username;
+      state.registerForm.email = payload.email;
+      state.registerForm.password = payload.password;
     },
 
     SET_CARD_FOLLOWS(state, payload) {
@@ -662,11 +668,11 @@ export default new Vuex.Store({
       state.sharesCard.num_shares = payload.num_shares;
     },
 
-    SET_LOGGED_USER_INFO(state, payload) {
-      state.loggedUser[0].username = payload.username;
-      state.loggedUser[0].location = payload.location;
-      state.loggedUser[0].birth = payload.birth;
-      state.loggedUser[0].email = payload.email;
+    SET_PROFILE_EDIT_FORM(state, payload) {
+      state.editProfileForm.name = payload.name;
+      state.editProfileForm.location = payload.location;
+      state.editProfileForm.birth = payload.birth;
+      state.editProfileForm.email = payload.email;
     }
     // ?
   },
@@ -680,7 +686,6 @@ export default new Vuex.Store({
         )
       );
     },
-
     async signUp({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
@@ -689,6 +694,17 @@ export default new Vuex.Store({
           this.state.registerForm.username,
           this.state.registerForm.email,
           this.state.registerForm.password
+        )
+      );
+    },
+    async editProfile({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await userService.editProfile(
+          this.state.editProfileForm.name,
+          this.state.editProfileForm.location,
+          this.state.editProfileForm.birth,
+          this.state.editProfileForm.email
         )
       );
     },

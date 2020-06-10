@@ -9,6 +9,8 @@ let headers = {
   "Access-Control-Allow-Origin": "*"
 };
 
+let user_id = JSON.parse(localStorage.getItem("loggedUser"));
+
 const userConfig = {
   async signIn(input, password) {
     try {
@@ -41,19 +43,14 @@ const userConfig = {
     }
   },
   async signUp(name, username, email, password) {
-    alert(headers);
-    alert(name);
-    alert(username);
-    alert(email);
-    alert(password);
     try {
       const response = await HTTP.post(
         `${API_URL}/register`,
         {
           name: name,
           username: username,
-          password: password,
-          email: email
+          email: email,
+          password: password
         },
         {
           headers
@@ -63,7 +60,30 @@ const userConfig = {
         resStatus: response.status
       };
     } catch (err) {
+      return err;
+    }
+  },
+  async editProfile(name, location, birth, email) {
+    try {
+      const response = await HTTP.put(
+        `${API_URL}/users/update/${user_id[0].id_user}`,
+        {
+          name: name,
+          location: location,
+          birth: birth,
+          email: email
+        },
+        {
+          headers
+        }
+      );
+      alert(1);
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
       alert(err);
+      return err;
     }
   }
 };

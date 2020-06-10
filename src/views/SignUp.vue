@@ -70,7 +70,7 @@
           <p>
             Your backpack is already ready?
             <u>
-              <router-link :to="{ name: 'signIn' }">Sign In</router-link>
+              <router-link :to="{ name: 'sign-in' }">Sign In</router-link>
             </u>
             right now!
           </p>
@@ -186,7 +186,7 @@
 
 <script>
 // import { mapGetter } from "vuex";
-// import $ from "jquery";
+import $ from "jquery";
 
 export default {
   data: function() {
@@ -228,6 +228,14 @@ export default {
         try {
           await this.$store.dispatch("signUp");
           alert("Done creating");
+          $("#termsOfPrivacy").modal("toggle");
+          setTimeout(
+            () =>
+              this.$router.push({
+                name: "sign-in"
+              }),
+            2000
+          );
         } catch (err) {
           alert("Something went wrong try again please");
         }

@@ -63,9 +63,7 @@ export default {
         userName: "",
         followedCount: 0
       },
-
       buttonText: "Follow",
-
       mylist: "",
       myCategories: [],
       itinerary: "",
@@ -152,6 +150,11 @@ export default {
         });
       }
       this.buttonTextDefiner();
+      // this.$store.commit("SET_CARD_FOLLOWS", {
+      //   title: this.form.title,
+      //   author: this.form.userName,
+      //   num_shares: this.form.followedCount
+      // });
       this.form.title = this.itinerary.title;
       this.form.userName = this.itinerary.userName;
       this.form.followedCount = this.itinerary.fallowedCount;
@@ -164,13 +167,24 @@ export default {
       });
     }
   },
-  created() {
+  async created() {
     this.itinerary = this.getItineraryById(this.id);
     this.form.title = this.itinerary.title;
     this.form.userName = this.itinerary.userName;
     this.form.followedCount = this.itinerary.fallowedCount;
-    this.createList();
-    this.buttonTextDefiner();
+    // try {
+    //   await this.$store.dispatch("numSharesCard");
+    //   this.itinerary = this.getItineraryById(this.id);
+    //   this.$store.commit("SET_CARD_FOLLOWS", {
+    //     title: this.form.title,
+    //     author: this.form.userName,
+    //     num_shares: this.form.followedCount
+    //   });
+    //   this.createList();
+    //   this.buttonTextDefiner();
+    // } catch (err) {
+    //   alert("Something went wrong try again please");
+    // }
   }
 };
 </script>

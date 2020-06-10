@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import userService from "@/api/users.config";
+import mainConfig from "@/api/main.config";
 
 Vue.use(Vuex);
 
@@ -28,8 +29,19 @@ export default new Vuex.Store({
       input: null,
       password: null
     },
+    sharesCard: {
+      title: null,
+      author: null,
+      num_shares: null
+    },
     token: null,
-    resStatus: null
+    resStatus: null,
+    userInfo: {
+      name: null,
+      location: null,
+      birth: null,
+      email: null
+    }
   },
   getters: {
     getUserById: state => id => {
@@ -624,17 +636,50 @@ export default new Vuex.Store({
     SET_LOGIN_FORM(state, payload) {
       state.loginForm.input = payload.input;
       state.loginForm.password = payload.password;
+    },
+
+    SET_CARD_FOLLOWS(state, payload) {
+      state.sharesCard.title = payload.title;
+      state.sharesCard.author = payload.author;
+      state.sharesCard.num_shares = payload.num_shares;
+    },
+
+    SET_LOGGED_USER_INFO(state, payload) {
+      state.loggedUser[0].username = payload.username;
+      state.loggedUser[0].location = payload.location;
+      state.loggedUser[0].birth = payload.birth;
+      state.loggedUser[0].email = payload.email;
     }
     // ?
   },
   actions: {
-    // !<SignIn and login
     async signIn({ commit }) {
       commit(
         "SET_LOGGED_USER_IN_LOGIN",
         await userService.signIn(
           this.state.loginForm.input,
           this.state.loginForm.password
+        )
+      );
+    },
+    async numSharesCard({ commit }) {
+      commit(
+        "SET_CARD_FOLLOWS",
+        await mainConfig.numSharesCard(
+          this.state.sharesCard.title,
+          this.state.sharesCard.author,
+          this.state.sharesCard.num_shares
+        )
+      );
+    },
+    async profileData({ commit }) {
+      commit(
+        "SET_LOGGED_USER_INFO",
+        await userService.profileData(
+          this.state.loggedUser[0].username,
+          this.state.loggedUser[0].birth,
+          this.state.loggedUser[0].location,
+          this.state.loggedUser[0].email
         )
       );
     }

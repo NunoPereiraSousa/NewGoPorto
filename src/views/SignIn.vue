@@ -84,6 +84,7 @@ export default {
           let resStatus = this.$store.getters.getResStatus;
           if (resStatus == 200) {
             this.loggedUser = this.$store.getters.getLoggedUser;
+
             if (this.loggedUser.block == 1) {
               this.resetForm();
 
@@ -100,7 +101,7 @@ export default {
                 closeOnClick: true,
                 pauseOnHover: true
               });
-            } else if (this.loggedUser.id_user_type == 2) {
+            } else if (this.loggedUser[0].id_user_type == 2) {
               this.resetForm();
               this.$router.push({ name: "loading" }); // *CHANGES THE LOCATION
             } else {

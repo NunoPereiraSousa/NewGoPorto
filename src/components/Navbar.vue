@@ -472,7 +472,10 @@
               >
                 <!-- params: { username: user.username } -->
                 <router-link
-                  :to="{ name: 'profile', params: { username: user.username } }"
+                  :to="{
+                    name: 'profile',
+                    params: { username: user[0].username }
+                  }"
                   class="dropdown-item"
                   >Profile</router-link
                 >

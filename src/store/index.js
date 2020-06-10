@@ -27,7 +27,9 @@ export default new Vuex.Store({
     loginForm: {
       input: null,
       password: null
-    }
+    },
+    token: null,
+    resStatus: null
   },
   getters: {
     getUserById: state => id => {
@@ -61,6 +63,12 @@ export default new Vuex.Store({
 
     getLoggedUser: state => {
       return state.loggedUser;
+    },
+
+    getResStatus: state => {
+      let status = state.resStatus;
+      state.resStatus = null;
+      return status;
     },
 
     getNAdmins: state => {
@@ -386,7 +394,21 @@ export default new Vuex.Store({
     //!
     SET_LOGGED_USER(state, payload) {
       state.loggedUser = payload;
-      // localStorage.setItem("loggedUser", JSON.stringify(state.loggedUser));
+      localStorage.setItem("loggedUser", JSON.stringify(state.loggedUser));
+    },
+    // *NEW TO CONNECT
+
+    SET_TOKEN(state, payload) {
+      state.token = payload.token;
+      localStorage.setItem("token", JSON.stringify(state.token));
+    },
+    SET_LOGGED_USER_IN_LOGIN(state, payload) {
+      state.loggedUser = payload.loggedUser;
+      state.token = payload.token;
+      state.resStatus = payload.resStatus;
+
+      localStorage.setItem("token", JSON.stringify(payload.token));
+      localStorage.setItem("loggedUser", JSON.stringify(payload.loggedUser));
     },
     //!
 
@@ -606,10 +628,10 @@ export default new Vuex.Store({
     // ?
   },
   actions: {
+    // !<SignIn and login
     async signIn({ commit }) {
-      alert(this.state.loginForm.input + " " + this.state.loginForm.password);
       commit(
-        "SET_LOGGED_USER",
+        "SET_LOGGED_USER_IN_LOGIN",
         await userService.signIn(
           this.state.loginForm.input,
           this.state.loginForm.password
@@ -617,5 +639,7 @@ export default new Vuex.Store({
       );
     }
   },
+
+  // !SignIn and login>
   modules: {}
 });

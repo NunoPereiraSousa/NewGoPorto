@@ -73,20 +73,60 @@ export default {
   },
   methods: {
     async signInForm() {
-      //! this.$store.commit("SET_LOGGED_USER", this.loggedUser);
+      if ((this.emailOrUsername, this.password)) {
+        this.$store.commit("SET_LOGIN_FORM", {
+          input: this.emailOrUsername,
+          password: this.password
+        });
 
-      this.$store.commit("SET_LOGIN_FORM", {
-        input: this.emailOrUsername,
-        password: this.password
-      });
-      alert("you are in!");
+        try {
+          await this.$store.dispatch("signIn");
+          let resStatus = this.$store.getters.getResStatus;
+          if (resStatus == 200) {
+            this.loggedUser = this.$store.getters.getLoggedUser;
+            if (this.loggedUser.block == 1) {
+              this.resetForm();
 
-      try {
-        await this.$store.dispatch("signIn");
-      } catch (err) {
-        alert(err);
+              this.$store.commit("SET_LOGGED_USER", null);
+              this.$store.commit("SET_TOKEN", { token: null });
+
+              this.$store.commit("SET_LOGIN_FORM", {
+                input: this.emailOrUsername,
+                password: this.password
+              });
+              this.$snotify.error("The user it temporarly blocked", "Oh...", {
+                timeout: 2000,
+                showProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true
+              });
+            } else if (this.loggedUser.id_user_type == 2) {
+              this.resetForm();
+              this.$router.push({ name: "loading" }); // *CHANGES THE LOCATION
+            } else {
+              this.$router.push({ name: "adminLandingPage" }); // !CHANGES THE LOCATION
+            }
+          } else {
+            alert("User not found");
+            this.$snotify.error(
+              "The email, username or password is incorret",
+              "Oh...",
+              {
+                timeout: 2000,
+                showProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true
+              }
+            );
+          }
+        } catch (err) {
+          alert("Something went wrong try again please");
+        }
+      } else {
+        alert("fill in the fields");
       }
     },
+
     // signInForm() {
     //   if ((this.emailOrUsername, this.password)) {
     //     if (this.$store.getters.getUserByInput(this.emailOrUsername)) {

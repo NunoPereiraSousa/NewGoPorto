@@ -39,6 +39,32 @@ const userConfig = {
     } catch (err) {
       return err;
     }
+  },
+  async signUp(name, username, email, password) {
+    alert(headers);
+    alert(name);
+    alert(username);
+    alert(email);
+    alert(password);
+    try {
+      const response = await HTTP.post(
+        `${API_URL}/register`,
+        {
+          name: name,
+          username: username,
+          password: password,
+          email: email
+        },
+        {
+          headers
+        }
+      );
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
+      alert(err);
+    }
   }
 };
 

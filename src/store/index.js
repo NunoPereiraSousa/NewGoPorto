@@ -29,6 +29,13 @@ export default new Vuex.Store({
       input: null,
       password: null
     },
+
+    registerForm: {
+      name: null,
+      username: null,
+      email: null,
+      password: null
+    },
     sharesCard: {
       title: null,
       author: null,
@@ -422,6 +429,10 @@ export default new Vuex.Store({
       localStorage.setItem("token", JSON.stringify(payload.token));
       localStorage.setItem("loggedUser", JSON.stringify(payload.loggedUser));
     },
+
+    SET_REGISTER_STATUS(state, payload) {
+      state.resStatus = payload.resStatus;
+    },
     //!
 
     SET_LOGGED_USER_LOG_OUT(state, payload) {
@@ -638,6 +649,13 @@ export default new Vuex.Store({
       state.loginForm.password = payload.password;
     },
 
+    SET_REGISTER_FORM(state, payload) {
+      state.registerForm.name = payload.name;
+      state.registerForm.password = payload.password;
+      state.registerForm.email = payload.email;
+      state.registerForm.username = payload.username;
+    },
+
     SET_CARD_FOLLOWS(state, payload) {
       state.sharesCard.title = payload.title;
       state.sharesCard.author = payload.author;
@@ -659,6 +677,18 @@ export default new Vuex.Store({
         await userService.signIn(
           this.state.loginForm.input,
           this.state.loginForm.password
+        )
+      );
+    },
+
+    async signUp({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await userService.signUp(
+          this.state.registerForm.name,
+          this.state.registerForm.username,
+          this.state.registerForm.email,
+          this.state.registerForm.password
         )
       );
     },

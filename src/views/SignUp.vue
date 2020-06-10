@@ -186,7 +186,7 @@
 
 <script>
 // import { mapGetter } from "vuex";
-import $ from "jquery";
+// import $ from "jquery";
 
 export default {
   data: function() {
@@ -210,7 +210,7 @@ export default {
     this.$store.commit("SET_LOGGED_USER_LOG_OUT", { loggedUser: "" });
   },
   methods: {
-    signUpForm() {
+    async signUpForm() {
       if (
         this.username &&
         this.email &&
@@ -218,62 +218,18 @@ export default {
         this.password &&
         this.repeatPassword
       ) {
-        if (
-          !this.$store.getters.getUserByInput(this.email) &&
-          this.ConfirmPassword()
-        ) {
-          if (!this.$store.getters.getUserByInput(this.username)) {
-            this.id = this.$store.getters.getLastId;
-            this.$store.commit("NEW_USER", {
-              id: this.id,
-              name: this.name,
-              // surname: this.surname,
-              username: this.username,
-              email: this.email,
-              // age: this.age,
-              // id_nationality: this.id_nationality,
-              location: this.location,
-              birth: "",
-              // description: this.description,
-              photo: this.photo,
-              id_user_type: this.id_user_type,
-              blocked: this.blocked,
-              password: this.password
-            });
-            this.resetForm();
-            this.$snotify.success("User Created Successfully!", "Done", {
-              timeout: 2000,
-              showProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true
-            });
-            $("#termsOfPrivacy").modal("toggle");
-            setTimeout(
-              () =>
-                this.$router.push({
-                  name: "signIn"
-                }),
-              2000
-            );
-          } else {
-            this.$snotify.info("Username already taken", "Oh...", {
-              timeout: 2000,
-              showProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true
-            });
-          }
-        } else {
-          this.$snotify.info(
-            "The email has already been associated with an account",
-            "Oh...",
-            {
-              timeout: 2000,
-              showProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true
-            }
-          );
+        this.$store.commit("SET_REGISTER_FORM", {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          username: this.username
+        });
+
+        try {
+          await this.$store.dispatch("signUp");
+          alert("Done creating");
+        } catch (err) {
+          alert("Something went wrong try again please");
         }
       } else {
         this.$snotify.info("Please, fill all the inputs to proceed", "Oh...", {
@@ -284,6 +240,81 @@ export default {
         });
       }
     },
+
+    // signUpForm() {
+    //   if (
+    //     this.username &&
+    //     this.email &&
+    //     this.name &&
+    //     this.password &&
+    //     this.repeatPassword
+    //   ) {
+    //     if (
+    //       !this.$store.getters.getUserByInput(this.email) &&
+    //       this.ConfirmPassword()
+    //     ) {
+    //       if (!this.$store.getters.getUserByInput(this.username)) {
+    //         this.id = this.$store.getters.getLastId;
+    //         this.$store.commit("NEW_USER", {
+    //           id: this.id,
+    //           name: this.name,
+    //           // surname: this.surname,
+    //           username: this.username,
+    //           email: this.email,
+    //           // age: this.age,
+    //           // id_nationality: this.id_nationality,
+    //           location: this.location,
+    //           birth: "",
+    //           // description: this.description,
+    //           photo: this.photo,
+    //           id_user_type: this.id_user_type,
+    //           blocked: this.blocked,
+    //           password: this.password
+    //         });
+    //         this.resetForm();
+    //         this.$snotify.success("User Created Successfully!", "Done", {
+    //           timeout: 2000,
+    //           showProgressBar: false,
+    //           closeOnClick: true,
+    //           pauseOnHover: true
+    //         });
+    //         $("#termsOfPrivacy").modal("toggle");
+    //         setTimeout(
+    //           () =>
+    //             this.$router.push({
+    //               name: "signIn"
+    //             }),
+    //           2000
+    //         );
+    //       } else {
+    //         this.$snotify.info("Username already taken", "Oh...", {
+    //           timeout: 2000,
+    //           showProgressBar: false,
+    //           closeOnClick: true,
+    //           pauseOnHover: true
+    //         });
+    //       }
+    //     } else {
+    //       this.$snotify.info(
+    //         "The email has already been associated with an account",
+    //         "Oh...",
+    //         {
+    //           timeout: 2000,
+    //           showProgressBar: false,
+    //           closeOnClick: true,
+    //           pauseOnHover: true
+    //         }
+    //       );
+    //     }
+    //   } else {
+    //     this.$snotify.info("Please, fill all the inputs to proceed", "Oh...", {
+    //       timeout: 2000,
+    //       showProgressBar: false,
+    //       closeOnClick: true,
+    //       pauseOnHover: true
+    //     });
+    //   }
+    // },
     ConfirmPassword() {
       if (this.password == this.repeatPassword) {
         return true;

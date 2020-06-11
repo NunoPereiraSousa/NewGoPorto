@@ -35,6 +35,12 @@ export default new Vuex.Store({
       birth: null,
       email: null
     },
+    newPostForm: {
+      userId: null,
+      content: null,
+      date: null,
+      block: 1
+    },
     registerForm: {
       name: null,
       username: null,
@@ -673,6 +679,13 @@ export default new Vuex.Store({
       state.editProfileForm.location = payload.location;
       state.editProfileForm.birth = payload.birth;
       state.editProfileForm.email = payload.email;
+    },
+
+    SET_NEW_POST(state, payload) {
+      state.newPostForm.userId = payload.userId;
+      state.newPostForm.content = payload.content;
+      state.newPostForm.date = payload.date;
+      state.newPostForm.block = payload.block;
     }
     // ?
   },
@@ -708,6 +721,17 @@ export default new Vuex.Store({
         )
       );
     },
+    async addPost({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await userService.addPost(
+          this.state.newPostForm.userId,
+          this.state.newPostForm.content,
+          this.state.newPostForm.date,
+          this.state.newPostForm.block
+        )
+      );
+    },
     async numSharesCard({ commit }) {
       commit(
         "SET_CARD_FOLLOWS",
@@ -715,17 +739,6 @@ export default new Vuex.Store({
           this.state.sharesCard.title,
           this.state.sharesCard.author,
           this.state.sharesCard.num_shares
-        )
-      );
-    },
-    async profileData({ commit }) {
-      commit(
-        "SET_LOGGED_USER_INFO",
-        await userService.profileData(
-          this.state.loggedUser[0].username,
-          this.state.loggedUser[0].birth,
-          this.state.loggedUser[0].location,
-          this.state.loggedUser[0].email
         )
       );
     }

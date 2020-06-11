@@ -540,13 +540,25 @@ export default {
       this.form.content = "";
     },
 
-    addPublication() {
+    async addPublication() {
       this.allPublications = this.getPublications;
       // alert(this.getPublications.length)
 
       if (this.newPublication === "") {
         alert("Please write something before publishing");
       } else {
+        this.$store.commit("SET_NEW_POST", {
+          userId: this.loggedUser.id_user,
+          content: this.newPublication,
+          date: this.getCurrentDate(),
+          block: 1
+        });
+        try {
+          await this.$store.dispatch("addPost");
+          alert("Posted");
+        } catch (err) {
+          return err;
+        }
         this.allPublications.push({
           id: this.getPublicationsLastId,
           userId: this.loggedUser.id,

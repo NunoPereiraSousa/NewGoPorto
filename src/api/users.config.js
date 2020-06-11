@@ -77,6 +77,28 @@ const userConfig = {
           headers
         }
       );
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
+      alert(err);
+      return err;
+    }
+  },
+  async addPost(userId, content, date, block) {
+    try {
+      const response = await HTTP.post(
+        `${API_URL}/add-posts`,
+        {
+          userId: userId,
+          content: content,
+          date: date,
+          block: block
+        },
+        {
+          headers
+        }
+      );
       alert(1);
       return {
         resStatus: response.status

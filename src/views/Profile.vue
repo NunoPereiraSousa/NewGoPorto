@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser.username }} </span>
+            <span>{{ loggedUser.username }}</span>
             <span>Bio</span>
           </h2>
         </div>
@@ -91,7 +91,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser.username }} </span>
+            <span>{{ loggedUser.username }}</span>
             <span>Shares</span>
           </h2>
         </div>
@@ -145,7 +145,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Suggest </span>
+            <span>Suggest</span>
             <span>Places</span>
           </h2>
         </div>
@@ -474,6 +474,7 @@ export default {
       // this.$store.commit("SET_LOGGED_USER", this.loggedUser);
       try {
         await this.$store.dispatch("editProfile");
+        this.$store.commit("SET_LOGGED_USER", [this.loggedUser]);
         alert("Done editing");
       } catch (err) {
         return err;

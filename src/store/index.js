@@ -442,6 +442,11 @@ export default new Vuex.Store({
       state.loggedUser = payload;
       localStorage.setItem("loggedUser", JSON.stringify(state.loggedUser));
     },
+    // SET_LOGGED_USER_PROFILE(state, payload) {
+    //   state.loggedUser = payload;
+    //   localStorage.setItem("loggedUser", JSON.stringify(state.loggedUser));
+    // },
+
     // *NEW TO CONNECT
 
     SET_TOKEN(state, payload) {

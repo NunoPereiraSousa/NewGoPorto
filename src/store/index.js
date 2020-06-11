@@ -33,13 +33,24 @@ export default new Vuex.Store({
       name: null,
       location: null,
       birth: null,
-      email: null
+      email: null,
+      photo: null
     },
     newPostForm: {
       userId: null,
       content: null,
       date: null,
-      block: 1
+      block: null
+    },
+    userPosts: {},
+    deletePostId: 0,
+    newSuggestion: {
+      id_user: null,
+      photo: null,
+      content: null,
+      new_identity: null,
+      id_status: null,
+      category_name: null
     },
     registerForm: {
       name: null,
@@ -407,6 +418,10 @@ export default new Vuex.Store({
     // !in case of delete
     getPublicationIndexById: state => id => {
       return state.publications.findIndex(publication => publication.id === id);
+    },
+
+    getUserPosts: state => {
+      return state.userPosts;
     }
 
     // *publications getters>
@@ -679,6 +694,7 @@ export default new Vuex.Store({
       state.editProfileForm.location = payload.location;
       state.editProfileForm.birth = payload.birth;
       state.editProfileForm.email = payload.email;
+      state.editProfileForm.photo = payload.photo;
     },
 
     SET_NEW_POST(state, payload) {
@@ -686,6 +702,24 @@ export default new Vuex.Store({
       state.newPostForm.content = payload.content;
       state.newPostForm.date = payload.date;
       state.newPostForm.block = payload.block;
+    },
+
+    SET_DELETE_POST(state, payload) {
+      state.deletePostId = payload.deletePostId;
+      alert("payload: " + payload.deletePostId);
+    },
+
+    SET_USER_POSTS(state, payload) {
+      state.userPosts = payload.response;
+    },
+
+    SET_NEW_SUGGESTION(state, payload) {
+      state.newSuggestion.id_user = payload.id_user;
+      state.newSuggestion.photo = payload.photo;
+      state.newSuggestion.content = payload.content;
+      state.newSuggestion.new_identity = payload.new_identity;
+      state.newSuggestion.id_status = payload.id_status;
+      state.newSuggestion.category_name = payload.category_name;
     }
     // ?
   },
@@ -717,7 +751,8 @@ export default new Vuex.Store({
           this.state.editProfileForm.name,
           this.state.editProfileForm.location,
           this.state.editProfileForm.birth,
-          this.state.editProfileForm.email
+          this.state.editProfileForm.email,
+          this.state.editProfileForm.photo
         )
       );
     },
@@ -729,6 +764,28 @@ export default new Vuex.Store({
           this.state.newPostForm.content,
           this.state.newPostForm.date,
           this.state.newPostForm.block
+        )
+      );
+    },
+    async deletePost({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await userService.deletePost(this.state.deletePostId)
+      );
+    },
+    async userPosts({ commit }) {
+      commit("SET_USER_POSTS", await userService.getUserPosts());
+    },
+    async addSuggestion({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await userService.addSuggestion(
+          this.state.newSuggestion.id_user,
+          this.state.newSuggestion.photo,
+          this.state.newSuggestion.content,
+          this.state.newSuggestion.new_identity,
+          this.state.newSuggestion.id_status,
+          this.state.newSuggestion.category_name
         )
       );
     },

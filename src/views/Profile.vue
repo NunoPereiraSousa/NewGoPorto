@@ -112,15 +112,15 @@
           <div id="stories">
             <div v-for="publication in myPublications" :key="publication.id">
               <div class="d-flex justify-content-between align-items-center">
-                <img :src="editForm.image" alt="person" />
-                <p class>{{ publication.username }}</p>
+                <img :src="loggedUser.photo" alt="person" />
+                <p class>{{ loggedUser.name }}</p>
                 <p class="font-italic" style="font-size: 14px">
                   {{ publication.date }}
                 </p>
                 <button
                   id="delete"
                   class="btn btn-primary d-inline-block mb-3"
-                  @click="deletePublication(publication.id)"
+                  @click="deletePublication(publication.id_post)"
                 >
                   <i
                     class="far fa-times-circle"
@@ -335,11 +335,10 @@ export default {
       }
     };
   },
-  created() {
+  async created() {
     this.loggedUser = this.getLoggedUser;
-    // !!!!!!!!!!!!!!!!!!!!!!!!!
     this.loggedUser = this.loggedUser[0];
-    // alert(this.loggedUser[0].name);
+
     this.user = this.getUserById(this.loggedUser);
     this.users = this.getUsers;
     this.showUserData();
@@ -363,6 +362,14 @@ export default {
     }
 
     this.categories = this.getCategories;
+
+    try {
+      await this.$store.dispatch("userPosts");
+      this.myPublications = this.getUserPosts;
+    } catch (err) {
+      alert(err);
+      return err;
+    }
   },
   computed: {
     ...mapGetters({
@@ -379,7 +386,8 @@ export default {
       getPublicationsLastId: "getPublicationsLastId",
       getPublications: "getPublications",
       getPublicationByUser: "getPublicationByUser",
-      getCategories: "getCategories"
+      getCategories: "getCategories",
+      getUserPosts: "getUserPosts"
     })
   },
   methods: {
@@ -389,23 +397,37 @@ export default {
       let mm = String(today.getMonth() + 1).padStart(2, "0");
       let yyyy = today.getFullYear();
 
-      today = dd + "/" + mm + "/" + yyyy;
+      today = yyyy + "-" + mm + "-" + dd;
       return today;
     },
-    addSuggestion() {
+    async addSuggestion() {
       if (!this.getSuggestionByName(this.form.name)) {
-        this.form.id = this.getSuggestionsLastId;
-        this.$store.commit("NEW_SUGGESTION", {
-          id: this.form.id,
-          category: this.form.category,
-          name: this.form.name,
-          content: this.form.content,
-          date: this.getCurrentDate(),
+        this.$store.commit("SET_NEW_SUGGESTION", {
+          id_user: this.loggedUser.id_user,
           photo: this.form.photo,
-          status: "pendant",
-          userId: this.loggedUser.id,
-          username: this.loggedUser.username
+          content: this.form.content,
+          new_identity: this.form.name,
+          id_status: 2,
+          category_name: this.form.category
         });
+        try {
+          await this.$store.dispatch("addSuggestion");
+        } catch (err) {
+          alert(err);
+          return err;
+        }
+        // this.form.id = this.getSuggestionsLastId;
+        // this.$store.commit("NEW_SUGGESTION", {
+        //   id: this.form.id,
+        //   category: this.form.category,
+        //   name: this.form.name,
+        //   content: this.form.content,
+        //   date: this.getCurrentDate(),
+        //   photo: this.form.photo,
+        //   status: "pendant",
+        //   userId: this.loggedUser.id,
+        //   username: this.loggedUser.username
+        // });
         this.$snotify.success("Suggestion successfully sent!", "Done", {
           timeout: 2000,
           showProgressBar: false,
@@ -440,7 +462,8 @@ export default {
         name: this.editForm.name,
         location: this.editForm.location,
         birth: this.editForm.birth,
-        email: this.editForm.email
+        email: this.editForm.email,
+        photo: this.editForm.image
       });
       this.editForm.id = this.loggedUser.id;
       this.loggedUser.name = this.editForm.name;
@@ -564,18 +587,26 @@ export default {
           userId: this.loggedUser.id,
           content: this.newPublication,
           username: this.loggedUser.username,
-          date: this.getCurrentDate()
+          date: this.getCurrentDate(),
+          block: 1
         });
 
-        this.$store.commit("SET_PUBLICATIONS", {
-          publications: this.allPublications
-        });
+        // this.$store.commit("SET_PUBLICATIONS", {
+        //   publications: this.allPublications
+        // });
 
-        this.myPublications = this.getPublicationByUser(this.loggedUser.id);
-        this.newPublication = "";
+        // this.myPublications = this.getPublicationByUser(this.loggedUser.id);
+        // this.newPublication = "";
+
+        try {
+          await this.$store.dispatch("userPosts");
+          this.myPublications = this.getUserPosts;
+        } catch (err) {
+          alert(err);
+          return err;
+        }
       }
     },
-
     getCurrentDateTime() {
       let today = new Date();
       let date =
@@ -589,21 +620,31 @@ export default {
       let dateTime = date + ", " + time;
       return dateTime;
     },
+    async deletePublication(id) {
+      // this.allPublications = this.getPublications;
+      // this.allPublications = this.allPublications.filter(
+      //   publication => publication.id != id
+      // );
 
-    deletePublication(id) {
-      // alert("here");
-      this.allPublications = this.getPublications;
-      this.allPublications = this.allPublications.filter(
-        publication => publication.id != id
-      );
-
-      this.$store.commit("SET_PUBLICATIONS", {
-        publications: this.allPublications
+      this.$store.commit("SET_DELETE_POST", {
+        deletePostId: id
       });
 
-      this.myPublications = this.getPublicationByUser(this.loggedUser.id);
-    },
+      alert("ID: " + id);
 
+      try {
+        await this.$store.dispatch("deletePost");
+        alert("Deleted");
+      } catch (err) {
+        return err;
+      }
+
+      // this.$store.commit("SET_PUBLICATIONS", {
+      //   publications: this.allPublications
+      // });
+
+      // this.myPublications = this.getPublicationByUser(this.loggedUser.id);
+    },
     confirmEmailTaken() {
       this.permition = true;
       if (this.getUserByInput(this.editForm.email)) {

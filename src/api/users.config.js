@@ -86,7 +86,7 @@ const userConfig = {
       }
     }
   },
-  async editProfile(name, location, birth, email) {
+  async editProfile(name, location, birth, email, photo) {
     try {
       const response = await HTTP.put(
         `${API_URL}/users/update/${user_id[0].id_user}`,
@@ -94,7 +94,8 @@ const userConfig = {
           name: name,
           location: location,
           birth: birth,
-          email: email
+          email: email,
+          photo: photo
         },
         {
           headers
@@ -108,15 +109,9 @@ const userConfig = {
       return err;
     }
   },
-  async addPost(userId, content, date, block) {
-    alert(`id:${userId}`);
-    alert(`text:${content}`);
-    alert(`date:${date}`);
-    alert(`block:${block}`);
-    // 20 - 05 - 1999
-
-    let dateFormat = date.split("/");
-    date = `${dateFormat[2]}-${dateFormat[1]}-${dateFormat[0]}`;
+  async addPost(userId, content, date) {
+    // let dateFormat = date.split("/");
+    // date = `${dateFormat[2]}-${dateFormat[1]}-${dateFormat[0]}`;
     try {
       const response = await HTTP.post(
         `${API_URL}/add-posts`,
@@ -129,14 +124,85 @@ const userConfig = {
           headers
         }
       );
-      // alert(1);
-      // !PROGRESS IS A LONG PROCESS THEY WERE PROBABLY TALKING ABOUT THIS PART OF THE JOB
       return {
         resStatus: response.status
       };
     } catch (err) {
       localStorage.setItem("error", JSON.stringify(err.response.data.error));
-      // console.log();
+      return err;
+    }
+  },
+  async deletePost(deletePostId) {
+    try {
+      const response = await HTTP.put(
+        `${API_URL}/posts/delete/${deletePostId}`,
+        {
+          headers
+        }
+      );
+      for (const data in deletePostId) {
+        alert(deletePostId[data]);
+      }
+
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
+      alert(err);
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      return err;
+    }
+  },
+  async getUserPosts() {
+    try {
+      const response = await HTTP.get(
+        `${API_URL}/posts/${user_id[0].id_user}`,
+        {
+          headers
+        }
+      );
+      return {
+        resStatus: response.status,
+        response: response.data
+      };
+    } catch (err) {
+      alert(err);
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      return err;
+    }
+  },
+  async addSuggestion(
+    id_user,
+    photo,
+    content,
+    new_identity,
+    id_status,
+    category_name
+  ) {
+    alert(
+      `id_user: ${id_user} \nphoto: ${photo} \ncontent: ${content} \nnew_identity: ${new_identity} \nid_status: ${id_status} \ncategory_name: ${category_name} \n`
+    );
+    try {
+      const response = await HTTP.post(
+        `${API_URL}/add-suggestions`,
+        {
+          id_user: id_user,
+          photo: photo,
+          content: content,
+          new_identity: new_identity,
+          id_status: id_status,
+          category_name: category_name
+        },
+        {
+          headers
+        }
+      );
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      alert(err);
       return err;
     }
   }

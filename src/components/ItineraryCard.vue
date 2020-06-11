@@ -70,6 +70,7 @@ export default {
       itineraies: ""
     };
   },
+  //hustling
   computed: {
     ...mapGetters({
       getItineraryById: "getItineraryById",

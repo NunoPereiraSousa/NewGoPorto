@@ -109,14 +109,21 @@ const userConfig = {
     }
   },
   async addPost(userId, content, date, block) {
+    alert(`id:${userId}`);
+    alert(`text:${content}`);
+    alert(`date:${date}`);
+    alert(`block:${block}`);
+    // 20 - 05 - 1999
+
+    let dateFormat = date.split("/");
+    date = `${dateFormat[2]}-${dateFormat[1]}-${dateFormat[0]}`;
     try {
       const response = await HTTP.post(
         `${API_URL}/add-posts`,
         {
-          userId: userId,
+          id_user: userId,
           content: content,
-          date: date,
-          block: block
+          date: date
         },
         {
           headers
@@ -127,7 +134,8 @@ const userConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      alert(err);
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      // console.log();
       return err;
     }
   }

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import userService from "@/api/users.config";
+import itineraryService from "@/api/itineraries.config";
 import mainConfig from "@/api/main.config";
 
 Vue.use(Vuex);
@@ -485,8 +486,14 @@ export default new Vuex.Store({
 
     SET_ITINERARIES(state, payload) {
       state.itineraries = payload.itineraries;
+      state.resStatus = payload.resStatus;
       localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
     },
+
+    // NEW_SET_ITINERARIES(state, payload) {
+    //   state.itineraries = payload.itineraries;
+    //   localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
+    // },
 
     SET_SELECTED_ITINERARY(state, payload) {
       state.selectedItinerary = payload;
@@ -749,6 +756,9 @@ export default new Vuex.Store({
         )
       );
     },
+    async allUsers({ commit }) {
+      commit("SET_USERS", await userService.getAllUsers());
+    },
     async editProfile({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
@@ -803,7 +813,13 @@ export default new Vuex.Store({
           this.state.sharesCard.num_shares
         )
       );
+    },
+
+    // *Itineraries >
+    async allItineraries({ commit }) {
+      commit("SET_ITINERARIES", await itineraryService.getAllItineraries());
     }
+    // *Itineraries >
   },
 
   // !SignIn and login>

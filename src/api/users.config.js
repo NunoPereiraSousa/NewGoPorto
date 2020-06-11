@@ -205,6 +205,27 @@ const userConfig = {
       alert(err);
       return err;
     }
+  },
+  async getAllUsers() {
+    try {
+      const response = await HTTP.get(`${API_URL}/users`, {
+        headers
+      });
+      if (response.status == 200) {
+        return {
+          users: response.data,
+          resStatus: response.status
+        };
+      } else {
+        return {
+          users: [],
+          resStatus: response.status
+        };
+      }
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      return err;
+    }
   }
 };
 

@@ -129,7 +129,8 @@ const userConfig = {
           headers
         }
       );
-      alert(1);
+      // alert(1);
+      // !PROGRESS IS A LONG PROCESS THEY WERE PROBABLY TALKING ABOUT THIS PART OF THE JOB
       return {
         resStatus: response.status
       };

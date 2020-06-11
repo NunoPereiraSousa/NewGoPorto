@@ -56,11 +56,34 @@ const userConfig = {
           headers
         }
       );
-      return {
-        resStatus: response.status
-      };
+      if (response.status == 201) {
+        return {
+          resStatus: response.status
+        };
+      }
     } catch (err) {
-      return err;
+      if (err.response.status == 400) {
+        return {
+          resStatus: {
+            status: err.response.status,
+            message: err.response.data
+          }
+        };
+      } else if (err.response.status == 500) {
+        return {
+          resStatus: {
+            status: err.response.status,
+            message: err.response.data
+          }
+        };
+      } else {
+        return {
+          resStatus: {
+            status: 500,
+            message: "Something went wrong, please try again!!"
+          }
+        };
+      }
     }
   },
   async editProfile(name, location, birth, email) {

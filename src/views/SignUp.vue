@@ -227,17 +227,29 @@ export default {
 
         try {
           await this.$store.dispatch("signUp");
-          alert("Done creating");
-          $("#termsOfPrivacy").modal("toggle");
-          setTimeout(
-            () =>
-              this.$router.push({
-                name: "sign-in"
-              }),
-            2000
-          );
+          let resStatus = this.$store.getters.getResStatus;
+          if (resStatus == 201) {
+            alert("Done creating");
+            $("#termsOfPrivacy").modal("toggle");
+            setTimeout(
+              () =>
+                this.$router.push({
+                  name: "sign-in"
+                }),
+              2000
+            );
+          } else if (resStatus.status === 400) {
+            alert(resStatus.message);
+          }
         } catch (err) {
-          alert("Something went wrong try again please");
+          let resStatus = this.$store.getters.getResStatus;
+          if (resStatus !== null) {
+            if (resStatus.status === 400) {
+              alert(`${resStatus.message}`);
+            } else {
+              alert("Something went wrong, please try againr");
+            }
+          }
         }
       } else {
         this.$snotify.info("Please, fill all the inputs to proceed", "Oh...", {

@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import userService from "@/api/users.config";
 import itineraryService from "@/api/itineraries.config";
+import identityService from "@/api/identities.config";
 import mainConfig from "@/api/main.config";
 
 Vue.use(Vuex);
@@ -86,6 +87,17 @@ export default new Vuex.Store({
       location: null,
       birth: null,
       email: null
+    },
+    deleteRouteId: 0,
+    deleteIdentityId: 0,
+    editIdentityId: 0,
+    editIdentityForm: {
+      name: null,
+      information: null,
+      id_category: null,
+      lat: null,
+      lng: null,
+      image: null
     }
   },
   getters: {
@@ -133,7 +145,7 @@ export default new Vuex.Store({
     },
 
     getNBlockedUsers: state => {
-      return state.users.filter(user => user.blocked === true).length;
+      return state.users.filter(user => user.block === 1).length;
     },
 
     getUsers: state => {
@@ -349,7 +361,7 @@ export default new Vuex.Store({
 
     getItinerariesVotes: state => {
       const follows = state.itineraries.reduce(
-        (sum, itinerary) => sum + itinerary.fallowedCount,
+        (sum, itinerary) => sum + itinerary.num_shares,
         0
       );
       return follows;
@@ -357,7 +369,8 @@ export default new Vuex.Store({
 
     getItinerariesNPeople: state => {
       const persons = state.itineraries.reduce(
-        (sum, itinerary) => sum + parseInt(itinerary.adults) + itinerary.kids,
+        (sum, itinerary) =>
+          sum + parseInt(itinerary.adults_num) + itinerary.kids_num,
         0
       );
       return persons;
@@ -576,6 +589,7 @@ export default new Vuex.Store({
 
     SET_IDENTITY(state, payload) {
       state.identities = payload.identities;
+      state.resStatus = payload.resStatus;
       localStorage.setItem("identities", JSON.stringify(state.identities));
     },
 
@@ -781,6 +795,38 @@ export default new Vuex.Store({
 
     SET_EDIT_USER(state, payload) {
       state.editUserId = payload.editUserId;
+    },
+
+    SET_DELETE_ROUTE(state, payload) {
+      state.deleteRouteId = payload.deleteRouteId;
+    },
+
+    SET_DELETE_IDENTITY(state, payload) {
+      state.deleteIdentityId = payload.deleteIdentityId;
+    },
+
+    SET_EDIT_IDENTITY(state, payload) {
+      state.editIdentityId = payload.editIdentityId;
+      alert(payload.editIdentityId);
+    },
+
+    SET_EDIT_IDENTITY_ADMIN(state, payload) {
+      state.editIdentityId = payload.editIdentityId;
+      state.editIdentityForm.name = payload.name;
+      state.editIdentityForm.information = payload.information;
+      state.editIdentityForm.id_category = payload.id_category;
+      state.editIdentityForm.lat = payload.lat;
+      state.editIdentityForm.lng = payload.lng;
+      state.editIdentityForm.image = payload.image;
+    },
+
+    SET_NEW_IDENTITY_ADMIN(state, payload) {
+      state.editIdentityForm.name = payload.name;
+      state.editIdentityForm.information = payload.information;
+      state.editIdentityForm.id_category = payload.id_category;
+      state.editIdentityForm.lat = payload.lat;
+      state.editIdentityForm.lng = payload.lng;
+      state.editIdentityForm.image = payload.image;
     }
 
     // ?
@@ -910,13 +956,59 @@ export default new Vuex.Store({
         )
       );
     },
-    // *Itineraries >
+    //* Itineraries
     async allItineraries({ commit }) {
       commit("SET_ITINERARIES", await itineraryService.getAllItineraries());
-    }
-    // *Itineraries >
-  },
+    },
 
-  // !SignIn and login>
+    async deleteRoute({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await itineraryService.deleteRoutesAdmin(this.state.deleteRouteId)
+      );
+    },
+    //* Itineraries
+
+    //* Identities
+    async allIdentities({ commit }) {
+      commit("SET_IDENTITY", await identityService.getAllIdentities());
+    },
+
+    async deleteIdentity({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await identityService.deleteIdentitiesAdmin(this.state.deleteIdentityId)
+      );
+    },
+
+    async editIdentity({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await identityService.editIdentitiesAdmin(
+          this.state.editIdentityId,
+          this.state.editIdentityForm.name,
+          this.state.editIdentityForm.information,
+          this.state.editIdentityForm.id_category,
+          this.state.editIdentityForm.lat,
+          this.state.editIdentityForm.lng,
+          this.state.editIdentityForm.image
+        )
+      );
+    },
+    async newIdentity({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await identityService.AddIdentitiesAdmin(
+          this.state.editIdentityForm.name,
+          this.state.editIdentityForm.information,
+          this.state.editIdentityForm.id_category,
+          this.state.editIdentityForm.lat,
+          this.state.editIdentityForm.lng,
+          this.state.editIdentityForm.image
+        )
+      );
+    }
+    //* Identities
+  },
   modules: {}
 });

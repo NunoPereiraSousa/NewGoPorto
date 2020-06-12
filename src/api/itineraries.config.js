@@ -30,6 +30,22 @@ const itineraryConfig = {
       localStorage.setItem("error", JSON.stringify(err.response.data.error));
       return err;
     }
+  },
+  async deleteRoutesAdmin(deleteRouteId) {
+    try {
+      const response = await HTTP.put(
+        `${API_URL}/itineraries/delete/${deleteRouteId}`,
+        {
+          headers
+        }
+      );
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      return err;
+    }
   }
 };
 

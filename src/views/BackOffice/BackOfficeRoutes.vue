@@ -49,12 +49,12 @@
           <div
             class="col-4"
             v-for="itinerary in filterItineraries"
-            :key="itinerary.id"
+            :key="itinerary.id_itinerary"
           >
             <div class="card" style="width: 18rem;">
               <div class="card-body">
                 <h5 class="card-title text-center text-nowrap">
-                  {{ itinerary.title }}
+                  {{ itinerary.name }}
                 </h5>
                 <p class="lead pt-3 pl-4 text-left">
                   <span class="font-weight-bold">User: </span>
@@ -62,7 +62,7 @@
                 </p>
                 <p class="lead pt-3 pl-4 text-left">
                   <span class="font-weight-bold">Follows: </span>
-                  {{ itinerary.fallowedCount }}
+                  {{ itinerary.num_shares }}
                 </p>
                 <div
                   class="pt-3 pl-4 d-flex justify-content-start"
@@ -70,7 +70,7 @@
                 >
                   <button
                     class="btn btn-primary icon-btn btnIcons"
-                    @click="removeItinerary(itinerary.id)"
+                    @click="removeItinerary(itinerary.id_itinerary)"
                   >
                     <i
                       class="fa fa-times"
@@ -104,19 +104,30 @@ export default {
     this.itineraries = this.getItineraries;
   },
   methods: {
-    removeItinerary(id) {
+    async removeItinerary(id) {
       if (confirm(`Wanna remove?`)) {
-        this.itineraries = this.itineraries.filter(
-          itinerary => itinerary.id !== id
-        );
-        this.$store.commit("SET_ITINERARIES", {
-          itineraries: this.itineraries
+        this.$store.commit("SET_DELETE_ROUTE", {
+          deleteRouteId: id
         });
+
+        try {
+          await this.$store.dispatch("deleteRoute");
+          alert("Deleted");
+        } catch (err) {
+          alert(err);
+          return err;
+        }
+        // this.itineraries = this.itineraries.filter(
+        //   itinerary => itinerary.id !== id
+        // );
+        // this.$store.commit("SET_ITINERARIES", {
+        //   itineraries: this.itineraries
+        // });
       }
     },
     compareFollows(a, b) {
-      if (a.fallowedCount < b.fallowedCount) return 1;
-      if (a.fallowedCount > b.fallowedCount) return -1;
+      if (a.num_shares < b.num_shares) return 1;
+      if (a.num_shares > b.num_shares) return -1;
       else return 0;
     },
     orderByFollows() {

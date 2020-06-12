@@ -62,7 +62,7 @@
         </div>
         <div class="row mb-5 cardsRow mx-auto">
           <div
-            class="col-4"
+            class="col-4 col-md-6 col-12"
             v-for="identity in filterByCategory"
             :key="identity.id"
           >
@@ -79,7 +79,7 @@
                   <button
                     type="button"
                     class="btn btn-primary btnIcons"
-                    @click="editIdentity(identity.id)"
+                    @click="editIdentity(identity.id_identity)"
                     data-toggle="modal"
                     data-target="#editIdentityModal"
                   >
@@ -90,7 +90,7 @@
                   </button>
                   <button
                     class="btn btn-primary icon-btn btnIcons"
-                    @click="removeIdentity(identity.id)"
+                    @click="removeIdentity(identity.id_identity)"
                   >
                     <i
                       class="fa fa-times"
@@ -103,7 +103,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-4">
+          <div class="col-lg-4 col-md-6 col-12">
             <div class="pb-lg-5 pb-5">
               <button
                 type="button"
@@ -117,7 +117,7 @@
               </button>
             </div>
           </div>
-          <div class="col-lg-4">
+          <div class="col-lg-4 col-md-6 col-12">
             <div class="pb-lg-5 pb-5">
               <button
                 type="button"
@@ -131,8 +131,7 @@
               </button>
             </div>
           </div>
-
-          <div class="col-lg-4">
+          <div class="col-lg-4 col-md-6 col-12">
             <div class="pb-lg-5 pb-5">
               <button
                 type="button"
@@ -208,33 +207,15 @@
               </div>
               <div class="form-group pb-3">
                 <input
-                  type="url"
-                  class="form-control"
-                  placeholder="Webite"
-                  v-model="form.webite_link"
-                />
-              </div>
-              <div class="form-group pb-3">
-                <input
                   type="text"
-                  class="form-control"
-                  placeholder="Kids Allowed?"
-                  v-model="form.kids_allowed"
-                />
-              </div>
-
-              <div class="form-group pb-3">
-                <input
-                  type="number"
                   class="form-control"
                   placeholder="latitude"
                   v-model="form.lat"
                 />
               </div>
-
               <div class="form-group pb-3">
                 <input
-                  type="number"
+                  type="text"
                   class="form-control"
                   placeholder="longitude"
                   v-model="form.lng"
@@ -283,7 +264,7 @@
                   type="text"
                   class="form-control"
                   placeholder="Category"
-                  v-model="form.category"
+                  v-model="form.id_category"
                 />
               </div>
               <div class="form-group">
@@ -302,35 +283,17 @@
                   v-model="form.image"
                 />
               </div>
-              <div class="form-group">
-                <input
-                  type="url"
-                  class="form-control"
-                  placeholder="Main Webite"
-                  v-model="form.webite_link"
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Kids Allowed?"
-                  v-model="form.kids_allowed"
-                />
-              </div>
-
               <div class="form-group pb-3">
                 <input
-                  type="number"
+                  type="text"
                   class="form-control"
                   placeholder="latitude"
                   v-model="form.lat"
                 />
               </div>
-
               <div class="form-group pb-3">
                 <input
-                  type="number"
+                  type="text"
                   class="form-control"
                   placeholder="longitude"
                   v-model="form.lng"
@@ -451,13 +414,11 @@ export default {
       categories: [],
       itineraries: [],
       form: {
-        img: "", //* related to the category
+        img: "",
         name: "",
         information: "",
-        category: "",
+        id_category: 0,
         image: "",
-        webite_link: "",
-        kids_allowed: "",
         editId: 0,
         rating: 0,
         lat: 0,
@@ -472,10 +433,17 @@ export default {
       identitiesController: ""
     };
   },
-  created() {
+  async created() {
     this.$store.commit("SET_IDENTITY", {
       identities: JSON.parse(localStorage.getItem("identities"))
     });
+
+    // try {
+    //   await this.$store.dispatch("allIdentities");
+    // } catch (err) {
+    //   alert(err);
+    //   return err;
+    // }
 
     this.identities = this.getIdentities;
     this.categories = this.getCategories;
@@ -542,31 +510,42 @@ export default {
         });
       }
     },
-    removeIdentity(id) {
-      this.identities = this.identities.filter(identity => identity.id !== id);
-      this.$store.commit("SET_IDENTITY", {
-        identities: this.identities
+    async removeIdentity(id) {
+      this.$store.commit("SET_DELETE_IDENTITY", {
+        deleteIdentityId: id
       });
 
-      this.itineraries = this.getItineraries;
-
-      // alert(this.getItineraries.length);
-
-      // *Delete in the itineraries the identities that have been already delected based on the id
-      for (const itinerarie of this.itineraries) {
-        itinerarie.Visitelocations = itinerarie.Visitelocations.filter(
-          location => location.id !== id
-        );
+      try {
+        await this.$store.dispatch("deleteIdentity");
+        alert("Deleted");
+      } catch (err) {
+        alert(err);
+        return err;
       }
+      // this.identities = this.identities.filter(identity => identity.id !== id);
+      // this.$store.commit("SET_IDENTITY", {
+      //   identities: this.identities
+      // });
 
-      // * Delete itineraries with no places to visite
-      this.itineraries = this.itineraries.filter(
-        itinerary => itinerary.Visitelocations.length !== 0
-      );
+      // this.itineraries = this.getItineraries;
 
-      this.$store.commit("SET_ITINERARIES", {
-        itineraries: this.itineraries
-      });
+      // // alert(this.getItineraries.length);
+
+      // // *Delete in the itineraries the identities that have been already delected based on the id
+      // for (const itinerarie of this.itineraries) {
+      //   itinerarie.Visitelocations = itinerarie.Visitelocations.filter(
+      //     location => location.id !== id
+      //   );
+      // }
+
+      // // * Delete itineraries with no places to visite
+      // this.itineraries = this.itineraries.filter(
+      //   itinerary => itinerary.Visitelocations.length !== 0
+      // );
+
+      // this.$store.commit("SET_ITINERARIES", {
+      //   itineraries: this.itineraries
+      // });
 
       this.$snotify.success("Removed successfully", "Done", {
         timeout: 2000,
@@ -582,50 +561,65 @@ export default {
       });
     },
     editIdentity(id) {
-      const identity = this.identities.filter(
-        identity => identity.id === id
-      )[0];
-      this.form.editId = identity.id;
-      this.form.name = identity.name;
-      this.form.information = identity.information;
-      this.form.category = identity.category;
-      this.form.image = identity.image;
-      this.form.webite_link = identity.webite_link;
-      this.form.kids_allowed = identity.kids_allowed;
-      this.form.lat = identity.lat;
-      this.form.lng = identity.lng;
+      // const identity = this.identities.filter(
+      //   identity => identity.id === id
+      // )[0];
+      this.form.editId = id;
+      // this.form.name = identity.name;
+      // this.form.information = identity.information;
+      // this.form.category = identity.category;
+      // this.form.image = identity.image;
+      // this.form.webite_link = identity.webite_link;
+      // this.form.kids_allowed = identity.kids_allowed;
+      // this.form.lat = identity.lat;
+      // this.form.lng = identity.lng;
     },
-    updateIdentity() {
-      this.identities[
-        this.getIdentityById(this.form.editId)
-      ].name = this.form.name;
-      this.identities[
-        this.getIdentityById(this.form.editId)
-      ].information = this.form.information;
-      this.identities[
-        this.getIdentityById(this.form.editId)
-      ].category = this.form.category;
-      this.identities[
-        this.getIdentityById(this.form.editId)
-      ].image = this.form.image;
-      this.identities[
-        this.getIdentityById(this.form.editId)
-      ].webite_link = this.form.webite_link;
-      this.identities[
-        this.getIdentityById(this.form.editId)
-      ].kids_allowed = this.form.kids_allowed;
-
-      this.identities[
-        this.getIdentityById(this.form.editId)
-      ].lat = this.form.lat;
-
-      this.identities[
-        this.getIdentityById(this.form.editId)
-      ].lng = this.form.lng;
-
-      this.$store.commit("SET_IDENTITY", {
-        identities: this.identities
+    async updateIdentity() {
+      this.$store.commit("SET_EDIT_IDENTITY_ADMIN", {
+        editIdentityId: this.form.editId,
+        name: this.form.name,
+        information: this.form.information,
+        id_category: this.form.id_category,
+        lat: this.form.lat,
+        lng: this.form.lng,
+        image: this.form.image
       });
+      try {
+        await this.$store.dispatch("editIdentity");
+        alert("Identity Edited");
+      } catch (err) {
+        return err;
+      }
+      // this.identities[
+      //   this.getIdentityById(this.form.editId)
+      // ].name = this.form.name;
+      // this.identities[
+      //   this.getIdentityById(this.form.editId)
+      // ].information = this.form.information;
+      // this.identities[
+      //   this.getIdentityById(this.form.editId)
+      // ].category = this.form.category;
+      // this.identities[
+      //   this.getIdentityById(this.form.editId)
+      // ].image = this.form.image;
+      // this.identities[
+      //   this.getIdentityById(this.form.editId)
+      // ].webite_link = this.form.webite_link;
+      // this.identities[
+      //   this.getIdentityById(this.form.editId)
+      // ].kids_allowed = this.form.kids_allowed;
+
+      // this.identities[
+      //   this.getIdentityById(this.form.editId)
+      // ].lat = this.form.lat;
+
+      // this.identities[
+      //   this.getIdentityById(this.form.editId)
+      // ].lng = this.form.lng;
+
+      // this.$store.commit("SET_IDENTITY", {
+      //   identities: this.identities
+      // });
       this.$snotify.success("Edited successfully", "Done", {
         timeout: 2000,
         showProgressBar: false,

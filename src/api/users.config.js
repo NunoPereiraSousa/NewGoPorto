@@ -299,7 +299,6 @@ const userConfig = {
     location,
     birth
   ) {
-    alert(name);
     try {
       const response = await HTTP.put(
         `${API_URL}/users/update/${editUserId}`,

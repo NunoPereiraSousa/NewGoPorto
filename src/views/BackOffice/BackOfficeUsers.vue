@@ -77,9 +77,9 @@
                     <button
                       type="button"
                       class="btn btn-primary btnIcons"
-                      @click="blockUser(user.id)"
+                      @click="blockUser(user.id_user)"
                     >
-                      <div v-if="user.blocked === true">
+                      <div v-if="user.block == 1">
                         <i
                           class="fa fa-lock"
                           style="font-size: 34px; color: rgba(32, 37, 43, 0.4);"
@@ -95,7 +95,7 @@
                     <button
                       type="button"
                       class="btn btn-primary btnIcons"
-                      @click="editUser(user.id)"
+                      @click="editUser(user.id_user)"
                       data-toggle="modal"
                       data-target="#editUserModal"
                     >
@@ -108,7 +108,7 @@
                       class="btn btn-primary icon-btn btnIcons"
                       data-toggle="modal"
                       data-target="#userHistoryModal"
-                      @click="userHistory(user.id)"
+                      @click="userHistory(user.id_user)"
                     >
                       <i
                         class="fa fa-times"
@@ -175,14 +175,6 @@
                   </div>
                   <div class="form-group">
                     <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Last Name"
-                      v-model="form.surname"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
                       type="email"
                       class="form-control"
                       placeholder="Email"
@@ -193,16 +185,16 @@
                     <input
                       type="number"
                       class="form-control"
-                      placeholder="Age"
-                      v-model="form.age"
+                      placeholder="Location"
+                      v-model="form.location"
                     />
                   </div>
                   <div class="form-group">
                     <input
-                      type="text"
+                      type="date"
                       class="form-control"
-                      placeholder="Description"
-                      v-model="form.description"
+                      placeholder="Birth"
+                      v-model="form.birth"
                     />
                   </div>
                   <div class="form-group">
@@ -284,8 +276,24 @@
                     <input
                       type="text"
                       class="form-control"
-                      placeholder="Last Name"
-                      v-model="form.surname"
+                      placeholder="Photo"
+                      v-model="form.photo"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Location"
+                      v-model="form.location"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Birth"
+                      v-model="form.birth"
                     />
                   </div>
                   <div class="form-group">
@@ -294,22 +302,6 @@
                       class="form-control"
                       placeholder="Email"
                       v-model="form.email"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="number"
-                      class="form-control"
-                      placeholder="Age"
-                      v-model="form.age"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Description"
-                      v-model="form.description"
                     />
                   </div>
                   <div class="form-group">
@@ -424,14 +416,13 @@ export default {
       form: {
         id: "",
         name: "",
-        surname: "",
+        birth: "",
         username: "",
         email: "",
-        age: "",
-        description: "",
+        location: "",
         photo: "",
         id_user_type: "",
-        blocked: false,
+        blocked: 0,
         password: "",
         editId: 0
       },
@@ -473,22 +464,39 @@ export default {
     ])
   },
   methods: {
-    addUser() {
+    async addUser() {
       if (!this.getUserUsername(this.form.username)) {
         this.form.id = this.getLastId;
-        this.$store.commit("NEW_USER", {
-          id: this.form.id,
-          name: this.form.name,
-          surname: this.form.surname,
-          username: this.form.username,
-          email: this.form.email,
-          age: this.form.age,
-          description: this.form.description,
-          photo: this.form.photo,
+        this.$store.commit("SET_NEW_USER_ADMIN", {
           id_user_type: this.form.id_user_type,
-          blocked: this.form.blocked,
-          password: this.form.password
+          name: this.form.name,
+          username: this.form.username,
+          password: this.form.password,
+          email: this.form.email,
+          photo: this.form.photo,
+          location: this.form.location,
+          birth: this.form.birth
         });
+        try {
+          await this.$store.dispatch("addUsersAdmin");
+          alert("User Added");
+        } catch (err) {
+          return err;
+        }
+        // this.form.id = this.getLastId;
+        // this.$store.commit("NEW_USER", {
+        //   id: this.form.id,
+        //   name: this.form.name,
+        //   surname: this.form.surname,
+        //   username: this.form.username,
+        //   email: this.form.email,
+        //   age: this.form.age,
+        //   description: this.form.description,
+        //   photo: this.form.photo,
+        //   id_user_type: this.form.id_user_type,
+        //   blocked: this.form.blocked,
+        //   password: this.form.password
+        // });
         this.clearForm();
       } else {
         this.clearForm();
@@ -500,11 +508,23 @@ export default {
         });
       }
     },
-    removeUser(id) {
-      this.users = this.users.filter(user => user.id !== id);
-      this.$store.commit("SET_USERS", {
-        users: this.users
+    async removeUser(id) {
+      this.$store.commit("SET_DELETE_USER", {
+        deleteUserId: id
       });
+
+      try {
+        await this.$store.dispatch("deleteUser");
+        alert("Deleted");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+
+      // this.users = this.users.filter(user => user.id !== id);
+      // this.$store.commit("SET_USERS", {
+      //   users: this.users
+      // });
       $(function() {
         $("#modal").modal("toggle");
       });
@@ -516,54 +536,104 @@ export default {
       });
     },
     editUser(id) {
-      const user = this.users.filter(user => user.id === id)[0];
-      this.form.editId = user.id;
-      this.form.name = user.name;
-      this.form.surname = user.surname;
-      this.form.username = user.username;
-      this.form.email = user.email;
-      this.form.age = user.age;
-      this.form.description = user.description;
-      this.form.photo = user.photo;
-      this.form.id_user_type = user.id_user_type;
-      this.form.password = user.password;
+      // const user = this.users.filter(user => user.id === id)[0];
+      // this.$store.commit("SET_EDIT_USER", {
+      //   editUserId: id
+      // });
+      this.form.editId = id;
+      alert("ID: " + this.form.editId);
+      // this.form.name = user.name;
+      // this.form.surname = user.surname;
+      // this.form.username = user.username;
+      // this.form.email = user.email;
+      // this.form.age = user.age;
+      // this.form.description = user.description;
+      // this.form.photo = user.photo;
+      // this.form.id_user_type = user.id_user_type;
+      // this.form.password = user.password;
     },
-    updateUser() {
-      this.users[
-        this.getIndexById(this.form.editId)
-      ].username = this.form.username;
-      this.users[this.getIndexById(this.form.editId)].name = this.form.name;
-      this.users[
-        this.getIndexById(this.form.editId)
-      ].surname = this.form.surname;
-      this.users[this.getIndexById(this.form.editId)].email = this.form.email;
-      this.users[this.getIndexById(this.form.editId)].age = this.form.age;
-      this.users[
-        this.getIndexById(this.form.editId)
-      ].description = this.form.description;
-      this.users[this.getIndexById(this.form.editId)].photo = this.form.photo;
-      this.users[this.getIndexById(this.form.editId)].id_user_type = parseInt(
-        this.form.id_user_type
-      );
-      this.users[
-        this.getIndexById(this.form.editId)
-      ].password = this.form.password;
-
-      this.$store.commit("SET_USERS", {
-        users: this.users
+    async updateUser() {
+      this.$store.commit("SET_EDIT_USER_ADMIN", {
+        editUserId: this.form.editId,
+        id_user_type: this.form.id_user_type,
+        name: this.form.name,
+        username: this.form.username,
+        password: this.form.password,
+        email: this.form.email,
+        photo: this.form.photo,
+        location: this.form.location,
+        birth: this.form.birth
       });
+
+      try {
+        await this.$store.dispatch("editUser");
+        alert("User Edited");
+      } catch (err) {
+        return err;
+      }
+      // this.users[
+      //   this.getIndexById(this.form.editId)
+      // ].username = this.form.username;
+      // this.users[this.getIndexById(this.form.editId)].name = this.form.name;
+      // this.users[
+      //   this.getIndexById(this.form.editId)
+      // ].surname = this.form.surname;
+      // this.users[this.getIndexById(this.form.editId)].email = this.form.email;
+      // this.users[this.getIndexById(this.form.editId)].age = this.form.age;
+      // this.users[
+      //   this.getIndexById(this.form.editId)
+      // ].description = this.form.description;
+      // this.users[this.getIndexById(this.form.editId)].photo = this.form.photo;
+      // this.users[this.getIndexById(this.form.editId)].id_user_type = parseInt(
+      //   this.form.id_user_type
+      // );
+      // this.users[
+      //   this.getIndexById(this.form.editId)
+      // ].password = this.form.password;
+
+      // this.$store.commit("SET_USERS", {
+      //   users: this.users
+      // });
       this.clearForm();
     },
-    blockUser(id) {
-      if (this.users[this.getIndexById(id)].blocked) {
-        this.users[this.getIndexById(id)].blocked = false;
-      } else {
-        this.users[this.getIndexById(id)].blocked = true;
+    async blockUser(id) {
+      let block = null;
+      for (const user of this.users) {
+        if (user.id_user === id) {
+          block = user.block;
+        }
+      }
+      if (block == "0") {
+        block = "1";
+      } else if (block == "1") {
+        block = "0";
       }
 
-      this.$store.commit("SET_USERS", {
-        users: this.users
+      //block ? 0 : 1
+
+      this.$store.commit("SET_BLOCK_USER", {
+        blockUserId: id,
+        block: block
       });
+
+      try {
+        await this.$store.dispatch("blockUser");
+        alert("Blocked");
+      } catch (err) {
+        return err;
+      }
+      // alert(this.users[this.getIndexById(id)].block)
+
+      // localStorage.setItem("block", JSON.stringify(block));
+      // if (this.users[this.getIndexById(id)].block == 1) {
+      //   this.users[this.getIndexById(id)].block = 0;
+      // } else {
+      //   this.users[this.getIndexById(id)].block = 1;
+      // }
+
+      // this.$store.commit("SET_USERS", {
+      //   users: this.users
+      // });
     },
     compareType(a, b) {
       if (a.id_user_type < b.id_user_type) return -1;
@@ -583,9 +653,10 @@ export default {
       this.users.sort(this.compareName);
     },
     userHistory(id) {
-      const user = this.users.filter(user => user.id === id)[0];
-      this.username = user.username;
-      this.userId = user.id;
+      // this.$store.commit("SET_DELETE_USER", {
+      //   deletePostId: id
+      // });
+      this.userId = id;
     },
     clearForm() {
       this.form.name = "";

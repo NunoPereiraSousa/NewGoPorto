@@ -105,7 +105,6 @@ const userConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      alert(err);
       return err;
     }
   },
@@ -148,7 +147,6 @@ const userConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      alert(err);
       localStorage.setItem("error", JSON.stringify(err.response.data.error));
       return err;
     }
@@ -166,7 +164,6 @@ const userConfig = {
         response: response.data
       };
     } catch (err) {
-      alert(err);
       localStorage.setItem("error", JSON.stringify(err.response.data.error));
       return err;
     }
@@ -179,9 +176,6 @@ const userConfig = {
     id_status,
     category_name
   ) {
-    alert(
-      `id_user: ${id_user} \nphoto: ${photo} \ncontent: ${content} \nnew_identity: ${new_identity} \nid_status: ${id_status} \ncategory_name: ${category_name} \n`
-    );
     try {
       const response = await HTTP.post(
         `${API_URL}/add-suggestions`,
@@ -202,7 +196,6 @@ const userConfig = {
       };
     } catch (err) {
       localStorage.setItem("error", JSON.stringify(err.response.data.error));
-      alert(err);
       return err;
     }
   },
@@ -224,6 +217,111 @@ const userConfig = {
       }
     } catch (err) {
       localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      return err;
+    }
+  },
+  async addUsersAdmin(
+    id_user_type,
+    name,
+    username,
+    password,
+    email,
+    photo,
+    location,
+    birth
+  ) {
+    try {
+      const response = await HTTP.post(
+        `${API_URL}/add-users-admin`,
+        {
+          id_user_type: id_user_type,
+          name: name,
+          username: username,
+          password: password,
+          email: email,
+          photo: photo,
+          location: location,
+          birth: birth
+        },
+        {
+          headers
+        }
+      );
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      return err;
+    }
+  },
+  async deleteUsersAdmin(deleteUserId) {
+    try {
+      const response = await HTTP.put(
+        `${API_URL}/users/delete/${deleteUserId}`,
+        {
+          headers
+        }
+      );
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      return err;
+    }
+  },
+  async blockUsersAdmin(blockUserId, block) {
+    try {
+      const response = await HTTP.put(
+        `${API_URL}/users/block/${blockUserId}`,
+        { block: block },
+        {
+          headers
+        }
+      );
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data));
+      return err;
+    }
+  },
+  async editUserAdmin(
+    editUserId,
+    id_user_type,
+    name,
+    username,
+    password,
+    email,
+    photo,
+    location,
+    birth
+  ) {
+    alert(name);
+    try {
+      const response = await HTTP.put(
+        `${API_URL}/users/update/${editUserId}`,
+        {
+          id_user_type: id_user_type,
+          name: name,
+          username: username,
+          password: password,
+          email: email,
+          photo: photo,
+          location: location,
+          birth: birth
+        },
+        {
+          headers
+        }
+      );
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
+      alert(err);
       return err;
     }
   }

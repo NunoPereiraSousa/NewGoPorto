@@ -37,6 +37,16 @@ export default new Vuex.Store({
       email: null,
       photo: null
     },
+    addUsersAdmin: {
+      id_user_type: null,
+      name: null,
+      username: null,
+      password: null,
+      email: null,
+      photo: null,
+      location: null,
+      birth: null
+    },
     newPostForm: {
       userId: null,
       content: null,
@@ -45,6 +55,10 @@ export default new Vuex.Store({
     },
     userPosts: {},
     deletePostId: 0,
+    deleteUserId: 0,
+    blockUserId: 0,
+    block: 0,
+    editUserId: 0,
     newSuggestion: {
       id_user: null,
       photo: null,
@@ -718,7 +732,6 @@ export default new Vuex.Store({
 
     SET_DELETE_POST(state, payload) {
       state.deletePostId = payload.deletePostId;
-      alert("payload: " + payload.deletePostId);
     },
 
     SET_USER_POSTS(state, payload) {
@@ -732,7 +745,44 @@ export default new Vuex.Store({
       state.newSuggestion.new_identity = payload.new_identity;
       state.newSuggestion.id_status = payload.id_status;
       state.newSuggestion.category_name = payload.category_name;
+    },
+
+    SET_NEW_USER_ADMIN(state, payload) {
+      state.addUsersAdmin.id_user_type = payload.id_user_type;
+      state.addUsersAdmin.name = payload.name;
+      state.addUsersAdmin.username = payload.username;
+      state.addUsersAdmin.password = payload.password;
+      state.addUsersAdmin.email = payload.email;
+      state.addUsersAdmin.photo = payload.photo;
+      state.addUsersAdmin.location = payload.location;
+      state.addUsersAdmin.birth = payload.birth;
+    },
+
+    SET_EDIT_USER_ADMIN(state, payload) {
+      state.editUserId = payload.editUserId;
+      state.addUsersAdmin.id_user_type = payload.id_user_type;
+      state.addUsersAdmin.name = payload.name;
+      state.addUsersAdmin.username = payload.username;
+      state.addUsersAdmin.password = payload.password;
+      state.addUsersAdmin.email = payload.email;
+      state.addUsersAdmin.photo = payload.photo;
+      state.addUsersAdmin.location = payload.location;
+      state.addUsersAdmin.birth = payload.birth;
+    },
+
+    SET_DELETE_USER(state, payload) {
+      state.deleteUserId = payload.deleteUserId;
+    },
+
+    SET_BLOCK_USER(state, payload) {
+      state.blockUserId = payload.blockUserId;
+      state.block = payload.block;
+    },
+
+    SET_EDIT_USER(state, payload) {
+      state.editUserId = payload.editUserId;
     }
+
     // ?
   },
   actions: {
@@ -758,6 +808,21 @@ export default new Vuex.Store({
     },
     async allUsers({ commit }) {
       commit("SET_USERS", await userService.getAllUsers());
+    },
+    async addUsersAdmin({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await userService.addUsersAdmin(
+          this.state.addUsersAdmin.id_user_type,
+          this.state.addUsersAdmin.name,
+          this.state.addUsersAdmin.username,
+          this.state.addUsersAdmin.password,
+          this.state.addUsersAdmin.email,
+          this.state.addUsersAdmin.photo,
+          this.state.addUsersAdmin.location,
+          this.state.addUsersAdmin.birth
+        )
+      );
     },
     async editProfile({ commit }) {
       commit(
@@ -814,7 +879,37 @@ export default new Vuex.Store({
         )
       );
     },
-
+    async deleteUser({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await userService.deleteUsersAdmin(this.state.deleteUserId)
+      );
+    },
+    async blockUser({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await userService.blockUsersAdmin(
+          this.state.blockUserId,
+          this.state.block
+        )
+      );
+    },
+    async editUser({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await userService.editUserAdmin(
+          this.state.editUserId,
+          this.state.addUsersAdmin.id_user_type,
+          this.state.addUsersAdmin.name,
+          this.state.addUsersAdmin.username,
+          this.state.addUsersAdmin.password,
+          this.state.addUsersAdmin.email,
+          this.state.addUsersAdmin.photo,
+          this.state.addUsersAdmin.location,
+          this.state.addUsersAdmin.birth
+        )
+      );
+    },
     // *Itineraries >
     async allItineraries({ commit }) {
       commit("SET_ITINERARIES", await itineraryService.getAllItineraries());

@@ -30,6 +30,43 @@ const categoryConfig = {
       localStorage.setItem("error", JSON.stringify(err.response.data.error));
       return err;
     }
+  },
+  async deleteCategoriesAdmin(deleteCategory) {
+    try {
+      const response = await HTTP.put(
+        `${API_URL}/categories/delete/${deleteCategory}`,
+        {
+          headers
+        }
+      );
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      return err;
+    }
+  },
+  async addCategoriesAdmin(category_name, photo) {
+    alert(`Name: ${category_name} photo: ${photo}`);
+    try {
+      const response = await HTTP.post(
+        `${API_URL}/add-categories`,
+        {
+          category_name: category_name,
+          photo: photo
+        },
+        {
+          headers
+        }
+      );
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response));
+      return err;
+    }
   }
 };
 

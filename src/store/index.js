@@ -99,6 +99,11 @@ export default new Vuex.Store({
       lat: null,
       lng: null,
       image: null
+    },
+    deleteCategory: null,
+    newCategoryForm: {
+      category_name: null,
+      photo: null
     }
   },
   getters: {
@@ -396,7 +401,7 @@ export default new Vuex.Store({
 
     getCategoryByName: state => name => {
       return state.categories.find(
-        category => category.name.toLowerCase() === name.toLowerCase()
+        category => category.category_name.toLowerCase() === name.toLowerCase()
       );
     },
 
@@ -871,6 +876,13 @@ export default new Vuex.Store({
       state.editIdentityForm.lat = payload.lat;
       state.editIdentityForm.lng = payload.lng;
       state.editIdentityForm.image = payload.image;
+    },
+    SET_DELETE_CATEGORY(state, payload) {
+      state.deleteCategory = payload.deleteCategory;
+    },
+    SET_NEW_CATEGORY(state, payload) {
+      state.newCategoryForm.category_name = payload.category_name;
+      state.newCategoryForm.photo = payload.photo;
     }
 
     // ?
@@ -1024,14 +1036,12 @@ export default new Vuex.Store({
     async allIdentities({ commit }) {
       commit("SET_IDENTITY", await identityService.getAllIdentities());
     },
-
     async deleteIdentity({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
         await identityService.deleteIdentitiesAdmin(this.state.deleteIdentityId)
       );
     },
-
     async editIdentity({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
@@ -1060,9 +1070,28 @@ export default new Vuex.Store({
       );
     },
     //* Identities
+
+    //* Categories
     async allCategories({ commit }) {
       commit("SET_CATEGORIES", await categoryService.getAllCategories());
+    },
+    async deleteCategory({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await categoryService.deleteCategoriesAdmin(this.state.deleteCategory)
+      );
+    },
+    async newCategory({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await categoryService.addCategoriesAdmin(
+          this.state.newCategoryForm.category_name,
+          this.state.newCategoryForm.photo
+        )
+      );
     }
+
+    //* Categories
   },
   modules: {}
 });

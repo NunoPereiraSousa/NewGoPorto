@@ -29,15 +29,15 @@
         <div class="row mb-lg-2" style="background-color: #f0f0f0">
           <div class="col-lg-4">
             <select
-              class="form-control mx-auto mt-4 w-75 text-uppercase"
+              class="form-control mx-auto mt-4 w-75"
               v-model="filterCategories"
             >
               <option value="all">Choose Category</option>
               <option
                 v-for="category in categories"
-                :key="category.id"
-                :value="category.name"
-                >{{ category.name }}</option
+                :key="category.id_category"
+                :value="category.category_name.toLowerCase()"
+                >{{ category.category_name }}</option
               >
             </select>
           </div>
@@ -334,7 +334,7 @@
                   type="text"
                   class="form-control"
                   placeholder="New Category Name"
-                  v-model="categoryForm.categoryName"
+                  v-model="categoryForm.category_name"
                   required
                 />
               </div>
@@ -343,7 +343,7 @@
                   type="url"
                   class="form-control"
                   placeholder="Image"
-                  v-model="form.img"
+                  v-model="categoryForm.photo"
                   required
                 />
               </div>
@@ -379,13 +379,13 @@
             </button>
             <form class="pb-4 w-75 mx-auto" @submit.prevent="removeCategory()">
               <div class="form-group">
-                <select class="form-control" v-model="form.category">
+                <select class="form-control" v-model="deleteCategoryName">
                   <option value>Choose the identity category</option>
                   <option
                     v-for="category in categories"
-                    :key="category.id"
-                    :value="category.name"
-                    >{{ category.name }}</option
+                    :key="category.id_category"
+                    :value="category.category_name"
+                    >{{ category.category_name }}</option
                   >
                 </select>
               </div>
@@ -426,11 +426,13 @@ export default {
       },
       categoryForm: {
         id: "",
-        categoryName: ""
+        category_name: null,
+        photo: null
       },
       filterCategories: "all",
       search: "",
-      identitiesController: ""
+      identitiesController: "",
+      deleteCategoryName: null
     };
   },
   async created() {
@@ -465,7 +467,7 @@ export default {
         let filterSearch = true;
         if (this.filterCategories !== "") {
           filterCategory =
-            identity.category == this.filterCategories ||
+            identity.category_name == this.filterCategories ||
             this.filterCategories === "all";
         }
         if (this.search !== "") {
@@ -641,14 +643,25 @@ export default {
         pauseOnHover: true
       });
     },
-    addCategory() {
-      if (!this.getCategoryByName(this.categoryForm.categoryName)) {
-        this.categoryForm.id = this.getCategoriesLastId;
-        this.$store.commit("NEW_CATEGORY", {
-          id: this.categoryForm.id,
-          name: this.categoryForm.categoryName,
-          img: this.form.img
+    async addCategory() {
+      if (!this.getCategoryByName(this.categoryForm.category_name)) {
+        // this.categoryForm.id = this.getCategoriesLastId;
+        // this.$store.commit("NEW_CATEGORY", {
+        //   id: this.categoryForm.id,
+        //   name: this.categoryForm.categoryName,
+        //   img: this.form.img
+        // });
+        this.$store.commit("SET_NEW_CATEGORY", {
+          category_name: this.categoryForm.category_name,
+          photo: this.categoryForm.photo
         });
+        try {
+          await this.$store.dispatch("newCategory");
+          alert("Category added");
+        } catch (err) {
+          alert(err);
+          return err;
+        }
         this.clearCategoryForm();
       } else {
         this.clearCategoryForm();
@@ -664,58 +677,71 @@ export default {
       // *Fazer com que as categorias adicionadas afectam areas na plataforma
     },
 
-    removeCategory() {
-      this.categories = this.getCategories;
-
-      this.categories = this.categories.filter(
-        category => category.name !== this.form.category
-      );
-
-      this.$store.commit("SET_CATEGORIES", {
-        categories: this.categories
-      });
-      this.categories = this.getCategories;
-
-      this.identitiesController = this.getIdentities;
-
-      this.identitiesController = this.identitiesController.filter(
-        identity => identity.category !== this.form.category
-      );
-
-      this.$store.commit("SET_IDENTITY", {
-        identities: this.identitiesController
+    async removeCategory() {
+      this.$store.commit("SET_DELETE_CATEGORY", {
+        deleteCategory: this.deleteCategoryName
       });
 
-      this.identities = this.getIdentities;
-
-      this.itineraries = this.getItineraries;
-
-      // alert(this.getItineraries.length);
-
-      // *Delete in the itineraries the identities that have been already delected
-      for (const itinerarie of this.itineraries) {
-        itinerarie.Visitelocations = itinerarie.Visitelocations.filter(
-          location => location.category !== this.form.category
-        );
+      try {
+        await this.$store.dispatch("deleteCategory");
+        alert("Deleted");
+      } catch (err) {
+        alert(err);
+        return err;
       }
+      // this.categories = this.getCategories;
 
-      // * Delete itineraries with no places to visite
-      this.itineraries = this.itineraries.filter(
-        itinerary => itinerary.Visitelocations.length !== 0
-      );
+      // this.categories = this.categories.filter(
+      //   category => category.name !== this.form.category
+      // );
 
-      this.$store.commit("SET_ITINERARIES", {
-        itineraries: this.itineraries
-      });
+      // this.$store.commit("SET_CATEGORIES", {
+      //   categories: this.categories
+      // });
+      // this.categories = this.getCategories;
 
-      // SET_ITINERARIES;
+      // this.identitiesController = this.getIdentities;
 
-      // todo (ideia de ultima hora)
-      //*eliminar nos itinerarios entidades que ja foram eliminadas durante o processo
+      // this.identitiesController = this.identitiesController.filter(
+      //   identity => identity.category !== this.form.category
+      // );
+
+      // this.$store.commit("SET_IDENTITY", {
+      //   identities: this.identitiesController
+      // });
+
+      // this.identities = this.getIdentities;
+
+      // this.itineraries = this.getItineraries;
+
+      // // alert(this.getItineraries.length);
+
+      // // *Delete in the itineraries the identities that have been already delected
+      // for (const itinerarie of this.itineraries) {
+      //   itinerarie.Visitelocations = itinerarie.Visitelocations.filter(
+      //     location => location.category !== this.form.category
+      //   );
+      // }
+
+      // // * Delete itineraries with no places to visite
+      // this.itineraries = this.itineraries.filter(
+      //   itinerary => itinerary.Visitelocations.length !== 0
+      // );
+
+      // this.$store.commit("SET_ITINERARIES", {
+      //   itineraries: this.itineraries
+      // });
+
+      // // SET_ITINERARIES;
+
+      // // todo (ideia de ultima hora)
+      // //*eliminar nos itinerarios entidades que ja foram eliminadas durante o processo
     },
     compareCategory(a, b) {
-      if (a.category.toLowerCase() < b.category.toLowerCase()) return -1;
-      if (a.category.toLowerCase() > b.category.toLowerCase()) return 1;
+      if (a.category_name.toLowerCase() < b.category_name.toLowerCase())
+        return -1;
+      if (a.category_name.toLowerCase() > b.category_name.toLowerCase())
+        return 1;
       else return 0;
     },
     orderByCategory() {
@@ -736,6 +762,10 @@ export default {
       this.form.image = "";
       this.form.webite_link = "";
       this.form.kids_allowed = "";
+    },
+    clearCategoryForm() {
+      this.categoryForm.category_name = "";
+      this.categoryForm.photo = "";
     }
   }
 };

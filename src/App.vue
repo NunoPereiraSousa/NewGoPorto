@@ -587,6 +587,14 @@ export default {
         alert(err);
         return err;
       }
+
+      try {
+        await this.$store.dispatch("allFullItineraries");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+
       // if (JSON.parse(localStorage.getItem("itineraries"))) {
       //   this.$store.commit("SET_ITINERARIES", {
       //     itineraries: JSON.parse(localStorage.getItem("itineraries"))

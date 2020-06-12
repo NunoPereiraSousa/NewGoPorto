@@ -518,6 +518,48 @@ export default new Vuex.Store({
       localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
     },
 
+    SET_FULL_ITINERARIES(state, payload) {
+      let fullItineraries = [];
+
+      for (const data of state.itineraries) {
+        let object = {
+          id: data.id_itinerary,
+          name: data.name,
+          kids: data.kids_num,
+          adults: data.adults_num,
+          food: true,
+          Visitelocations: [],
+          userId: data.id_user,
+          username: "",
+          followedCount: 3
+        };
+        fullItineraries.push(object);
+      }
+
+      for (const itinerary of fullItineraries) {
+        for (const data of payload.itineraries) {
+          if (data.id_itinerary == itinerary.id) {
+            let username = data.username;
+            let obj = {
+              id: data.id_identity,
+              name: data.name,
+              information: data.information,
+              category: data.category_name,
+              image: "",
+              webite_link: "",
+              kids_allowed: "",
+              rating: 0
+            };
+            itinerary.Visitelocations.push(obj);
+            itinerary.username = username;
+          }
+        }
+      }
+      state.itineraries = fullItineraries;
+      state.resStatus = payload.resStatus;
+      localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
+    },
+
     // NEW_SET_ITINERARIES(state, payload) {
     //   state.itineraries = payload.itineraries;
     //   localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
@@ -961,6 +1003,13 @@ export default new Vuex.Store({
     //* Itineraries
     async allItineraries({ commit }) {
       commit("SET_ITINERARIES", await itineraryService.getAllItineraries());
+    },
+
+    async allFullItineraries({ commit }) {
+      commit(
+        "SET_FULL_ITINERARIES",
+        await itineraryService.getAllFullItineraries()
+      );
     },
 
     async deleteRoute({ commit }) {

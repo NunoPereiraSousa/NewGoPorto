@@ -514,64 +514,71 @@ export default {
         });
       }
 
-      if (JSON.parse(localStorage.getItem("categories"))) {
-        this.$store.commit("SET_CATEGORIES", {
-          categories: JSON.parse(localStorage.getItem("categories"))
-        });
-      } else {
-        this.$store.commit("SET_CATEGORIES", {
-          categories: [
-            {
-              id: 1,
-              name: "Beach",
-              img:
-                "https://images.unsplash.com/photo-1476129718124-c0494399ab1c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80"
-            },
-            {
-              id: 2,
-              name: "Bridges",
-              img:
-                "https://images.unsplash.com/photo-1552333709-c465f89a4dfd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-            },
-            {
-              id: 3,
-              name: "Gastronomy",
-              img:
-                "https://lh3.googleusercontent.com/proxy/H-NreOjbwCeeJsWGf9KIDdTDdoGzvnQY4j6kd6kau2auLdRZNO-ECCp2Udb0bgKWH_1NaKLAlizvV0aNNBHsKpp1q9a47QNS9eyd_IwXBJ_R6Bl3_FlVoaMZ"
-            },
-            {
-              id: 4,
-              name: "Monuments",
-              img:
-                "https://images.unsplash.com/photo-1533285860212-c85e7140a408?ixlib=rb-1.2.1&auto=format&fit=crop&w=1036&q=80"
-            },
-            {
-              id: 5,
-              name: "Rivers",
-              img:
-                "https://images.unsplash.com/photo-1542128219-f00cc5891ca5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1055&q=80"
-            },
-            {
-              id: 6,
-              name: "Sports",
-              img:
-                "https://files.app.fcporto.pt/sources/5c90c108c4b3b1J17qAEFdZDq1XiD.jpg"
-            },
-            {
-              id: 7,
-              name: "Streets",
-              img:
-                "https://images.unsplash.com/photo-1581118222166-f0602c1f8730?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-            },
-            {
-              id: 8,
-              name: "Wine",
-              img:
-                "https://images.unsplash.com/photo-1560089168-4169937e37d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80"
-            }
-          ]
-        });
-      }
+      // try {
+      //   await this.$store.dispatch("allCategories");
+      // } catch (err) {
+      //   alert(err);
+      //   return err;
+      // }
+
+      // if (JSON.parse(localStorage.getItem("categories"))) {
+      //   this.$store.commit("SET_CATEGORIES", {
+      //     categories: JSON.parse(localStorage.getItem("categories"))
+      //   });
+      // } else {
+      //   this.$store.commit("SET_CATEGORIES", {
+      //     categories: [
+      //       {
+      //         id: 1,
+      //         name: "Beach",
+      //         img:
+      //           "https://images.unsplash.com/photo-1476129718124-c0494399ab1c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80"
+      //       },
+      //       {
+      //         id: 2,
+      //         name: "Bridges",
+      //         img:
+      //           "https://images.unsplash.com/photo-1552333709-c465f89a4dfd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+      //       },
+      //       {
+      //         id: 3,
+      //         name: "Gastronomy",
+      //         img:
+      //           "https://lh3.googleusercontent.com/proxy/H-NreOjbwCeeJsWGf9KIDdTDdoGzvnQY4j6kd6kau2auLdRZNO-ECCp2Udb0bgKWH_1NaKLAlizvV0aNNBHsKpp1q9a47QNS9eyd_IwXBJ_R6Bl3_FlVoaMZ"
+      //       },
+      //       {
+      //         id: 4,
+      //         name: "Monuments",
+      //         img:
+      //           "https://images.unsplash.com/photo-1533285860212-c85e7140a408?ixlib=rb-1.2.1&auto=format&fit=crop&w=1036&q=80"
+      //       },
+      //       {
+      //         id: 5,
+      //         name: "Rivers",
+      //         img:
+      //           "https://images.unsplash.com/photo-1542128219-f00cc5891ca5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1055&q=80"
+      //       },
+      //       {
+      //         id: 6,
+      //         name: "Sports",
+      //         img:
+      //           "https://files.app.fcporto.pt/sources/5c90c108c4b3b1J17qAEFdZDq1XiD.jpg"
+      //       },
+      //       {
+      //         id: 7,
+      //         name: "Streets",
+      //         img:
+      //           "https://images.unsplash.com/photo-1581118222166-f0602c1f8730?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+      //       },
+      //       {
+      //         id: 8,
+      //         name: "Wine",
+      //         img:
+      //           "https://images.unsplash.com/photo-1560089168-4169937e37d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80"
+      //       }
+      //     ]
+      //   });
+      // }
       // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
       try {

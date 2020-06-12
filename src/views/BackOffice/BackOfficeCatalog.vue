@@ -70,7 +70,7 @@
               <div class="card-body">
                 <h5 class="card-title text-center">{{ identity.name }}</h5>
                 <p class="lead pt-3 pb-4 text-center font-italic">
-                  {{ identity.category }}
+                  {{ identity.category_name.toUpperCase() }}
                 </p>
                 <div
                   class="pt-2 d-flex justify-content-around"
@@ -179,13 +179,13 @@
                 />
               </div>
               <div class="form-group pb-3">
-                <select class="form-control" v-model="form.category">
-                  <option value>Choose the identity category</option>
+                <select class="form-control" v-model="form.category_name">
+                  <option value="">Choose the identity category</option>
                   <option
                     v-for="category in categories"
-                    :key="category.id"
-                    :value="category.name"
-                    >{{ category.name }}</option
+                    :key="category.id_category"
+                    :value="category.category_name"
+                    >{{ category.category_name }}</option
                   >
                 </select>
               </div>
@@ -264,7 +264,7 @@
                   type="text"
                   class="form-control"
                   placeholder="Category"
-                  v-model="form.id_category"
+                  v-model="form.category_name"
                 />
               </div>
               <div class="form-group">
@@ -417,7 +417,7 @@ export default {
         img: "",
         name: "",
         information: "",
-        id_category: 0,
+        category_name: "",
         image: "",
         editId: 0,
         rating: 0,
@@ -438,12 +438,12 @@ export default {
       identities: JSON.parse(localStorage.getItem("identities"))
     });
 
-    // try {
-    //   await this.$store.dispatch("allIdentities");
-    // } catch (err) {
-    //   alert(err);
-    //   return err;
-    // }
+    try {
+      await this.$store.dispatch("allCategories");
+    } catch (err) {
+      alert(err);
+      return err;
+    }
 
     this.identities = this.getIdentities;
     this.categories = this.getCategories;
@@ -478,21 +478,35 @@ export default {
     }
   },
   methods: {
-    addIdentity() {
+    async addIdentity() {
       if (!this.getIdentitiesName(this.form.name)) {
-        this.form.id = this.getIdentityLastId;
-        this.$store.commit("NEW_IDENTITY", {
-          id: this.form.id,
+        this.$store.commit("SET_NEW_IDENTITY_ADMIN", {
           name: this.form.name,
           information: this.form.information,
-          category: this.form.category,
-          image: this.form.image,
-          webite_link: this.form.webite_link,
-          kids_allowed: this.form.kids_allowed,
-          rating: this.rating,
-          lat: this.lat,
-          lng: this.lng
+          category_name: this.form.category_name.toLowerCase(),
+          lat: this.form.lat,
+          lng: this.form.lng,
+          image: this.form.image
         });
+        try {
+          await this.$store.dispatch("newIdentity");
+          alert("Identity added");
+        } catch (err) {
+          return err;
+        }
+        // this.form.id = this.getIdentityLastId;
+        // this.$store.commit("NEW_IDENTITY", {
+        //   id: this.form.id,
+        //   name: this.form.name,
+        //   information: this.form.information,
+        //   category: this.form.category,
+        //   image: this.form.image,
+        //   webite_link: this.form.webite_link,
+        //   kids_allowed: this.form.kids_allowed,
+        //   rating: this.rating,
+        //   lat: this.lat,
+        //   lng: this.lng
+        // });
         this.$snotify.success("Added successfully", "Done", {
           timeout: 2000,
           showProgressBar: false,
@@ -579,7 +593,7 @@ export default {
         editIdentityId: this.form.editId,
         name: this.form.name,
         information: this.form.information,
-        id_category: this.form.id_category,
+        category_name: this.form.category_name.toLowerCase(),
         lat: this.form.lat,
         lng: this.form.lng,
         image: this.form.image

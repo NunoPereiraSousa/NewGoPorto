@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import userService from "@/api/users.config";
 import itineraryService from "@/api/itineraries.config";
 import identityService from "@/api/identities.config";
+import categoryService from "@/api/categories.config";
 import mainConfig from "@/api/main.config";
 
 Vue.use(Vuex);
@@ -94,7 +95,7 @@ export default new Vuex.Store({
     editIdentityForm: {
       name: null,
       information: null,
-      id_category: null,
+      category_name: null,
       lat: null,
       lng: null,
       image: null
@@ -691,6 +692,7 @@ export default new Vuex.Store({
 
     SET_CATEGORIES(state, payload) {
       state.categories = payload.categories;
+      state.resStatus = payload.resStatus;
       localStorage.setItem("categories", JSON.stringify(state.categories));
     },
 
@@ -814,7 +816,7 @@ export default new Vuex.Store({
       state.editIdentityId = payload.editIdentityId;
       state.editIdentityForm.name = payload.name;
       state.editIdentityForm.information = payload.information;
-      state.editIdentityForm.id_category = payload.id_category;
+      state.editIdentityForm.category_name = payload.category_name;
       state.editIdentityForm.lat = payload.lat;
       state.editIdentityForm.lng = payload.lng;
       state.editIdentityForm.image = payload.image;
@@ -823,7 +825,7 @@ export default new Vuex.Store({
     SET_NEW_IDENTITY_ADMIN(state, payload) {
       state.editIdentityForm.name = payload.name;
       state.editIdentityForm.information = payload.information;
-      state.editIdentityForm.id_category = payload.id_category;
+      state.editIdentityForm.category_name = payload.category_name;
       state.editIdentityForm.lat = payload.lat;
       state.editIdentityForm.lng = payload.lng;
       state.editIdentityForm.image = payload.image;
@@ -988,7 +990,7 @@ export default new Vuex.Store({
           this.state.editIdentityId,
           this.state.editIdentityForm.name,
           this.state.editIdentityForm.information,
-          this.state.editIdentityForm.id_category,
+          this.state.editIdentityForm.category_name,
           this.state.editIdentityForm.lat,
           this.state.editIdentityForm.lng,
           this.state.editIdentityForm.image
@@ -998,17 +1000,20 @@ export default new Vuex.Store({
     async newIdentity({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
-        await identityService.AddIdentitiesAdmin(
+        await identityService.addIdentitiesAdmin(
           this.state.editIdentityForm.name,
           this.state.editIdentityForm.information,
-          this.state.editIdentityForm.id_category,
+          this.state.editIdentityForm.category_name,
           this.state.editIdentityForm.lat,
           this.state.editIdentityForm.lng,
           this.state.editIdentityForm.image
         )
       );
-    }
+    },
     //* Identities
+    async allCategories({ commit }) {
+      commit("SET_CATEGORIES", await categoryService.getAllCategories());
+    }
   },
   modules: {}
 });

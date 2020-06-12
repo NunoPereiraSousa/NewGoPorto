@@ -51,13 +51,13 @@ const identityConfig = {
     editIdentityId,
     name,
     information,
-    id_category,
+    category_name,
     lat,
     lng,
     image
   ) {
     alert(
-      `editIdentityId: ${editIdentityId} \nName: ${name} \ninformation: ${information} \nid_category: ${id_category} \nlat: ${lat} \nlng: ${lng} \nphoto: ${image} `
+      `editIdentityId: ${editIdentityId} \nName: ${name} \ninformation: ${information} \nid_category: ${category_name} \nlat: ${lat} \nlng: ${lng} \nphoto: ${image} `
     );
     try {
       const response = await HTTP.put(
@@ -66,7 +66,7 @@ const identityConfig = {
           editIdentityId: editIdentityId,
           name: name,
           information: information,
-          id_category: id_category,
+          category_name: category_name,
           lat: lat,
           lng: lng,
           image: image
@@ -83,9 +83,9 @@ const identityConfig = {
       return err;
     }
   },
-  async AddIdentitiesAdmin(name, information, id_category, lat, lng, image) {
+  async addIdentitiesAdmin(name, information, category_name, lat, lng, image) {
     alert(
-      `Name: ${name} \ninformation: ${information} \nid_category: ${id_category} \nlat: ${lat} \nlng: ${lng} \nphoto: ${image} `
+      `Name: ${name} \ninformation: ${information} \ncategory_name: ${category_name} \nlat: ${lat} \nlng: ${lng} \nphoto: ${image} `
     );
     try {
       const response = await HTTP.post(
@@ -93,7 +93,7 @@ const identityConfig = {
         {
           name: name,
           information: information,
-          id_category: id_category,
+          category_name: category_name,
           lat: lat,
           lng: lng,
           image: image

@@ -522,10 +522,8 @@ export default new Vuex.Store({
       state.resStatus = payload.resStatus;
       localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
     },
-
     SET_FULL_ITINERARIES(state, payload) {
       let fullItineraries = [];
-
       for (const data of state.itineraries) {
         let object = {
           id: data.id_itinerary,

@@ -210,6 +210,7 @@ export default new Vuex.Store({
     getSuggestions: state => {
       return state.suggestions;
     },
+    // "My 2nd grate teacher once told me that I wouldn't be shit in life, HEHEH now she tells every body that I was her student"
 
     getSuggestionsLastId(state) {
       if (state.suggestions.length > 0) {

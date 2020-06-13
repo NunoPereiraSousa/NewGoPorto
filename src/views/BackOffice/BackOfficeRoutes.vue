@@ -49,7 +49,7 @@
           <div
             class="col-4"
             v-for="itinerary in filterItineraries"
-            :key="itinerary.id_itinerary"
+            :key="itinerary.id"
           >
             <div class="card" style="width: 18rem;">
               <div class="card-body">
@@ -58,7 +58,7 @@
                 </h5>
                 <p class="lead pt-3 pl-4 text-left">
                   <span class="font-weight-bold">User: </span>
-                  {{ itinerary.userName }}
+                  {{ itinerary.username }}
                 </p>
                 <p class="lead pt-3 pl-4 text-left">
                   <span class="font-weight-bold">Follows: </span>
@@ -70,7 +70,7 @@
                 >
                   <button
                     class="btn btn-primary icon-btn btnIcons"
-                    @click="removeItinerary(itinerary.id_itinerary)"
+                    @click="removeItinerary(itinerary.id)"
                   >
                     <i
                       class="fa fa-times"
@@ -105,6 +105,7 @@ export default {
   },
   methods: {
     async removeItinerary(id) {
+      // alert(id)
       if (confirm(`Wanna remove?`)) {
         this.$store.commit("SET_DELETE_ROUTE", {
           deleteRouteId: id
@@ -117,12 +118,12 @@ export default {
           alert(err);
           return err;
         }
-        // this.itineraries = this.itineraries.filter(
-        //   itinerary => itinerary.id !== id
-        // );
-        // this.$store.commit("SET_ITINERARIES", {
-        //   itineraries: this.itineraries
-        // });
+        this.itineraries = this.itineraries.filter(
+          itinerary => itinerary.id !== id
+        );
+        this.$store.commit("SET_ITINERARIES", {
+          itineraries: this.itineraries
+        });
       }
     },
     compareFollows(a, b) {

@@ -553,7 +553,9 @@ export default new Vuex.Store({
               image: "",
               webite_link: "",
               kids_allowed: "",
-              rating: 0
+              rating: 0,
+              lat: data.lat,
+              lng: data.lng
             };
             itinerary.Visitelocations.push(obj);
             itinerary.username = username;

@@ -9,7 +9,7 @@
             {{ form.userName }}
           </p>
           <p class="card-text pl-2">
-            <span class="font-weight-bold">Followers: </span>
+            <span class="font-weight-bold">Followers:</span>
             {{ form.followedCount }}
           </p>
         </div>
@@ -63,14 +63,15 @@ export default {
         userName: "",
         followedCount: 0
       },
+
       buttonText: "Follow",
+
       mylist: "",
       myCategories: [],
       itinerary: "",
       itineraies: ""
     };
   },
-  //hustling
   computed: {
     ...mapGetters({
       getItineraryById: "getItineraryById",
@@ -107,16 +108,18 @@ export default {
       }
     },
     upFollow(id) {
-      this.$store.commit("ADD_FOLLOW", {
-        id: id,
-        userId: this.getLoggedUser.id
-      });
+      alert(id);
+      // this.$store.commit("ADD_FOLLOW", {
+      //   id: id,
+      //   userId: this.getLoggedUser.id
+      // });
     },
     downFollow(id) {
-      this.$store.commit("REMOVE_FOLLOW", {
-        id: id,
-        userId: this.getLoggedUser.id
-      });
+      alert(id);
+      // this.$store.commit("REMOVE_FOLLOW", {
+      //   id: id,
+      //   userId: this.getLoggedUser.id
+      // });
     },
 
     buttonTextDefiner() {
@@ -151,14 +154,9 @@ export default {
         });
       }
       this.buttonTextDefiner();
-      // this.$store.commit("SET_CARD_FOLLOWS", {
-      //   title: this.form.title,
-      //   author: this.form.userName,
-      //   num_shares: this.form.followedCount
-      // });
-      this.form.title = this.itinerary.title;
-      this.form.userName = this.itinerary.userName;
-      this.form.followedCount = this.itinerary.fallowedCount;
+      this.form.title = this.itinerary.name;
+      this.form.userName = this.itinerary.username;
+      this.form.followedCount = this.itinerary.followedCount;
     },
     showItinerary(id) {
       this.itinerary = this.getItineraryById(id);
@@ -168,24 +166,13 @@ export default {
       });
     }
   },
-  async created() {
+  created() {
     this.itinerary = this.getItineraryById(this.id);
-    this.form.title = this.itinerary.title;
-    this.form.userName = this.itinerary.userName;
-    this.form.followedCount = this.itinerary.fallowedCount;
-    // try {
-    //   await this.$store.dispatch("numSharesCard");
-    //   this.itinerary = this.getItineraryById(this.id);
-    //   this.$store.commit("SET_CARD_FOLLOWS", {
-    //     title: this.form.title,
-    //     author: this.form.userName,
-    //     num_shares: this.form.followedCount
-    //   });
-    //   this.createList();
-    //   this.buttonTextDefiner();
-    // } catch (err) {
-    //   alert("Something went wrong try again please");
-    // }
+    this.form.title = this.itinerary.name;
+    this.form.userName = this.itinerary.username;
+    this.form.followedCount = this.itinerary.followedCount;
+    this.createList();
+    this.buttonTextDefiner();
   }
 };
 </script>

@@ -410,6 +410,7 @@ const routes = [
       mustBeAdmin: false
     },
     beforeEnter: (to, from, next) => {
+      alert();
       if (JSON.parse(localStorage.getItem("loggedUser"))) {
         store.commit(
           "SET_LOGGED_USER",
@@ -431,17 +432,12 @@ const routes = [
         });
       }
 
-      let identity = store.getters.getIdentity;
       let loggedUser = store.getters.getLoggedUser;
 
       if (loggedUser == "") {
         next("/");
       } else {
-        if (identity == "") {
-          next("/Error");
-        } else {
-          next();
-        }
+        next();
       }
     }
   },

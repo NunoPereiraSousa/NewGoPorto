@@ -17,6 +17,7 @@ export default new Vuex.Store({
     categories: [],
     selectedItinerary: {},
     identity: "",
+    identity_id: "",
     inLogInAndReg: false,
     suggestions: [],
     suggestion: {},
@@ -179,7 +180,7 @@ export default new Vuex.Store({
     },
 
     getIdentityByIds: state => id => {
-      return state.identities.find(identity => identity.id == id);
+      return state.identities.find(identity => identity.id_identity == id);
     },
 
     getIdentityLastId(state) {
@@ -651,8 +652,14 @@ export default new Vuex.Store({
     },
 
     SET_IDENTITY_SELECTED(state, payload) {
-      state.identity = payload;
+      alert("here");
+      state.identity = payload.identity;
       localStorage.setItem("identity", JSON.stringify(state.identity));
+    },
+
+    SET_IDENTITY_SELECTED_ID(state, payload) {
+      state.identity_id = payload;
+      localStorage.setItem("identity_id", JSON.stringify(state.identity_id));
     },
 
     SET_IDENTITY_SELECTED_PROTECTION(state, payload) {
@@ -1040,6 +1047,11 @@ export default new Vuex.Store({
     async allIdentities({ commit }) {
       commit("SET_IDENTITY", await identityService.getAllIdentities());
     },
+
+    async getIdentity({ commit }) {
+      commit("SET_IDENTITY_SELECTED", await identityService.getIdentityById());
+    },
+
     async deleteIdentity({ commit }) {
       commit(
         "SET_REGISTER_STATUS",

@@ -109,6 +109,29 @@ const identityConfig = {
       localStorage.setItem("error", JSON.stringify(err.response));
       return err;
     }
+  },
+  async getIdentityById() {
+    let identity_id = JSON.parse(localStorage.getItem("identity_id"));
+    alert(identity_id);
+    try {
+      const response = await HTTP.get(`${API_URL}/identities/${identity_id}`, {
+        headers
+      });
+      if (response.status == 200) {
+        return {
+          identity: response.data,
+          resStatus: response.status
+        };
+      } else {
+        return {
+          identity: [],
+          resStatus: response.status
+        };
+      }
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      return err;
+    }
   }
 };
 

@@ -98,9 +98,10 @@ export default {
   methods: {
     saveIdentity(id) {
       // TODO
-      alert(id);
-      // this.identity = this.getIdentityByIds(id);
-      this.$store.commit("SET_IDENTITY_SELECTED", id);
+      // alert(id);
+      this.identity = this.getIdentityByIds(id);
+      // alert(`name:${this.identity.name}`);
+      this.$store.commit("SET_IDENTITY_SELECTED_ID", id);
       this.$router.push({
         name: "identity-info",
         params: { name: this.identity.name }

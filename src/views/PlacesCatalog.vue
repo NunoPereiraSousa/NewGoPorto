@@ -15,22 +15,22 @@
             <li
               class="list-inline-item"
               v-for="category in myCategories"
-              :key="category.id"
+              :key="category.id_category"
             >
               <a
-                v-if="selectedCategory != `${category.name}`"
+                v-if="selectedCategory != `${category.category_name}`"
                 href="#"
                 class="btn-floating active btn-sm rgba-white-slight mx-1"
-                @click="setCategory(category.name)"
-                >{{ category.name }}</a
+                @click="setCategory(category.category_name)"
+                >{{ category.category_name }}</a
               >
               <a
                 v-else
                 id="painted"
                 href="#"
                 class="btn-floating active btn-sm rgba-white-slight mx-1"
-                @click="setCategory(category.name)"
-                >{{ category.name }}</a
+                @click="setCategory(category.category_name)"
+                >{{ category.category_name }}</a
               >
             </li>
           </ul>
@@ -42,9 +42,9 @@
         <div
           class="col-lg-3 col-md-6 col-12"
           v-for="identity in identities"
-          :key="identity.id"
+          :key="identity.id_identity"
         >
-          <div v-on:click="saveIdentity(identity.id)">
+          <div v-on:click="saveIdentity(identity.id_identity)">
             <CatalogCard :image="identity.image" :title="identity.name" />
           </div>
         </div>
@@ -97,8 +97,10 @@ export default {
   },
   methods: {
     saveIdentity(id) {
-      this.identity = this.getIdentityByIds(id);
-      this.$store.commit("SET_IDENTITY_SELECTED", this.identity);
+      // TODO
+      alert(id);
+      // this.identity = this.getIdentityByIds(id);
+      this.$store.commit("SET_IDENTITY_SELECTED", id);
       this.$router.push({
         name: "identity-info",
         params: { name: this.identity.name }

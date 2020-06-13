@@ -68,6 +68,15 @@ export default {
   },
   methods: {
     async setStorage() {
+      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+      // *All categories
+      try {
+        await this.$store.dispatch("allCategories");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+
       // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
       //* A1
 

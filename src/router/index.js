@@ -254,17 +254,13 @@ const routes = [
         });
       }
 
-      let visited = store.getters.getVisitedUser;
+      // let visited = store.getters.getVisitedUser;
       let loggedUser = store.getters.getLoggedUser;
 
       if (loggedUser == "") {
         next("/");
       } else {
-        if (visited == "") {
-          next("/Error");
-        } else {
-          next();
-        }
+        next();
       }
     }
   },

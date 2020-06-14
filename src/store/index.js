@@ -27,6 +27,7 @@ export default new Vuex.Store({
     comments: [],
     emails: [],
     visitedUser: "",
+    visitedUserId: null,
     category: "Monuments",
     favoritesList: [],
     followedItinerary: [], // follow system like on instagram,
@@ -705,8 +706,10 @@ export default new Vuex.Store({
       // let loggedUserid_user = JSON.parse(localStorage.getItem("loggedUser"));
 
       state.newComment.date_hour = payload.date;
-      state.newComment.id_user = state.loggedUser.id_user;
-      state.newComment.id_identity = state.identity_id;
+      state.newComment.id_user = state.loggedUser[0].id_user;
+      state.newComment.id_identity = JSON.parse(
+        localStorage.getItem("identity_id")
+      );
       state.newComment.comment_text = payload.content;
       state.newComment.num_star = payload.rating;
     },
@@ -728,8 +731,16 @@ export default new Vuex.Store({
     },
 
     SET_VISITED_USER(state, payload) {
-      state.visitedUser = payload;
+      state.visitedUser = payload.user;
+      state.resStatus = payload.resStatus;
       localStorage.setItem("visitedUser", JSON.stringify(state.visitedUser));
+    },
+    SET_VISITED_USER_ID(state, payload) {
+      state.visitedUserId = payload;
+      localStorage.setItem(
+        "visitedUserId",
+        JSON.stringify(state.visitedUserId)
+      );
     },
 
     SET_VISITED_USER_PROTECTION(state, payload) {
@@ -822,6 +833,7 @@ export default new Vuex.Store({
     },
 
     SET_USER_POSTS(state, payload) {
+      alert("payload" + payload.response.length);
       state.userPosts = payload.response;
     },
 
@@ -950,6 +962,9 @@ export default new Vuex.Store({
         )
       );
     },
+    async getVisitedUserProfile({ commit }) {
+      commit("SET_VISITED_USER", await userService.getUserById());
+    },
     async editProfile({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
@@ -981,6 +996,9 @@ export default new Vuex.Store({
     },
     async userPosts({ commit }) {
       commit("SET_USER_POSTS", await userService.getUserPosts());
+    },
+    async VisitedUserPosts({ commit }) {
+      commit("SET_USER_POSTS", await userService.getVisitedUserPosts());
     },
     async addSuggestion({ commit }) {
       commit(

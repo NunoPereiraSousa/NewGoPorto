@@ -90,7 +90,7 @@
                   </div>
                   <p
                     class="mt-lg-1 mb-0 mr-0"
-                    @click="visiteAccount(comment.id_user)"
+                    @click="visiteAccount(comment.id_user, comment.username)"
                     style="cursor: pointer; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 200px;color: #363636;"
                   >
                     {{ comment.username }}
@@ -236,10 +236,14 @@ export default {
         list: JSON.parse(localStorage.getItem("favoritesList"))
       });
     }
-
+    //  *important
     this.loggedUser = this.getLoggedUser;
     this.identity = this.getIdentity;
+    //  *important
+
+    // * important
     this.comments = this.getCommentsByIdentity(this.identity.id);
+    // *important
     this.favouritesList = this.getFavoritesList;
     this.identities = this.getIdentities;
     this.renderMap();
@@ -354,13 +358,12 @@ export default {
     sortCommentsByDateTime() {
       this.comments.sort(this.compareDateTime);
     },
-    visiteAccount(username) {
-      this.visitedUser = this.getUserByInput(username);
-      this.$store.commit("SET_VISITED_USER", this.visitedUser);
+    visiteAccount(id, username) {
+      this.$store.commit("SET_VISITED_USER_ID", id);
 
       this.$router.push({
         name: "other-user-profile",
-        params: { username: this.visitedUser.username }
+        params: { username: username }
       });
     },
     setRating(rating) {

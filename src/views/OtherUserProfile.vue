@@ -72,12 +72,12 @@
           <div
             id="stories"
             v-for="publication in visitedUserPublications"
-            :key="publication.id"
+            :key="publication.id_post"
           >
             <img :src="Form.image" class="d-inline-block" alt="person" />
-            <p class="d-inline-block pl-3">{{ publication.username }}</p>
+            <p class="d-inline-block pl-3">{{ Form.name }}</p>
             <p style="font-size: 14px">{{ publication.date }}</p>
-            <p class="lead text-justify">{{ publication.content }}</p>
+            <p class="text-justify">{{ publication.content }}</p>
             <hr />
           </div>
         </div>
@@ -104,16 +104,25 @@ export default {
         name: "",
         email: "",
         birth: "",
-        image: ""
+        image: "",
+        location: ""
       }
     };
   },
-  created() {
-    if (JSON.parse(localStorage.getItem("visitedUser"))) {
-      this.$store.commit(
-        "SET_VISITED_USER",
-        JSON.parse(localStorage.getItem("visitedUser"))
-      );
+  async created() {
+    // if (JSON.parse(localStorage.getItem("visitedUser"))) {
+    //   this.$store.commit(
+    //     "SET_VISITED_USER",
+    //     JSON.parse(localStorage.getItem("visitedUser"))
+    //   );
+    // }
+
+    try {
+      await this.$store.dispatch("getVisitedUserProfile");
+      this.visitedUser = this.getVisitedUser;
+    } catch (err) {
+      alert(err);
+      return err;
     }
 
     if (JSON.parse(localStorage.getItem("publications"))) {
@@ -122,19 +131,28 @@ export default {
       });
     }
 
-    this.visitedUser = this.getVisitedUser;
+    try {
+      await this.$store.dispatch("VisitedUserPosts");
+      this.visitedUserPublications = this.getUserPosts;
+      alert(`${this.visitedUserPublications[0].content} here`);
+    } catch (err) {
+      alert(err);
+      return err;
+    }
+
     this.Form.id = this.visitedUser.id;
     this.Form.name = this.visitedUser.name;
     this.Form.birth = this.visitedUser.birth;
     this.Form.email = this.visitedUser.email;
     this.Form.image = this.visitedUser.photo;
+    this.Form.location = this.visitedUser.location;
 
-    this.getUserPublications();
+    // this.getUserPublications();
   },
   computed: {
     ...mapGetters({
       getVisitedUser: "getVisitedUser",
-
+      getUserPosts: "getUserPosts",
       // todo
       getPublicationsLastId: "getPublicationsLastId",
       getPublications: "getPublications",

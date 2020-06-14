@@ -33,9 +33,10 @@ const commentConfig = {
     }
   },
   async addComment(date_hour, id_user, id_identity, comment_text, num_star) {
+    alert(date_hour);
     try {
       const response = await HTTP.post(
-        `${API_URL}/add-identities`,
+        `${API_URL}/add-comments`,
         {
           date_hour: date_hour,
           id_user: id_user,

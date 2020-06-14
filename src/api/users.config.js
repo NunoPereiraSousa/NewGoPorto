@@ -168,6 +168,23 @@ const userConfig = {
       return err;
     }
   },
+
+  async getVisitedUserPosts() {
+    let user_id = JSON.parse(localStorage.getItem("visitedUserId"));
+    // alert(user_id)
+    try {
+      const response = await HTTP.get(`${API_URL}/posts/${user_id}`, {
+        headers
+      });
+      return {
+        resStatus: response.status,
+        response: response.data
+      };
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      return err;
+    }
+  },
   async addSuggestion(
     id_user,
     photo,
@@ -275,7 +292,9 @@ const userConfig = {
     try {
       const response = await HTTP.put(
         `${API_URL}/users/block/${blockUserId}`,
-        { block: block },
+        {
+          block: block
+        },
         {
           headers
         }
@@ -321,6 +340,29 @@ const userConfig = {
       };
     } catch (err) {
       alert(err);
+      return err;
+    }
+  },
+
+  async getUserById() {
+    let user_id = JSON.parse(localStorage.getItem("visitedUserId"));
+    try {
+      const response = await HTTP.get(`${API_URL}/users/${user_id}`, {
+        headers
+      });
+      if (response.status == 200) {
+        return {
+          user: response.data[0],
+          resStatus: response.status
+        };
+      } else {
+        return {
+          user: [],
+          resStatus: response.status
+        };
+      }
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
       return err;
     }
   }

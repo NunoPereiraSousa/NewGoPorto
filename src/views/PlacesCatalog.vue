@@ -71,11 +71,18 @@ export default {
       myCategories: []
     };
   },
-  created() {
+  async created() {
     if (JSON.parse(localStorage.getItem("selectedCategory"))) {
       this.$store.commit("SET_MONUMENTS_SELECTED_CATEGORY", {
         category: JSON.parse(localStorage.getItem("selectedCategory"))
       });
+
+      try {
+        await this.$store.dispatch("allIdentities");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
 
       this.selectedCategory = this.getIdentitiesSelectedCategory;
       this.identities = this.getIdentitiesByCategory(this.selectedCategory);

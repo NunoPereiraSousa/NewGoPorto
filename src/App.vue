@@ -332,196 +332,196 @@ export default {
         });
       }
 
-      if (JSON.parse(localStorage.getItem("comments"))) {
-        this.$store.commit("SET_COMMENTS", {
-          comments: JSON.parse(localStorage.getItem("comments"))
-        });
-      } else {
-        this.$store.commit("SET_COMMENTS", {
-          comments: [
-            {
-              id: 1,
-              content: "The best place to watch the sun7!",
-              rating: 5,
-              date: "29-1-2020, 20:21:59",
-              userName: "NunoPereiraSousa",
-              userId: 1,
-              userPhoto: "../src/assets/OurTeam/Nuno.jpg",
-              identityId: 19
-            },
-            {
-              id: 2,
-              content: "The best place to watch the sun7!",
-              rating: 4,
-              date: "29-1-2020, 20:21:59",
-              userName: "Titas",
-              userId: 2,
-              userPhoto: "../src/assets/OurTeam/Titas.png",
-              identityId: 19
-            },
-            {
-              id: 3,
-              content: "Uau! Gorgeous!",
-              rating: 5,
-              date: "29-1-2020, 20:21:59",
-              userName: "KobeBryant",
-              userId: 2,
-              userPhoto:
-                "https://www.correiodoestado.com.br/upload/dn_noticia/2020/01/kobe-bryant.jpg",
-              identityId: 19
-            },
-            {
-              id: 4,
-              content: "Amazing Stadium! Go FCPorto!",
-              rating: 5,
-              date: "29-1-2020, 20:21:59",
-              userName: "KobeBryant",
-              userId: 2,
-              userPhoto:
-                "https://www.correiodoestado.com.br/upload/dn_noticia/2020/01/kobe-bryant.jpg",
-              identityId: 7
-            },
-            {
-              id: 5,
-              content:
-                "Probably one of the most enjoyable things to do in the world, dip a glass of history under the vines that form the canopy to the terrace. The view of Porto on a sunny day is something and if it’s winter and you are the only ones braving the cold - bonus. And having Sophia serve you is an added pleasure",
-              rating: 5,
-              date: "26-1-2020, 18:21:11",
-              userName: "JulieTyler2",
-              userId: 6,
-              userPhoto:
-                "https://media.rtp.pt/thevoiceportugal/wp-content/uploads/sites/76/2019/11/JoanaAbreu.jpg",
-              identityId: 37
-            },
-            {
-              id: 6,
-              content: "Super schöner Ort! Sollte man unbedingt besuchen.",
-              rating: 4,
-              date: "26-1-2020, 19:29:37",
-              userName: "JulieTyler2",
-              userId: 6,
-              userPhoto:
-                "https://media.rtp.pt/thevoiceportugal/wp-content/uploads/sites/76/2019/11/JoanaAbreu.jpg",
-              identityId: 37
-            },
-            {
-              id: 7,
-              content:
-                "Wow what a fantastic place. Port has never been my thing but the history and size of the operation is one you cannot miss. Tasting afterwards was fun but the tour was a wealth of knowledge about port it's history and wine making itself.",
-              rating: 5,
-              date: "26-1-2020, 23:46:20",
-              userName: "Curry30",
-              userId: 7,
-              userPhoto:
-                "https://www.theplayoffs.com.br/wp-content/uploads/2019/01/Curry-em-vit%C3%B3ria-do-Golden-State-Warriors.jpg",
-              identityId: 37
-            },
-            {
-              id: 8,
-              content:
-                "가이아 지역 언덕에 위치하고 있어 오가기가 조금 어려울 수도 있지만, 덕분에 사람도 많지 않아 한적하고 뷰도 훌륭합니다. 설명도 재미있고 볼거리도 많아서 즐거운 시간이었습니다. 그리고 역시 포트 와인 시음은 너무나 알차고 훌륭한 시간이었습니다. 예약 꼭 하고 가세요~~",
-              rating: 5,
-              date: "26-1-2020, 22:01:00",
-              userName: "Anna2",
-              userId: 5,
-              userPhoto:
-                "https://images.squarespace-cdn.com/content/v1/570283d39f72667cfc9ccc8b/1554519481891-KLF6FNI41KK4H5LUGB3I/ke17ZwdGBToddI8pDm48kLkXF2pIyv_F2eUT9F60jBl7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0iyqMbMesKd95J-X4EagrgU9L3Sa3U8cogeb0tjXbfawd0urKshkc5MgdBeJmALQKw/Anna%2BPancaldi-5.jpg?format=2500w",
-              identityId: 37
-            }
-          ]
-        });
-      }
+      // if (JSON.parse(localStorage.getItem("comments"))) {
+      //   this.$store.commit("SET_COMMENTS", {
+      //     comments: JSON.parse(localStorage.getItem("comments"))
+      //   });
+      // } else {
+      //   this.$store.commit("SET_COMMENTS", {
+      //     comments: [
+      //       {
+      //         id: 1,
+      //         content: "The best place to watch the sun7!",
+      //         rating: 5,
+      //         date: "29-1-2020, 20:21:59",
+      //         userName: "NunoPereiraSousa",
+      //         userId: 1,
+      //         userPhoto: "../src/assets/OurTeam/Nuno.jpg",
+      //         identityId: 19
+      //       },
+      //       {
+      //         id: 2,
+      //         content: "The best place to watch the sun7!",
+      //         rating: 4,
+      //         date: "29-1-2020, 20:21:59",
+      //         userName: "Titas",
+      //         userId: 2,
+      //         userPhoto: "../src/assets/OurTeam/Titas.png",
+      //         identityId: 19
+      //       },
+      //       {
+      //         id: 3,
+      //         content: "Uau! Gorgeous!",
+      //         rating: 5,
+      //         date: "29-1-2020, 20:21:59",
+      //         userName: "KobeBryant",
+      //         userId: 2,
+      //         userPhoto:
+      //           "https://www.correiodoestado.com.br/upload/dn_noticia/2020/01/kobe-bryant.jpg",
+      //         identityId: 19
+      //       },
+      //       {
+      //         id: 4,
+      //         content: "Amazing Stadium! Go FCPorto!",
+      //         rating: 5,
+      //         date: "29-1-2020, 20:21:59",
+      //         userName: "KobeBryant",
+      //         userId: 2,
+      //         userPhoto:
+      //           "https://www.correiodoestado.com.br/upload/dn_noticia/2020/01/kobe-bryant.jpg",
+      //         identityId: 7
+      //       },
+      //       {
+      //         id: 5,
+      //         content:
+      //           "Probably one of the most enjoyable things to do in the world, dip a glass of history under the vines that form the canopy to the terrace. The view of Porto on a sunny day is something and if it’s winter and you are the only ones braving the cold - bonus. And having Sophia serve you is an added pleasure",
+      //         rating: 5,
+      //         date: "26-1-2020, 18:21:11",
+      //         userName: "JulieTyler2",
+      //         userId: 6,
+      //         userPhoto:
+      //           "https://media.rtp.pt/thevoiceportugal/wp-content/uploads/sites/76/2019/11/JoanaAbreu.jpg",
+      //         identityId: 37
+      //       },
+      //       {
+      //         id: 6,
+      //         content: "Super schöner Ort! Sollte man unbedingt besuchen.",
+      //         rating: 4,
+      //         date: "26-1-2020, 19:29:37",
+      //         userName: "JulieTyler2",
+      //         userId: 6,
+      //         userPhoto:
+      //           "https://media.rtp.pt/thevoiceportugal/wp-content/uploads/sites/76/2019/11/JoanaAbreu.jpg",
+      //         identityId: 37
+      //       },
+      //       {
+      //         id: 7,
+      //         content:
+      //           "Wow what a fantastic place. Port has never been my thing but the history and size of the operation is one you cannot miss. Tasting afterwards was fun but the tour was a wealth of knowledge about port it's history and wine making itself.",
+      //         rating: 5,
+      //         date: "26-1-2020, 23:46:20",
+      //         userName: "Curry30",
+      //         userId: 7,
+      //         userPhoto:
+      //           "https://www.theplayoffs.com.br/wp-content/uploads/2019/01/Curry-em-vit%C3%B3ria-do-Golden-State-Warriors.jpg",
+      //         identityId: 37
+      //       },
+      //       {
+      //         id: 8,
+      //         content:
+      //           "가이아 지역 언덕에 위치하고 있어 오가기가 조금 어려울 수도 있지만, 덕분에 사람도 많지 않아 한적하고 뷰도 훌륭합니다. 설명도 재미있고 볼거리도 많아서 즐거운 시간이었습니다. 그리고 역시 포트 와인 시음은 너무나 알차고 훌륭한 시간이었습니다. 예약 꼭 하고 가세요~~",
+      //         rating: 5,
+      //         date: "26-1-2020, 22:01:00",
+      //         userName: "Anna2",
+      //         userId: 5,
+      //         userPhoto:
+      //           "https://images.squarespace-cdn.com/content/v1/570283d39f72667cfc9ccc8b/1554519481891-KLF6FNI41KK4H5LUGB3I/ke17ZwdGBToddI8pDm48kLkXF2pIyv_F2eUT9F60jBl7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0iyqMbMesKd95J-X4EagrgU9L3Sa3U8cogeb0tjXbfawd0urKshkc5MgdBeJmALQKw/Anna%2BPancaldi-5.jpg?format=2500w",
+      //         identityId: 37
+      //       }
+      //     ]
+      //   });
+      // }
 
-      if (JSON.parse(localStorage.getItem("notifications"))) {
-        this.$store.commit("SET_NOTIFICATIONS", {
-          notifications: JSON.parse(localStorage.getItem("notifications"))
-        });
-      } else {
-        this.$store.commit("SET_NOTIFICATIONS", {
-          notifications: [
-            {
-              id: 1,
-              userId: 4,
-              relatedTo: "Morro Garden",
-              sugestionDate: "27/01/2020",
-              answear: "Your sugestion was accepted",
-              status: "not-read"
-            },
-            {
-              id: 2,
-              userId: 4,
-              relatedTo: "Rio Ave Stadium",
-              sugestionDate: "25/01/2020",
-              answear: "Your sugestion was accepted",
-              status: "not-read"
-            },
-            {
-              id: 3,
-              userId: 4,
-              relatedTo: "Praia da Memória",
-              sugestionDate: "28/01/2020",
-              answear: "Your sugestion was accepted",
-              status: "checked"
-            },
-            {
-              id: 4,
-              userId: 4,
-              relatedTo: "Praia de Moreiró",
-              sugestionDate: "22/01/2020",
-              answear: "Your sugestion was accepted",
-              status: "not-read"
-            },
-            {
-              id: 5,
-              userId: 1,
-              relatedTo: "Praia de Lavadores",
-              sugestionDate: "20/01/2020",
-              answear: "Your sugestion was accepted",
-              status: "checked"
-            },
-            {
-              id: 6,
-              userId: 4,
-              relatedTo: "Praia das Sereias",
-              sugestionDate: "30/01/2020",
-              answear: "Your sugestion was accepted",
-              status: "not-read"
-            },
-            {
-              id: 7,
-              userId: 2,
-              relatedTo: "Praia do Mindelo",
-              sugestionDate: "31/01/2020",
-              answear: "Your sugestion was accepted",
-              status: "not-read"
-            },
-            {
-              id: 8,
-              userId: 2,
-              relatedTo: "Praia de Matosinhos",
-              sugestionDate: "29/01/2020",
-              answear: "Your sugestion was accepted",
-              status: "checked"
-            },
-            {
-              id: 9,
-              userId: 2,
-              relatedTo: "Passeio Alegre Garden",
-              sugestionDate: "30/01/2020",
-              answear: "Your sugestion was accepted",
-              status: "not-read"
-            },
-            {
-              id: 10,
-              userId: 4,
-              relatedTo: "Morro Garden",
-              sugestionDate: "30/01/2020",
-              answear: "Your sugestion was not accepted",
-              status: "not-read"
-            }
-          ]
-        });
-      }
+      // if (JSON.parse(localStorage.getItem("notifications"))) {
+      //   this.$store.commit("SET_NOTIFICATIONS", {
+      //     notifications: JSON.parse(localStorage.getItem("notifications"))
+      //   });
+      // } else {
+      //   this.$store.commit("SET_NOTIFICATIONS", {
+      //     notifications: [
+      //       {
+      //         id: 1,
+      //         userId: 4,
+      //         relatedTo: "Morro Garden",
+      //         sugestionDate: "27/01/2020",
+      //         answear: "Your sugestion was accepted",
+      //         status: "not-read"
+      //       },
+      //       {
+      //         id: 2,
+      //         userId: 4,
+      //         relatedTo: "Rio Ave Stadium",
+      //         sugestionDate: "25/01/2020",
+      //         answear: "Your sugestion was accepted",
+      //         status: "not-read"
+      //       },
+      //       {
+      //         id: 3,
+      //         userId: 4,
+      //         relatedTo: "Praia da Memória",
+      //         sugestionDate: "28/01/2020",
+      //         answear: "Your sugestion was accepted",
+      //         status: "checked"
+      //       },
+      //       {
+      //         id: 4,
+      //         userId: 4,
+      //         relatedTo: "Praia de Moreiró",
+      //         sugestionDate: "22/01/2020",
+      //         answear: "Your sugestion was accepted",
+      //         status: "not-read"
+      //       },
+      //       {
+      //         id: 5,
+      //         userId: 1,
+      //         relatedTo: "Praia de Lavadores",
+      //         sugestionDate: "20/01/2020",
+      //         answear: "Your sugestion was accepted",
+      //         status: "checked"
+      //       },
+      //       {
+      //         id: 6,
+      //         userId: 4,
+      //         relatedTo: "Praia das Sereias",
+      //         sugestionDate: "30/01/2020",
+      //         answear: "Your sugestion was accepted",
+      //         status: "not-read"
+      //       },
+      //       {
+      //         id: 7,
+      //         userId: 2,
+      //         relatedTo: "Praia do Mindelo",
+      //         sugestionDate: "31/01/2020",
+      //         answear: "Your sugestion was accepted",
+      //         status: "not-read"
+      //       },
+      //       {
+      //         id: 8,
+      //         userId: 2,
+      //         relatedTo: "Praia de Matosinhos",
+      //         sugestionDate: "29/01/2020",
+      //         answear: "Your sugestion was accepted",
+      //         status: "checked"
+      //       },
+      //       {
+      //         id: 9,
+      //         userId: 2,
+      //         relatedTo: "Passeio Alegre Garden",
+      //         sugestionDate: "30/01/2020",
+      //         answear: "Your sugestion was accepted",
+      //         status: "not-read"
+      //       },
+      //       {
+      //         id: 10,
+      //         userId: 4,
+      //         relatedTo: "Morro Garden",
+      //         sugestionDate: "30/01/2020",
+      //         answear: "Your sugestion was not accepted",
+      //         status: "not-read"
+      //       }
+      //     ]
+      //   });
+      // }
 
       // try {
       //   await this.$store.dispatch("allCategories");

@@ -82,7 +82,7 @@
                 <div class="col-lg-2">
                   <div class="d-flex align-items-center">
                     <img
-                      :src="comment.userPhoto"
+                      :src="comment.photo"
                       :alt="comment.username"
                       class="img-fluid"
                       id="commentImg"
@@ -90,17 +90,17 @@
                   </div>
                   <p
                     class="mt-lg-1 mb-0 mr-0"
-                    @click="visiteAccount(comment.userName)"
+                    @click="visiteAccount(comment.id_user)"
                     style="cursor: pointer; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 200px;color: #363636;"
                   >
-                    {{ comment.userName }}
+                    {{ comment.username }}
                   </p>
                   <div
                     class="d-lg-flex align-items-center justify-content-start"
                   >
                     <star-rating
                       read-only
-                      :rating="comment.rating"
+                      :rating="comment.num_star"
                       :show-rating="false"
                       :star-size="15"
                       :border-width="1"
@@ -112,9 +112,9 @@
                 <div class="col-lg-10">
                   <div class="text-justify">
                     <p class="mb-0">
-                      <small>{{ comment.date }}</small>
+                      <small>{{ comment.date_hour }}</small>
                     </p>
-                    <p style="padding-right: 2em">{{ comment.content }}</p>
+                    <p style="padding-right: 2em">{{ comment.comment_text }}</p>
                   </div>
                 </div>
                 <hr class="mx-auto" />
@@ -200,13 +200,24 @@ export default {
       }
     });
   },
-  created() {
-    if (JSON.parse(localStorage.getItem("identity"))) {
-      this.$store.commit(
-        "SET_IDENTITY_SELECTED",
-        JSON.parse(localStorage.getItem("identity"))
-      );
+  async created() {
+    // !<get itinerary
+    try {
+      await this.$store.dispatch("getIdentity");
+    } catch (err) {
+      alert(err);
+      return err;
     }
+    // !get itinerary>
+
+    // !get comments
+    try {
+      await this.$store.dispatch("getCommentsIdIdentity");
+    } catch (err) {
+      alert(err);
+      return err;
+    }
+    // !get comments
 
     if (JSON.parse(localStorage.getItem("users"))) {
       this.$store.commit("SET_USERS", {
@@ -253,6 +264,10 @@ export default {
     }
   },
   methods: {
+    // async getItinerary() {},
+
+    // async getCommentsIdIdentity() {},
+
     renderMap() {
       const location = new google.maps.LatLng(
         this.identity.lat,
@@ -299,18 +314,20 @@ export default {
       let dateTime = date + ", " + time;
       return dateTime;
     },
-    addComment() {
+    async addComment() {
       this.form.id = this.getCommentsLastId;
       this.$store.commit("NEW_COMMENT", {
-        id: this.form.id,
         content: this.form.content,
         rating: this.form.rating,
-        date: this.getCurrentDateTime(),
-        userName: this.loggedUser.username,
-        userId: this.loggedUser.id,
-        userPhoto: this.loggedUser.photo,
-        identityId: this.identity.id
+        date: this.getCurrentDateTime()
       });
+
+      try {
+        await this.$store.dispatch("addNewComment");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
       this.$snotify.success("Comment successfully sent!", "Done", {
         timeout: 2000,
         showProgressBar: false,
@@ -318,6 +335,15 @@ export default {
         pauseOnHover: true
       });
       this.form.content = "";
+      // !get comments
+      try {
+        await this.$store.dispatch("getCommentsIdIdentity");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+      // !get comments
+
       this.comments = this.getCommentsByIdentity(this.identity.id);
     },
     compareDateTime(a, b) {

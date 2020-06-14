@@ -410,7 +410,6 @@ const routes = [
       mustBeAdmin: false
     },
     beforeEnter: (to, from, next) => {
-      alert();
       if (JSON.parse(localStorage.getItem("loggedUser"))) {
         store.commit(
           "SET_LOGGED_USER",

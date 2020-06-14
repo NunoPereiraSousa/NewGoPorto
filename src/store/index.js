@@ -4,6 +4,8 @@ import userService from "@/api/users.config";
 import itineraryService from "@/api/itineraries.config";
 import identityService from "@/api/identities.config";
 import categoryService from "@/api/categories.config";
+import commentService from "@/api/comments.config";
+
 import mainConfig from "@/api/main.config";
 
 Vue.use(Vuex);
@@ -105,6 +107,13 @@ export default new Vuex.Store({
     newCategoryForm: {
       category_name: null,
       photo: null
+    },
+    newComment: {
+      date_hour: null,
+      id_user: null,
+      id_identity: null,
+      comment_text: null,
+      num_star: null
     }
   },
   getters: {
@@ -400,7 +409,6 @@ export default new Vuex.Store({
 
     // * Categories Getters
     getCategories: state => {
-      alert(state.categories);
       return state.categories;
     },
 
@@ -652,7 +660,7 @@ export default new Vuex.Store({
     },
 
     SET_IDENTITY_SELECTED(state, payload) {
-      alert("here");
+      // alert("here");
       state.identity = payload.identity;
       localStorage.setItem("identity", JSON.stringify(state.identity));
     },
@@ -694,8 +702,13 @@ export default new Vuex.Store({
     },
 
     NEW_COMMENT(state, payload) {
-      state.comments.push(payload);
-      localStorage.setItem("comments", JSON.stringify(state.comments));
+      // let loggedUserid_user = JSON.parse(localStorage.getItem("loggedUser"));
+
+      state.newComment.date_hour = payload.date;
+      state.newComment.id_user = state.loggedUser.id_user;
+      state.newComment.id_identity = state.identity_id;
+      state.newComment.comment_text = payload.content;
+      state.newComment.num_star = payload.rating;
     },
 
     SET_COMMENTS(state, payload) {
@@ -867,7 +880,7 @@ export default new Vuex.Store({
 
     SET_EDIT_IDENTITY(state, payload) {
       state.editIdentityId = payload.editIdentityId;
-      alert(payload.editIdentityId);
+      // alert(payload.editIdentityId);
     },
 
     SET_EDIT_IDENTITY_ADMIN(state, payload) {
@@ -1086,6 +1099,25 @@ export default new Vuex.Store({
       );
     },
     //* Identities
+
+    // * <comments
+    async getCommentsIdIdentity({ commit }) {
+      commit("SET_COMMENTS", await commentService.getCommentsByIdentityId());
+    },
+
+    async addNewComment({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await commentService.addComment(
+          this.state.newComment.date_hour,
+          this.state.newComment.id_user,
+          this.state.newComment.id_identity,
+          this.state.newComment.comment_text,
+          this.state.newComment.num_star
+        )
+      );
+    },
+    // * comments>
 
     //* Categories
     async allCategories({ commit }) {

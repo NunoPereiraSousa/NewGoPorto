@@ -45,7 +45,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Know More About </span>
+            <span>Know More About</span>
             <span>Porto</span>
           </h2>
         </div>
@@ -54,12 +54,12 @@
         <div
           class="col-lg-3 col-md-6 col-12 mt-lg-2 mt-4"
           v-for="category in myCategories"
-          :key="category.id"
+          :key="category.id_category"
         >
-          <div @click="setCatalogCategory(category.name)">
+          <div @click="setCatalogCategory(category.category_name)">
             <CategoryCard
-              :image="category.img"
-              :title="category.name"
+              :image="category.photo"
+              :title="category.category_name"
               class="text-center"
             />
           </div>
@@ -71,7 +71,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Most Followed </span>
+            <span>Most Followed</span>
             <span>Itineraries</span>
           </h2>
         </div>
@@ -121,7 +121,14 @@ export default {
       getCategories: "getCategories"
     })
   },
-  created() {
+  async created() {
+    try {
+      await this.$store.dispatch("allCategories");
+    } catch (err) {
+      alert(err);
+      return err;
+    }
+
     this.$store.commit("SET_ITINERARIES", {
       itineraries: JSON.parse(localStorage.getItem("itineraries"))
     });

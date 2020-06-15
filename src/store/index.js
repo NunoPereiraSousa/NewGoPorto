@@ -115,7 +115,20 @@ export default new Vuex.Store({
       id_identity: null,
       comment_text: null,
       num_star: null
-    }
+    },
+    newItineraryInfo: {
+      // id_itinerary: null,
+      name: null,
+      kids_num: null,
+      adults_num: null,
+      id_deslocation: 3,
+      start_location: null,
+      num_shares: 0,
+      block: 1
+    },
+
+    itineraryID: null,
+    inIdentityId: null
   },
   getters: {
     getUserById: state => id => {
@@ -399,13 +412,15 @@ export default new Vuex.Store({
     getSelectedItinerary: state => {
       return state.selectedItinerary;
     },
-
     getItinerariesByUser: state => id => {
       return state.itineraries.filter(itinerary => itinerary.userId === id);
     },
 
     getItineraryById: state => id => {
       return state.itineraries.find(itinerary => itinerary.id === id);
+    },
+    getItineraryId: state => {
+      return state.itineraryId;
     },
 
     // * Categories Getters
@@ -525,6 +540,27 @@ export default new Vuex.Store({
     },
 
     // * itineraries
+    // Todo --------------------
+
+    SET_NEW_ITINERARY_INFO(state, payload) {
+      state.newItineraryInfo.name = payload.name;
+      state.newItineraryInfo.kids_num = payload.kids_num;
+      state.newItineraryInfo.adults_num = payload.adults_num;
+      state.newItineraryInfo.id_deslocation = payload.id_deslocation;
+      state.newItineraryInfo.start_location = "";
+      state.newItineraryInfo.num_shares = 0;
+      state.newItineraryInfo.block = 1;
+    },
+
+    SET_IN_IDENTITY_ID(state, payload) {
+      state.inIdentityId = payload;
+    },
+
+    SET_ITINERARY_ID(state, payload) {
+      state.itineraryId = payload[0].id_itinerary;
+    },
+
+    // Todo ------------------
 
     NEW_ITINERARY(state, payload) {
       state.itineraries.push(payload);
@@ -1072,6 +1108,39 @@ export default new Vuex.Store({
         await itineraryService.deleteRoutesAdmin(this.state.deleteRouteId)
       );
     },
+
+    // todo-----------------------------------------------------------------
+    async addItinerary({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await identityService.addItinerary(
+          this.state.newItineraryInfo.name,
+          this.state.newItineraryInfo.kids_num,
+          this.state.newItineraryInfo.adults_num,
+          this.state.newItineraryInfo.id_deslocation,
+          this.state.newItineraryInfo.start_location,
+          this.state.newItineraryInfo.num_shares,
+          this.state.newItineraryInfo.block
+        )
+      );
+    },
+
+    async addIdentityItinerary({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await identityService.addIdentityItinerary(
+          this.state.itineraryId,
+          this.state.inIdentityId
+        )
+      );
+    },
+
+    async itineraryLastId({ commit }) {
+      commit("SET_ITINERARY_ID", await identityService.getItineraryLastId());
+    },
+
+    // Todo---------------------------------------------------------------
+
     //* Itineraries
 
     //* Identities

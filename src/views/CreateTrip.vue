@@ -189,22 +189,22 @@
             <li
               class="list-inline-item"
               v-for="category in categories"
-              :key="category.id"
+              :key="category.id_category"
             >
               <a
-                v-if="selectedCategory != `${category.name}`"
+                v-if="selectedCategory != `${category.category_name}`"
                 href="#"
                 class="btn-floating active btn-sm rgba-white-slight mx-1"
-                @click="setCategory(category.name)"
-                >{{ category.name }}</a
+                @click="setCategory(category.category_name)"
+                >{{ category.category_name }}</a
               >
               <a
                 v-else
                 id="painted"
                 href="#"
                 class="btn-floating active btn-sm rgba-white-slight mx-1"
-                @click="setCategory(category.name)"
-                >{{ category.name }}</a
+                @click="setCategory(category.category_name)"
+                >{{ category.category_name }}</a
               >
             </li>
           </ul>
@@ -216,11 +216,16 @@
                 class="col-lg-3 pb-3"
                 id="col"
                 v-for="identity in filterCatalog"
-                :key="identity.id"
+                :key="identity.id_identity"
               >
                 <div
                   style="cursor: pointer;"
-                  @click="addOrRemoveToList(identity.id, identity.category)"
+                  @click="
+                    addOrRemoveToList(
+                      identity.id_identity,
+                      identity.category_name
+                    )
+                  "
                 >
                   <ItineraryPlaceCard
                     :image="identity.image"
@@ -278,14 +283,32 @@ export default {
       loggedUser: {}
     };
   },
-  created() {
-    this.itineraries = this.getItineraries;
-    this.identities = this.getIdentities;
-    this.loggedUser = this.getLoggedUser;
+  async created() {
+    try {
+      await this.$store.dispatch("allCategories");
+    } catch (err) {
+      alert(err);
+      return err;
+    }
+
+    try {
+      await this.$store.dispatch("allIdentities");
+    } catch (err) {
+      alert(err);
+      return err;
+    }
+
+    // this.itineraries = this.getItineraries;
+    // this.identities = this.getIdentities;
+    // this.loggedUser = this.getLoggedUser;
     this.categories = this.getCategories;
+
+    // this.selectedCategory = this.getIdentitiesSelectedCategory;
+    this.identities = this.getIdentitiesByCategory(this.selectedCategory);
   },
   computed: {
     ...mapGetters({
+      getIdentitiesByCategory: "getIdentitiesByCategory",
       getItinerariesLastId: "getItinerariesLastId",
       getItineraries: "getItineraries",
       getIdentities: "getIdentities",
@@ -295,10 +318,12 @@ export default {
     }),
 
     filterCatalog() {
-      // this.sortCategory();
       return this.identities.filter(identity => {
         let boolCategory = false;
-        if (identity.category == this.selectedCategory) {
+        if (
+          identity.category_name.toLowerCase() ==
+          this.selectedCategory.toLowerCase()
+        ) {
           boolCategory = true;
         }
         return boolCategory;
@@ -377,12 +402,15 @@ export default {
     },
     setCategory(category) {
       this.selectedCategory = category;
+      this.identities = this.getIdentitiesByCategory(this.selectedCategory);
     },
     addOrRemoveToList(id, categ) {
-      this.identityIsSelected(id);
+      this.identityIsSelected(id); //Todo obs : validate if the place is already chosen or not
+
+      //  first Part  - if the place is inside
       if (this.addValidation == true) {
         this.interestPoints = this.interestPoints.filter(
-          identity => identity.id != id
+          identity => identity.id_identity != id
         );
         this.$snotify.warning("Place Removed", "Alright...", {
           timeout: 2000,
@@ -391,19 +419,25 @@ export default {
           pauseOnHover: true
         });
 
-        if (!this.interestPoints.find(points => points.category == categ)) {
+        // Comnfirms if there is  still in the list places from the category of the one that has been removed
+        if (
+          !this.interestPoints.find(points => points.category_name == categ)
+        ) {
           this.myCategories = this.myCategories.filter(
             Element => Element !== categ
           );
         }
 
         this.addValidation = false;
-      } else {
+      }
+
+      // Second part - if the place is not inside
+      else {
         let myIdentity = this.getIdentityByIds(id);
         this.interestPoints.push(myIdentity);
 
-        if (!this.myCategories.find(cat => cat == myIdentity.category)) {
-          this.myCategories.push(myIdentity.category);
+        if (!this.myCategories.find(cat => cat == myIdentity.category_name)) {
+          this.myCategories.push(myIdentity.category_name);
         }
 
         this.addValidation = false;
@@ -412,7 +446,7 @@ export default {
       this.buildIterece();
     },
     identityIsSelected(id) {
-      if (this.interestPoints.find(identity => identity.id == id)) {
+      if (this.interestPoints.find(identity => identity.id_identity == id)) {
         this.addValidation = true;
       } else {
         this.addValidation = false;
@@ -425,7 +459,7 @@ export default {
         this.letToDosOutput += ` <i class="fas fa-chevron-right d-inline-block" style="color: #e9d496"><li class='list-group-item d-inline-block' style="background-color: transparent; color: black"><h5>${cat}</h5></li></i>`;
 
         for (const point of this.interestPoints) {
-          if (point.category == cat) {
+          if (point.category_name.toLowerCase() == cat.toLowerCase()) {
             this.letToDosOutput += ` <li class='list-group-item pt-0 ml-2' style="background-color: transparent; border: none">${point.name}</li>`;
           }
         }

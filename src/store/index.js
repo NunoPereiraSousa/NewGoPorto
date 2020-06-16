@@ -1113,14 +1113,13 @@ export default new Vuex.Store({
     async addItinerary({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
-        await identityService.addItinerary(
+        await itineraryService.addItinerary(
           this.state.newItineraryInfo.name,
           this.state.newItineraryInfo.kids_num,
           this.state.newItineraryInfo.adults_num,
           this.state.newItineraryInfo.id_deslocation,
           this.state.newItineraryInfo.start_location,
-          this.state.newItineraryInfo.num_shares,
-          this.state.newItineraryInfo.block
+          this.state.newItineraryInfo.num_shares
         )
       );
     },
@@ -1128,7 +1127,7 @@ export default new Vuex.Store({
     async addIdentityItinerary({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
-        await identityService.addIdentityItinerary(
+        await itineraryService.addIdentityItinerary(
           this.state.itineraryId,
           this.state.inIdentityId
         )
@@ -1136,7 +1135,7 @@ export default new Vuex.Store({
     },
 
     async itineraryLastId({ commit }) {
-      commit("SET_ITINERARY_ID", await identityService.getItineraryLastId());
+      commit("SET_ITINERARY_ID", await itineraryService.getItineraryLastId());
     },
 
     // Todo---------------------------------------------------------------

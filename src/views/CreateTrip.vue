@@ -332,7 +332,7 @@ export default {
   },
 
   methods: {
-    addItinerary() {
+    async addItinerary() {
       let newItineraryBool = true;
 
       if (this.interestPoints.length == 0) {
@@ -347,6 +347,7 @@ export default {
           }
         );
         newItineraryBool = false;
+        alert("Must put something here bro");
       }
       if (this.form.kids == "") {
         this.form.kids = 0;
@@ -363,31 +364,79 @@ export default {
             pauseOnHover: true
           }
         );
+        alert("adult number mus be bigger then 0 bro");
         newItineraryBool = false;
       }
 
       if (newItineraryBool) {
-        let myItinerary = {
-          id: this.getItinerariesLastId,
-          title: this.form.title,
-          kids: this.form.kids,
-          adults: this.form.adults,
-          food: this.form.food,
-          Visitelocations: this.interestPoints,
-          userId: this.loggedUser.id,
-          userName: this.loggedUser.username,
-          fallowedCount: 0
-        };
-
-        this.$store.commit("NEW_ITINERARY", myItinerary);
-
-        this.$store.commit("SET_SELECTED_ITINERARY", myItinerary);
-
-        this.$router.push({
-          name: "my-trip"
+        let next = false;
+        let finalise = false;
+        // let myItinerary = {
+        //   id: this.getItinerariesLastId,
+        //   title: this.form.title,
+        //   kids: this.form.kids,
+        //   adults: this.form.adults,
+        //   food: this.form.food,
+        //   Visitelocations: this.interestPoints,
+        //   userId: this.loggedUser.id,
+        //   userName: this.loggedUser.username,
+        //   fallowedCount: 0
+        // };
+        this.$store.commit("SET_NEW_ITINERARY_INFO;", {
+          name: this.form.title,
+          kids_num: this.form.kids,
+          adults_num: this.form.adults,
+          id_deslocation: 3
         });
+
+        try {
+          await this.$store.dispatch("addItinerary");
+          next = true;
+        } catch (err) {
+          alert(err);
+          return err;
+        }
+        if (next) {
+          try {
+            await this.$store.dispatch("itineraryLastId");
+          } catch (err) {
+            alert(err);
+            return err;
+          }
+
+          for (const place of this.interestPoints) {
+            this.$store.commit("SET_NEW_ITINERARY_INFO", place.id_identity);
+          }
+
+          try {
+            await this.$store.dispatch("addIdentityItinerary");
+            finalise = true;
+          } catch (err) {
+            alert(err);
+            return err;
+          }
+        }
+
+        if (finalise) {
+          this.seeItinerary();
+        }
+
+        // this.$store.commit("NEW_ITINERARY", myItinerary);
+
+        // this.$store.commit("SET_SELECTED_ITINERARY", myItinerary);
       }
     },
+
+    //  todo ---------------------
+    seeItinerary() {
+      alert("I am here bro progress"); //! this must be delited
+      // this.$router.push({
+      //   name: "my-trip"
+      // });
+    },
+
+    //  todo ---------------------
+
     compareCategory(a, b) {
       if (a.category < b.category) {
         return 1;

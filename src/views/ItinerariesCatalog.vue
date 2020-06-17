@@ -113,6 +113,7 @@ export default {
     overflow-x: hidden;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
+    margin-bottom: 4em;
   }
 }
 </style>

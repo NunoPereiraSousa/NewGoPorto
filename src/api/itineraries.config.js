@@ -36,7 +36,7 @@ const itineraryConfig = {
     }
   },
 
-  async addIdentityItinerary(id_identity, id_itinerary) {
+  async addIdentityItinerary(id_itinerary, id_identity) {
     try {
       const response = await HTTP.post(
         `${API_URL}/itineraries_identities`,

@@ -392,6 +392,12 @@ export default new Vuex.Store({
       return 1;
     },
 
+    //  * new
+    getNewItineraryId: state => {
+      return state.itineraryID;
+    },
+    // *new
+
     getItinerariesVotes: state => {
       const follows = state.itineraries.reduce(
         (sum, itinerary) => sum + itinerary.num_shares,

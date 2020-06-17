@@ -390,13 +390,13 @@ export default {
           id_deslocation: 3
         });
 
-        // try {
-        //   await this.$store.dispatch("addItinerary");
-        //   next = true;
-        // } catch (err) {
-        //   alert(err);
-        //   return err;
-        // }
+        try {
+          await this.$store.dispatch("addItinerary");
+          next = true;
+        } catch (err) {
+          alert(err);
+          return err;
+        }
         if (next) {
           try {
             await this.$store.dispatch("itineraryLastId");
@@ -407,7 +407,7 @@ export default {
 
           for (const place of this.interestPoints) {
             // alert(place.id_identity);
-            this.$store.commit("SET_NEW_ITINERARY_INFO", place.id_identity);
+            this.$store.commit("SET_IN_IDENTITY_ID", place.id_identity);
             try {
               await this.$store.dispatch("addIdentityItinerary");
               finalise = true;

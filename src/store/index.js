@@ -559,7 +559,7 @@ export default new Vuex.Store({
     SET_ITINERARY_ID(state, payload) {
       // localStorage.setItem("error", JSON.stringify(payload.itinerary.id_itinerary));
       // alert(payload.itinerary.id_itinerary)
-      state.itineraryId = payload.itinerary.id_itinerary;
+      state.itineraryID = payload.itinerary.id_itinerary;
     },
 
     // Todo ------------------
@@ -1129,7 +1129,7 @@ export default new Vuex.Store({
       commit(
         "SET_REGISTER_STATUS",
         await itineraryService.addIdentityItinerary(
-          this.state.itineraryId,
+          this.state.itineraryID,
           this.state.inIdentityId
         )
       );

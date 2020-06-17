@@ -315,7 +315,8 @@ export default {
       getIdentityByIds: "getIdentityByIds",
       getLoggedUser: "getLoggedUser",
       getCategories: "getCategories",
-      getNewItineraryId: "getNewItineraryId"
+      getNewItineraryId: "getNewItineraryId",
+      getItineraryById: "getItineraryById"
     }),
 
     filterCatalog() {
@@ -429,17 +430,27 @@ export default {
 
     //  todo ---------------------
     async seeItinerary() {
+      let progress = false;
       try {
         await this.$store.dispatch("allItineraries");
-        let id = this.getNewItineraryId();
-        let selected = this.getItineraryById(id);
-        this.$store.commit("SET_SELECTED_ITINERARY", selected);
-        this.$router.push({
-          name: "my-trip"
-        });
+        progress = true;
       } catch (err) {
         alert(err);
         return err;
+      }
+      if (progress) {
+        try {
+          await this.$store.dispatch("allFullItineraries");
+          let id = this.getNewItineraryId;
+          let selected = this.getItineraryById(id);
+          this.$store.commit("SET_SELECTED_ITINERARY", selected);
+          this.$router.push({
+            name: "my-trip"
+          });
+        } catch (err) {
+          alert(err);
+          return err;
+        }
       }
 
       alert("I am here bro progress"); //! this must be delited

@@ -369,7 +369,7 @@ export default {
       }
 
       if (newItineraryBool) {
-        let next = true;
+        let next = false;
         let finalise = false;
         // let myItinerary = {
         //   id: this.getItinerariesLastId,

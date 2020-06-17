@@ -369,7 +369,7 @@ export default {
       }
 
       if (newItineraryBool) {
-        let next = false;
+        let next = true;
         let finalise = false;
         // let myItinerary = {
         //   id: this.getItinerariesLastId,
@@ -382,20 +382,21 @@ export default {
         //   userName: this.loggedUser.username,
         //   fallowedCount: 0
         // };
-        this.$store.commit("SET_NEW_ITINERARY_INFO;", {
+
+        this.$store.commit("SET_NEW_ITINERARY_INFO", {
           name: this.form.title,
           kids_num: this.form.kids,
           adults_num: this.form.adults,
           id_deslocation: 3
         });
 
-        try {
-          await this.$store.dispatch("addItinerary");
-          next = true;
-        } catch (err) {
-          alert(err);
-          return err;
-        }
+        // try {
+        //   await this.$store.dispatch("addItinerary");
+        //   next = true;
+        // } catch (err) {
+        //   alert(err);
+        //   return err;
+        // }
         if (next) {
           try {
             await this.$store.dispatch("itineraryLastId");
@@ -405,15 +406,15 @@ export default {
           }
 
           for (const place of this.interestPoints) {
+            // alert(place.id_identity);
             this.$store.commit("SET_NEW_ITINERARY_INFO", place.id_identity);
-          }
-
-          try {
-            await this.$store.dispatch("addIdentityItinerary");
-            finalise = true;
-          } catch (err) {
-            alert(err);
-            return err;
+            try {
+              await this.$store.dispatch("addIdentityItinerary");
+              finalise = true;
+            } catch (err) {
+              alert(err);
+              return err;
+            }
           }
         }
 

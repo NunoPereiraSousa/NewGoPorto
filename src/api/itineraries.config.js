@@ -11,7 +11,7 @@ let headers = {
 
 const itineraryConfig = {
   // todo --------------------------------------------------------------------------
-  async addItinerary(name, kids_num, adults_num, id_deslocation, num_shares) {
+  async addItinerary(name, kids_num, adults_num, id_deslocation) {
     let user = JSON.parse(localStorage.getItem("loggedUser"));
     try {
       const response = await HTTP.post(
@@ -21,8 +21,7 @@ const itineraryConfig = {
           kids_num: kids_num,
           adults_num: adults_num,
           id_deslocation: id_deslocation,
-          id_user: user[0].id_user,
-          num_shares: num_shares
+          id_user: user[0].id_user
         },
         {
           headers
@@ -60,17 +59,17 @@ const itineraryConfig = {
 
   async getItineraryLastId() {
     try {
-      const response = await HTTP.get(`${API_URL}/itineraries`, {
+      const response = await HTTP.get(`${API_URL}/itineraries-lastId`, {
         headers
       });
       if (response.status == 200) {
         return {
-          lastId: response.data,
+          itinerary: response.data,
           resStatus: response.status
         };
       } else {
         return {
-          lastId: [],
+          itinerary: [],
           resStatus: response.status
         };
       }

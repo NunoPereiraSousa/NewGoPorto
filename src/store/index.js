@@ -557,7 +557,9 @@ export default new Vuex.Store({
     },
 
     SET_ITINERARY_ID(state, payload) {
-      state.itineraryId = payload[0].id_itinerary;
+      // localStorage.setItem("error", JSON.stringify(payload.itinerary.id_itinerary));
+      // alert(payload.itinerary.id_itinerary)
+      state.itineraryId = payload.itinerary.id_itinerary;
     },
 
     // Todo ------------------
@@ -1118,8 +1120,7 @@ export default new Vuex.Store({
           this.state.newItineraryInfo.kids_num,
           this.state.newItineraryInfo.adults_num,
           this.state.newItineraryInfo.id_deslocation,
-          this.state.newItineraryInfo.start_location,
-          this.state.newItineraryInfo.num_shares
+          this.state.newItineraryInfo.start_location
         )
       );
     },

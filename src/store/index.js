@@ -636,6 +636,7 @@ export default new Vuex.Store({
       );
     },
 
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to  be removed
     ADD_FOLLOW(state, payload) {
       // *obs : payload = id
       let index = 0;
@@ -682,13 +683,14 @@ export default new Vuex.Store({
         JSON.stringify(state.followedItinerary)
       );
     },
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to  be removed
 
     SET_FOLLOWS(state, payload) {
       state.followedItinerary = payload.followedItinerary;
-      localStorage.setItem(
-        "followedItinerary",
-        JSON.stringify(state.followedItinerary)
-      );
+      // localStorage.setItem(
+      //   "followedItinerary",
+      //   JSON.stringify(state.followedItinerary)
+      // );
     },
 
     // *itineraries
@@ -1230,9 +1232,14 @@ export default new Vuex.Store({
           this.state.newCategoryForm.photo
         )
       );
-    }
-
+    },
     //* Categories
+
+    // * followed_itineraries
+    async getAllFollowedItinerary({ commit }) {
+      commit("SET_FOLLOWS", await commentService.getAllFollowedItinerary());
+    }
+    // * followed_itineraries
   },
   modules: {}
 });

@@ -138,7 +138,33 @@ const itineraryConfig = {
       localStorage.setItem("error", JSON.stringify(err.response.data.error));
       return err;
     }
-  }
+  },
+
+  async getAllFollowedItinerary() {
+    try {
+      const response = await HTTP.get(`${API_URL}/followedItineraries`, {
+        headers
+      });
+      if (response.status == 200) {
+        return {
+          followedItinerary: response.data,
+          resStatus: response.status
+        };
+      } else {
+        return {
+          followedItinerary: [],
+          resStatus: response.status
+        };
+      }
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      return err;
+    }
+  },
+
+  async getAllFollowedItineraryByUser() {},
+
+  async addFollowedIItinerary() {}
 };
 
 export default itineraryConfig;

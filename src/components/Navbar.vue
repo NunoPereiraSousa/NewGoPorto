@@ -119,13 +119,13 @@
                 <router-link
                   :to="{ name: 'itineraries-catalog' }"
                   class="dropdown-item"
-                  >Itineraries
-                </router-link>
+                  >Itineraries</router-link
+                >
                 <router-link
                   :to="{ name: 'places-catalog' }"
                   class="dropdown-item"
-                  >Places
-                </router-link>
+                  >Places</router-link
+                >
               </div>
             </li>
             <!-- TRANSPORTATION FOR - LG -->
@@ -479,7 +479,12 @@
                   class="dropdown-item"
                   >Profile</router-link
                 >
-                <router-link :to="{ name: 'my-backpack' }" class="dropdown-item"
+                <router-link
+                  :to="{
+                    name: 'my-backpack',
+                    params: { name: user[0].username }
+                  }"
+                  class="dropdown-item"
                   >My Backpack</router-link
                 >
                 <div class="dropdown-divider"></div>
@@ -533,9 +538,10 @@
                         <span class="d-inline-block"
                           >{{ notification.answear }}.</span
                         >
-                        <span class="pr-4">
-                          {{ notification.sugestionDate }} </span
-                        ><button
+                        <span class="pr-4">{{
+                          notification.sugestionDate
+                        }}</span>
+                        <button
                           type="button"
                           class="btn btn-primary btnIcon d-inline-block"
                           @click="checkNotification(notification.id)"

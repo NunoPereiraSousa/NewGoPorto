@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12">
           <h2>
-            <span>My </span>
+            <span>My</span>
             <span>Backpack</span>
           </h2>
         </div>
@@ -18,9 +18,7 @@
               v-if="myfavouriteList.length > 0"
               class="list-group list-group-flush"
             >
-              <p class="lead text-center">
-                Favourite Places
-              </p>
+              <p class="lead text-center">Favourite Places</p>
               <li
                 class="list-group-item text-left"
                 v-for="favorite in myfavouriteList"
@@ -40,31 +38,25 @@
             </ul>
 
             <ul v-else class="list-group list-group-flush">
-              <p class="lead text-center">
-                Favourite Places
-              </p>
+              <p class="lead text-center">Favourite Places</p>
               <li class="list-group-item">
-                <p class="btn btn-primary">
-                  There are no Favourites
-                </p>
+                <p class="btn btn-primary">There are no Favourites</p>
               </li>
             </ul>
           </div>
           <div class="col-lg-6 col-12">
             <ul class="list-group list-group-flush" v-if="myFollows.length > 0">
-              <p class="lead text-center">
-                Fallowed Itineraries
-              </p>
+              <p class="lead text-center">Fallowed Itineraries</p>
               <li
                 class="list-group-item text-left"
                 v-for="follow in myFollows"
-                :key="follow.userId"
+                :key="follow.id_user"
               >
                 <p
                   class="btn btn-primary"
-                  @click="folowItinerary(follow.itineraryId)"
+                  @click="folowItinerary(follow.id_itinerary)"
                 >
-                  {{ follow.title }}
+                  {{ follow.name }}
                   <i
                     class="fas fa-angle-double-right pl-2"
                     style="color: #5085a5"
@@ -73,13 +65,9 @@
               </li>
             </ul>
             <ul v-else class="list-group list-group-flush">
-              <p class="lead text-center">
-                Fallowed Itineraries
-              </p>
+              <p class="lead text-center">Fallowed Itineraries</p>
               <li class="list-group-item">
-                <p class="btn btn-primary">
-                  Nothing to show
-                </p>
+                <p class="btn btn-primary">Nothing to show</p>
               </li>
             </ul>
           </div>
@@ -110,17 +98,25 @@ export default {
       itinerary: {}
     };
   },
-  created() {
-    if (JSON.parse(localStorage.getItem("favoritesList"))) {
-      this.$store.commit("SET_FAVORITES_LIST", {
-        list: JSON.parse(localStorage.getItem("favoritesList"))
-      });
+  async created() {
+    try {
+      await this.$store.dispatch("getAllFollowedItinerary");
+    } catch (err) {
+      alert(err);
+      return err;
     }
+    // if (JSON.parse(localStorage.getItem("favoritesList"))) {
+    //   this.$store.commit("SET_FAVORITES_LIST", {
+    //     list: JSON.parse(localStorage.getItem("favoritesList"))
+    //   });
+    // }
 
     this.loggedUser = this.getLoggedUser;
 
-    this.myfavouriteList = this.getMyFavorites(this.loggedUser.id);
-    this.myFollows = this.getMyFollowsById(this.loggedUser.id);
+    // this.myfavouriteList = this.getMyFavorites(this.loggedUser.id);
+    //!!!!!!!!!!!!!!!
+    this.myFollows = this.getMyFollowsById(this.loggedUser[0].id_user);
+    // alert(this.myFollows.length);
   },
   methods: {
     saveIdentity(id) {

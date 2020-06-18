@@ -374,8 +374,10 @@ export default new Vuex.Store({
     },
 
     getMyFollowsById: state => userId => {
+      // alert(userId)
+      // alert(state.followedItinerary.length)
       return state.followedItinerary.filter(
-        following => following.userId === userId
+        following => following.id_user === userId
       );
     },
 

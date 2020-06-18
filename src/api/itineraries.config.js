@@ -162,9 +162,52 @@ const itineraryConfig = {
     }
   },
 
-  async getAllFollowedItineraryByUser() {},
+  // async getAllFollowedItineraryByUser() {},
 
-  async addFollowedIItinerary() {}
+  async addFollowedIItinerary(id_itinerary) {
+    let user = JSON.parse(localStorage.getItem("loggedUser"));
+    try {
+      const response = await HTTP.post(
+        `${API_URL}/add-followedItineraries`,
+        {
+          id_user: user[0].id_user,
+          id_itinerary: id_itinerary
+        },
+        {
+          headers
+        }
+      );
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      return err;
+    }
+  },
+
+  async removeFollowed(id_itinerary) {
+    let user = JSON.parse(localStorage.getItem("loggedUser"));
+    alert(id_itinerary);
+    try {
+      const response = await HTTP.put(
+        `${API_URL}/followedItineraries/delete`,
+        {
+          id_user: user[0].id_user,
+          id_itinerary: id_itinerary
+        },
+        {
+          headers
+        }
+      );
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      return err;
+    }
+  }
 };
 
 export default itineraryConfig;

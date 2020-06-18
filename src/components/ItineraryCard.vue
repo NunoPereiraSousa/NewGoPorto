@@ -77,7 +77,8 @@ export default {
       getItineraryById: "getItineraryById",
       getItineraries: "getItineraries",
       getFollowByIds: "getFollowByIds",
-      getLoggedUser: "getLoggedUser"
+      getLoggedUser: "getLoggedUser",
+      getNumFollowers: "getNumFollowers"
     })
   },
   methods: {
@@ -107,19 +108,52 @@ export default {
         }
       }
     },
-    upFollow(id) {
-      alert(id);
-      // this.$store.commit("ADD_FOLLOW", {
-      //   id: id,
-      //   userId: this.getLoggedUser.id
-      // });
+    async upFollow(id) {
+      alert("upfolloewd" + id);
+      this.$store.commit("SET_ITINERARY_ID", {
+        itinerary: {
+          id_itinerary: id
+        }
+      });
+
+      try {
+        await this.$store.dispatch("addNewFollowedItinerary");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+
+      try {
+        await this.$store.dispatch("getAllFollowedItinerary");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+      this.form.followedCount = this.getNumFollowers(id);
     },
-    downFollow(id) {
-      alert(id);
-      // this.$store.commit("REMOVE_FOLLOW", {
-      //   id: id,
-      //   userId: this.getLoggedUser.id
-      // });
+    async downFollow(id) {
+      alert("down follow " + id);
+      this.$store.commit("SET_ITINERARY_ID", {
+        itinerary: {
+          id_itinerary: id
+        }
+      });
+
+      try {
+        await this.$store.dispatch("deleteFollowedItinerary");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+
+      try {
+        await this.$store.dispatch("getAllFollowedItinerary");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+
+      this.form.followedCount = this.getNumFollowers(id);
     },
 
     buttonTextDefiner() {
@@ -133,9 +167,10 @@ export default {
     },
 
     followItinerary(id) {
+      alert("user id: " + this.getLoggedUser[0].id_user);
       // this.itinerary = this.getItineraryById(id);
-      this.$store.commit("SET_SELECTED_ITINERARY", this.itinerary);
-      if (this.getFollowByIds(id, this.getLoggedUser.id)) {
+      // this.$store.commit("SET_SELECTED_ITINERARY", this.itinerary);
+      if (this.getFollowByIds(id, this.getLoggedUser[0].id_user)) {
         this.downFollow(id);
 
         this.$snotify.warning("Itierary unfollow!", "Done", {
@@ -156,7 +191,6 @@ export default {
       this.buttonTextDefiner();
       this.form.title = this.itinerary.name;
       this.form.userName = this.itinerary.username;
-      this.form.followedCount = this.itinerary.followedCount;
     },
     showItinerary(id) {
       this.itinerary = this.getItineraryById(id);
@@ -170,7 +204,7 @@ export default {
     this.itinerary = this.getItineraryById(this.id);
     this.form.title = this.itinerary.name;
     this.form.userName = this.itinerary.username;
-    this.form.followedCount = this.itinerary.followedCount;
+    this.form.followedCount = this.getNumFollowers(this.id);
     this.createList();
     this.buttonTextDefiner();
   }

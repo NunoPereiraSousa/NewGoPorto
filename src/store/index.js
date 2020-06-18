@@ -369,7 +369,7 @@ export default new Vuex.Store({
     getFollowByIds: state => (itineraryId, userId) => {
       return state.followedItinerary.find(
         following =>
-          following.userId === userId && following.itineraryId == itineraryId
+          following.id_user === userId && following.id_itinerary == itineraryId
       );
     },
 
@@ -377,6 +377,17 @@ export default new Vuex.Store({
       return state.followedItinerary.filter(
         following => following.userId === userId
       );
+    },
+
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    getNumFollowers: state => id => {
+      let num = 0;
+      for (const data of state.followedItinerary) {
+        if (data.id_itinerary == id) {
+          num++;
+        }
+      }
+      return num;
     },
     // *follows
 
@@ -425,6 +436,7 @@ export default new Vuex.Store({
     getItineraryById: state => id => {
       return state.itineraries.find(itinerary => itinerary.id === id);
     },
+
     getItineraryId: state => {
       return state.itineraryId;
     },
@@ -685,13 +697,15 @@ export default new Vuex.Store({
     },
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to  be removed
 
+    // todo -----------------------------------------
     SET_FOLLOWS(state, payload) {
       state.followedItinerary = payload.followedItinerary;
-      // localStorage.setItem(
-      //   "followedItinerary",
-      //   JSON.stringify(state.followedItinerary)
-      // );
+      localStorage.setItem(
+        "followedItinerary",
+        JSON.stringify(state.followedItinerary)
+      );
     },
+    // todo -----------------------------------------
 
     // *itineraries
 
@@ -1236,8 +1250,24 @@ export default new Vuex.Store({
     //* Categories
 
     // * followed_itineraries
+    // get all
     async getAllFollowedItinerary({ commit }) {
-      commit("SET_FOLLOWS", await commentService.getAllFollowedItinerary());
+      commit("SET_FOLLOWS", await itineraryService.getAllFollowedItinerary());
+    },
+    // add
+    async addNewFollowedItinerary({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await itineraryService.addFollowedIItinerary(this.state.itineraryID)
+      );
+    },
+
+    //  delete
+    async deleteFollowedItinerary({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await itineraryService.removeFollowed(this.state.itineraryID)
+      );
     }
     // * followed_itineraries
   },

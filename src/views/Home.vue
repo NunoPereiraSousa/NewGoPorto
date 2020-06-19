@@ -45,7 +45,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Know More About</span>
+            <span>Know More About </span>
             <span>Porto</span>
           </h2>
         </div>
@@ -71,7 +71,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Most Followed</span>
+            <span>Most Followed </span>
             <span>Itineraries</span>
           </h2>
         </div>

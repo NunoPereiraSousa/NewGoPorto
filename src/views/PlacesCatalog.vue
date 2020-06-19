@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Places</span>
+            <span>Places </span>
             <span>Catalog</span>
           </h2>
         </div>
@@ -216,6 +216,7 @@ export default {
     overflow-y: scroll;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    margin-bottom: 4em;
   }
 }
 </style>

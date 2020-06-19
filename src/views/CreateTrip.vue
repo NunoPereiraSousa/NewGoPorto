@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Trip</span>
+            <span>Trip </span>
             <span>Details</span>
           </h2>
         </div>
@@ -32,13 +32,13 @@
                   />
                 </div>
               </div>
-              <div class="col-8">
+              <!-- <div class="col-8">
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
                 </p>
-              </div>
+              </div> -->
               <!-- // Location -->
             </div>
             <div class="form-row align-items-center">
@@ -61,13 +61,13 @@
                   />
                 </div>
               </div>
-              <div class="col-8">
+              <!-- <div class="col-8">
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
                 </p>
-              </div>
+              </div> -->
               <!-- // Trip Title -->
             </div>
             <div class="form-row align-items-center">
@@ -90,13 +90,13 @@
                   />
                 </div>
               </div>
-              <div class="col-8">
+              <!-- <div class="col-8">
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
                 </p>
-              </div>
+              </div> -->
               <!-- // Number Kids -->
             </div>
             <div class="form-row align-items-center">
@@ -119,13 +119,13 @@
                   />
                 </div>
               </div>
-              <div class="col-8">
+              <!-- <div class="col-8">
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
                 </p>
-              </div>
+              </div> -->
               <!-- // Number Adults -->
             </div>
             <div class="form-row align-items-center">
@@ -152,13 +152,13 @@
                   </select>
                 </div>
               </div>
-              <div class="col-8">
+              <!-- <div class="col-8">
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
                 </p>
-              </div>
+              </div> -->
               <!-- // Food -->
             </div>
           </form>
@@ -169,7 +169,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Choose</span>
+            <span>Choose </span>
             <span>Places to Visit</span>
           </h2>
         </div>

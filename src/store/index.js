@@ -440,6 +440,7 @@ export default new Vuex.Store({
     },
 
     getItineraryById: state => id => {
+      alert(state.itineraries.length);
       return state.itineraries.find(itinerary => itinerary.id === id);
     },
 

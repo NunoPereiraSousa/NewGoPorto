@@ -105,11 +105,19 @@ export default {
       alert(err);
       return err;
     }
-    // if (JSON.parse(localStorage.getItem("favoritesList"))) {
-    //   this.$store.commit("SET_FAVORITES_LIST", {
-    //     list: JSON.parse(localStorage.getItem("favoritesList"))
-    //   });
-    // }
+    try {
+      await this.$store.dispatch("allItineraries");
+    } catch (err) {
+      alert(err);
+      return err;
+    }
+
+    try {
+      await this.$store.dispatch("allFullItineraries");
+    } catch (err) {
+      alert(err);
+      return err;
+    }
 
     // todo
     try {
@@ -139,6 +147,7 @@ export default {
     },
 
     folowItinerary(id) {
+      alert(id);
       this.itinerary = this.getItineraryById(id);
       this.$store.commit("SET_SELECTED_ITINERARY", this.itinerary);
       this.$router.push({

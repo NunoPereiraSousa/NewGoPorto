@@ -109,7 +109,6 @@ export default {
       }
     },
     async upFollow(id) {
-      alert("upfolloewd" + id);
       this.$store.commit("SET_ITINERARY_ID", {
         itinerary: {
           id_itinerary: id
@@ -132,7 +131,6 @@ export default {
       this.form.followedCount = this.getNumFollowers(id);
     },
     async downFollow(id) {
-      alert("down follow " + id);
       this.$store.commit("SET_ITINERARY_ID", {
         itinerary: {
           id_itinerary: id

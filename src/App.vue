@@ -604,6 +604,7 @@ export default {
         return err;
       }
 
+      // getNumFollowers
       // if (JSON.parse(localStorage.getItem("itineraries"))) {
       //   this.$store.commit("SET_ITINERARIES", {
       //     itineraries: JSON.parse(localStorage.getItem("itineraries"))

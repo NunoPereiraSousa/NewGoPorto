@@ -606,9 +606,11 @@ export default new Vuex.Store({
           Visitelocations: [],
           userId: data.id_user,
           username: "",
-          followedCount: 3
+          followedCount: this.getters.getNumFollowers(data.id_itinerary)
         };
         fullItineraries.push(object);
+
+        //  Todo Now
       }
 
       for (const itinerary of fullItineraries) {

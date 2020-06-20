@@ -219,23 +219,23 @@ export default {
     }
     // !get comments
 
-    if (JSON.parse(localStorage.getItem("users"))) {
-      this.$store.commit("SET_USERS", {
-        users: JSON.parse(localStorage.getItem("users"))
-      });
-    }
+    // if (JSON.parse(localStorage.getItem("users"))) {
+    //   this.$store.commit("SET_USERS", {
+    //     users: JSON.parse(localStorage.getItem("users"))
+    //   });
+    // }
 
-    if (JSON.parse(localStorage.getItem("comments"))) {
-      this.$store.commit("SET_COMMENTS", {
-        comments: JSON.parse(localStorage.getItem("comments"))
-      });
-    }
+    // if (JSON.parse(localStorage.getItem("comments"))) {
+    //   this.$store.commit("SET_COMMENTS", {
+    //     comments: JSON.parse(localStorage.getItem("comments"))
+    //   });
+    // }
 
-    if (JSON.parse(localStorage.getItem("favoritesList"))) {
-      this.$store.commit("SET_FAVORITES_LIST", {
-        list: JSON.parse(localStorage.getItem("favoritesList"))
-      });
-    }
+    // if (JSON.parse(localStorage.getItem("favoritesList"))) {
+    //   this.$store.commit("SET_FAVORITES_LIST", {
+    //     list: JSON.parse(localStorage.getItem("favoritesList"))
+    //   });
+    // }
     //  *important
     this.loggedUser = this.getLoggedUser;
     this.identity = this.getIdentity;
@@ -369,25 +369,28 @@ export default {
     setRating(rating) {
       this.form.rating = rating;
     },
-    addTobackpack() {
-      if (!this.getFavoriteByIds(this.loggedUser.id, this.identity.id)) {
-        this.favouritesList.push({
-          userId: this.loggedUser.id,
-          identityId: this.identity.id,
-          identityName: this.identity.name
-        });
+    async addTobackpack() {
+      if (
+        !this.getFavoriteByIds(
+          this.loggedUser[0].id_user,
+          JSON.parse(localStorage.getItem("identity_id"))
+        )
+      ) {
+        alert("ali po");
         this.$snotify.success("Added to your favourites!", "Done", {
           timeout: 2000,
           showProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true
         });
-      } else {
-        this.favouritesList = this.getFavoritesByDifferentIds(
-          this.loggedUser.id,
-          this.identity.id
-        );
 
+        try {
+          await this.$store.dispatch("addNewFavorite");
+        } catch (err) {
+          alert(err);
+          return err;
+        }
+      } else {
         this.$snotify.warning(
           "The identity was removed from your 'favorites' list!",
           "Done",
@@ -398,11 +401,26 @@ export default {
             pauseOnHover: true
           }
         );
+
+        try {
+          await this.$store.dispatch("deleteFavorite");
+        } catch (err) {
+          alert(err);
+          return err;
+        }
       }
 
-      this.$store.commit("SET_FAVORITES_LIST", {
-        list: this.favouritesList
-      });
+      try {
+        await this.$store.dispatch("getAllFavorite");
+        this.favouritesList = this.getFavoritesList;
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+
+      // this.$store.commit("SET_FAVORITES_LIST", {
+      //   list: this.favouritesList
+      // });
     }
   }
 };

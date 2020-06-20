@@ -590,6 +590,15 @@ export default {
       // }
       // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
+      // todo
+      try {
+        await this.$store.dispatch("getAllFavorite");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+      // todo
+
       try {
         await this.$store.dispatch("allItineraries");
       } catch (err) {

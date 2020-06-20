@@ -341,13 +341,17 @@ export default new Vuex.Store({
     getFavoritesList: state => {
       return state.favoritesList;
     },
+    // Todo
     getMyFavorites: state => userId => {
-      return state.favoritesList.filter(favorite => favorite.userId === userId);
+      return state.favoritesList.filter(
+        favorite => favorite.id_user === userId
+      );
     },
+    // todo
     getFavoriteByIds: state => (userId, identityId) => {
       return state.favoritesList.find(
         favorite =>
-          favorite.userId === userId && favorite.identityId == identityId
+          favorite.id_user === userId && favorite.id_identity == identityId
       );
     },
     getFavoritesByDifferentIds: state => (userId, identityId) => {
@@ -821,7 +825,7 @@ export default new Vuex.Store({
       state.category = payload.countries;
       localStorage.setItem("countries", JSON.stringify(state.countries));
     },
-
+    // TODO
     SET_FAVORITES_LIST(state, payload) {
       state.favoritesList = payload.list;
       localStorage.setItem(
@@ -829,6 +833,7 @@ export default new Vuex.Store({
         JSON.stringify(state.favoritesList)
       );
     },
+    // TODO
 
     // * Categories Setters
     NEW_CATEGORY(state, payload) {
@@ -1272,8 +1277,24 @@ export default new Vuex.Store({
         "SET_REGISTER_STATUS",
         await itineraryService.removeFollowed(this.state.itineraryID)
       );
-    }
+    },
     // * followed_itineraries
+
+    // * Favorites
+    // get all
+    async getAllFavorite({ commit }) {
+      commit("SET_FAVORITES_LIST", await identityService.getAllFavorites());
+    },
+    // add
+    async addNewFavorite({ commit }) {
+      commit("SET_REGISTER_STATUS", await identityService.addFavorite());
+    },
+
+    //  delete
+    async deleteFavorite({ commit }) {
+      commit("SET_REGISTER_STATUS", await identityService.removeFavorite());
+    }
+    // * Favorites
   },
   modules: {}
 });

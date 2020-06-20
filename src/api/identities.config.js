@@ -132,7 +132,83 @@ const identityConfig = {
       localStorage.setItem("error", JSON.stringify(err.response.data.error));
       return err;
     }
+  },
+
+  // Todo -------------------------------
+
+  async getAllFavorites() {
+    try {
+      const response = await HTTP.get(`${API_URL}/favorites`, {
+        headers
+      });
+      if (response.status == 200) {
+        return {
+          list: response.data,
+          resStatus: response.status
+        };
+      } else {
+        return {
+          list: [],
+          resStatus: response.status
+        };
+      }
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      return err;
+    }
+  },
+
+  // async getAllFollowedItineraryByUser() {},
+
+  async addFavorite() {
+    let user = JSON.parse(localStorage.getItem("loggedUser"));
+    let identity_id = JSON.parse(localStorage.getItem("identity_id"));
+
+    alert("something " + identity_id);
+
+    try {
+      const response = await HTTP.post(
+        `${API_URL}/add-favorite`,
+        {
+          id_user: user[0].id_user,
+          id_identity: identity_id
+        },
+        {
+          headers
+        }
+      );
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      return err;
+    }
+  },
+
+  async removeFavorite() {
+    let user = JSON.parse(localStorage.getItem("loggedUser"));
+    let identity_id = JSON.parse(localStorage.getItem("identity_id"));
+    try {
+      const response = await HTTP.put(
+        `${API_URL}/favorites/delete`,
+        {
+          id_user: user[0].id_user,
+          id_identity: identity_id
+        },
+        {
+          headers
+        }
+      );
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      return err;
+    }
   }
+  // Todo -------------------------------
 };
 
 export default identityConfig;

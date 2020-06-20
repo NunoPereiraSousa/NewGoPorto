@@ -22,13 +22,13 @@
               <li
                 class="list-group-item text-left"
                 v-for="favorite in myfavouriteList"
-                :key="favorite.userId"
+                :key="favorite.id_user"
               >
                 <p
                   class="btn btn-primary"
-                  @click="saveIdentity(favorite.identityId)"
+                  @click="saveIdentity(favorite.id_identity)"
                 >
-                  {{ favorite.identityName }}
+                  {{ favorite.name }}
                   <i
                     class="fas fa-angle-double-right pl-2"
                     style="color: #5085a5"
@@ -111,9 +111,18 @@ export default {
     //   });
     // }
 
+    // todo
+    try {
+      await this.$store.dispatch("getAllFavorite");
+    } catch (err) {
+      alert(err);
+      return err;
+    }
+    // todo
+
     this.loggedUser = this.getLoggedUser;
 
-    // this.myfavouriteList = this.getMyFavorites(this.loggedUser.id);
+    this.myfavouriteList = this.getMyFavorites(this.loggedUser[0].id_user);
     //!!!!!!!!!!!!!!!
     this.myFollows = this.getMyFollowsById(this.loggedUser[0].id_user);
     // alert(this.myFollows.length);
@@ -121,7 +130,8 @@ export default {
   methods: {
     saveIdentity(id) {
       this.identity = this.getIdentityByIds(id);
-      this.$store.commit("SET_IDENTITY_SELECTED", this.identity);
+      // this.$store.commit("SET_IDENTITY_SELECTED", this.identity);
+      this.$store.commit("SET_IDENTITY_SELECTED_ID", id);
       this.$router.push({
         name: "identity-info",
         params: { name: this.identity.name }

@@ -610,14 +610,6 @@ export default {
         alert(err);
         return err;
       }
-      // todo
-      try {
-        await this.$store.dispatch("getAllUserNotifications");
-      } catch (err) {
-        alert(err);
-        return err;
-      }
-      // todo
 
       // getNumFollowers
       // if (JSON.parse(localStorage.getItem("itineraries"))) {

@@ -11,14 +11,13 @@ let headers = {
 
 const notificationConfig = {
   // *"Remove" notification
-  async removeNotification(id_suggestion) {
-    let user = JSON.parse(localStorage.getItem("loggedUser"));
+  async removeNotification(id_notif) {
+    alert(id_notif);
     try {
       const response = await HTTP.put(
         `${API_URL}/notifications/update`,
         {
-          id_user: user[0].id_user,
-          id_suggestion: id_suggestion
+          id_notif: id_notif
         },
         {
           headers

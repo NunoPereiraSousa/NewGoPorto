@@ -129,7 +129,16 @@ export default new Vuex.Store({
     },
 
     itineraryID: null,
-    inIdentityId: null
+    inIdentityId: null,
+
+    // Todo --new
+    notificationData: {
+      id_notif: null,
+      id_user: null,
+      id_suggestion: null,
+      answer: null
+    }
+    // Todo --new
   },
   getters: {
     getUserById: state => id => {
@@ -270,10 +279,12 @@ export default new Vuex.Store({
     getSuggestionIndexById: state => id => {
       return state.suggestions.findIndex(suggestion => suggestion.id == id);
     },
-
+    // todo
     getNotifications: state => {
       return state.notifications;
     },
+
+    // todo
 
     getNotificationsByUser: state => id => {
       return state.notifications.filter(suggestion => suggestion.userId === id);
@@ -759,6 +770,16 @@ export default new Vuex.Store({
         JSON.stringify(state.notifications)
       );
     },
+
+    // todo
+    // Serves to add a notification and also remove and notification
+    SET_NOTIFICATION_DATA(state, payload) {
+      state.notificationData.id_notif = payload.id_notif;
+      state.notificationData.id_user = payload.id_user;
+      state.notificationData.id_suggestion = payload.id_suggestion;
+      state.notificationData.answer = payload.answer;
+    },
+    // todo
 
     SET_NOTIFICATIONS(state, payload) {
       state.notifications = payload.notifications;
@@ -1305,15 +1326,20 @@ export default new Vuex.Store({
     async addNewNotification({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
-        await notificationService.addNotification()
+        await notificationService.addNotification(
+          this.state.notificationData.id_user,
+          this.state.notificationData.id_suggestion,
+          this.state.notificationData.answer
+        )
       );
     },
-
     //  delete
     async deleteNotification({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
-        await notificationService.removeNotification()
+        await notificationService.removeNotification(
+          this.state.notificationData.id_notif
+        )
       );
     }
     // * notifications

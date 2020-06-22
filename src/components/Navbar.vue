@@ -527,24 +527,22 @@
                   <li class="list-group-item">
                     <div
                       v-for="notification in notifications"
-                      :key="notification.id"
+                      :key="notification.id_notif"
                     >
                       <p class="d-inline-block">
                         Your suggestion:
                         <span class="font-italic d-inline-block"
-                          >"{{ notification.relatedTo }}"</span
+                          >"{{ notification.new_identity }}"</span
                         >.
                         <br />
                         <span class="d-inline-block"
-                          >{{ notification.answear }}.</span
+                          >{{ notification.answer }}.</span
                         >
-                        <span class="pr-4">
-                          {{ notification.sugestionDate }}
-                        </span>
+                        <!-- <span class="pr-4">{{ notification.sugestionDate }}</span> -->
                         <button
                           type="button"
                           class="btn btn-primary btnIcon d-inline-block"
-                          @click="checkNotification(notification.id)"
+                          @click="checkNotification(notification.id_notif)"
                         >
                           <div v-if="notification.status == 'not-read'">
                             <i
@@ -622,7 +620,7 @@ export default {
       getNotifications: "getNotifications"
     })
   },
-  created() {
+  async created() {
     // this.$store.commit("SET_USERS", {
     //   users: JSON.parse(localStorage.getItem("users"))
     // });
@@ -637,9 +635,20 @@ export default {
     //     notifications: JSON.parse(localStorage.getItem("notifications"))
     //   });
     // }
+
+    // todo
+    try {
+      await this.$store.dispatch("getAllUserNotifications");
+    } catch (err) {
+      alert(err);
+      return err;
+    }
+    // todo
+
     this.user = this.getLoggedUser;
 
     this.notifications = this.getNotifications;
+    // alert(this.totalNotifications.length);
 
     this.totalNotifications = this.notifications.length;
   },
@@ -648,25 +657,29 @@ export default {
       this.$store.commit("SET_LOGGED_USER_LOG_OUT", { loggedUser: "" });
       this.$router.push({ name: "sign-in" });
     },
-    checkNotification(id) {
-      //   if (
-      //     this.allNotiffications[this.getNotificationIndexById(id)].status ===
-      //     "not-read"
-      //   ) {
-      //     this.allNotiffications[this.getNotificationIndexById(id)].status =
-      //       "checked";
-      //     // this.$snotify.success("Notification checked!", "Done", {
-      //     //   timeout: 2000,
-      //     //   showProgressBar: false,
-      //     //   closeOnClick: true,
-      //     //   pauseOnHover: true
-      //     // });
-      //   }
-      //   this.$store.commit("SET_NOTIFICATIONS", {
-      //     notifications: this.allNotiffications
-      //   });
+    async checkNotification(id) {
+      this.$store.commit("SET_NOTIFICATION_DATA", {
+        id_notif: id,
+        id_user: null,
+        id_suggestion: null,
+        answer: null
+      });
 
-      alert(id);
+      try {
+        await this.$store.dispatch("deleteNotification");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+
+      try {
+        await this.$store.dispatch("getAllUserNotifications");
+        this.notifications = this.getNotifications;
+        this.totalNotifications = this.notifications.length;
+      } catch (err) {
+        alert(err);
+        return err;
+      }
     }
   }
 };

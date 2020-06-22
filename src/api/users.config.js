@@ -139,9 +139,6 @@ const userConfig = {
           headers
         }
       );
-      for (const data in deletePostId) {
-        alert(deletePostId[data]);
-      }
 
       return {
         resStatus: response.status
@@ -171,7 +168,6 @@ const userConfig = {
 
   async getVisitedUserPosts() {
     let user_id = JSON.parse(localStorage.getItem("visitedUserId"));
-    // alert(user_id)
     try {
       const response = await HTTP.get(`${API_URL}/posts/${user_id}`, {
         headers

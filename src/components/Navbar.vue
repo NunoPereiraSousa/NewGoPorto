@@ -538,9 +538,9 @@
                         <span class="d-inline-block"
                           >{{ notification.answear }}.</span
                         >
-                        <span class="pr-4">{{
-                          notification.sugestionDate
-                        }}</span>
+                        <span class="pr-4">
+                          {{ notification.sugestionDate }}
+                        </span>
                         <button
                           type="button"
                           class="btn btn-primary btnIcon d-inline-block"
@@ -623,29 +623,25 @@ export default {
     })
   },
   created() {
-    this.$store.commit("SET_USERS", {
-      users: JSON.parse(localStorage.getItem("users"))
-    });
+    // this.$store.commit("SET_USERS", {
+    //   users: JSON.parse(localStorage.getItem("users"))
+    // });
 
-    this.$store.commit(
-      "SET_LOGGED_USER",
-      JSON.parse(localStorage.getItem("loggedUser"))
-    );
+    // this.$store.commit(
+    //   "SET_LOGGED_USER",
+    //   JSON.parse(localStorage.getItem("loggedUser"))
+    // );
 
-    if (JSON.parse(localStorage.getItem("notifications"))) {
-      this.$store.commit("SET_NOTIFICATIONS", {
-        notifications: JSON.parse(localStorage.getItem("notifications"))
-      });
-    }
+    // if (JSON.parse(localStorage.getItem("notifications"))) {
+    //   this.$store.commit("SET_NOTIFICATIONS", {
+    //     notifications: JSON.parse(localStorage.getItem("notifications"))
+    //   });
+    // }
     this.user = this.getLoggedUser;
 
-    this.allNotiffications = this.getNotifications;
+    this.notifications = this.getNotifications;
 
-    this.notifications = this.getNotificationsByUser(this.user.id);
-
-    this.totalNotifications = this.getAmountNotificationsNotReadById(
-      this.getLoggedUser.id
-    );
+    this.totalNotifications = this.notifications.length;
   },
   methods: {
     logOut() {
@@ -653,22 +649,24 @@ export default {
       this.$router.push({ name: "sign-in" });
     },
     checkNotification(id) {
-      if (
-        this.allNotiffications[this.getNotificationIndexById(id)].status ===
-        "not-read"
-      ) {
-        this.allNotiffications[this.getNotificationIndexById(id)].status =
-          "checked";
-        // this.$snotify.success("Notification checked!", "Done", {
-        //   timeout: 2000,
-        //   showProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true
-        // });
-      }
-      this.$store.commit("SET_NOTIFICATIONS", {
-        notifications: this.allNotiffications
-      });
+      //   if (
+      //     this.allNotiffications[this.getNotificationIndexById(id)].status ===
+      //     "not-read"
+      //   ) {
+      //     this.allNotiffications[this.getNotificationIndexById(id)].status =
+      //       "checked";
+      //     // this.$snotify.success("Notification checked!", "Done", {
+      //     //   timeout: 2000,
+      //     //   showProgressBar: false,
+      //     //   closeOnClick: true,
+      //     //   pauseOnHover: true
+      //     // });
+      //   }
+      //   this.$store.commit("SET_NOTIFICATIONS", {
+      //     notifications: this.allNotiffications
+      //   });
+
+      alert(id);
     }
   }
 };

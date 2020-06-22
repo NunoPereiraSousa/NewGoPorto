@@ -188,7 +188,6 @@ const itineraryConfig = {
 
   async removeFollowed(id_itinerary) {
     let user = JSON.parse(localStorage.getItem("loggedUser"));
-    alert(id_itinerary);
     try {
       const response = await HTTP.put(
         `${API_URL}/followedItineraries/delete`,

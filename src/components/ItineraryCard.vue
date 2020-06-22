@@ -165,7 +165,6 @@ export default {
     },
 
     followItinerary(id) {
-      alert("user id: " + this.getLoggedUser[0].id_user);
       // this.itinerary = this.getItineraryById(id);
       // this.$store.commit("SET_SELECTED_ITINERARY", this.itinerary);
       if (this.getFollowByIds(id, this.getLoggedUser[0].id_user)) {

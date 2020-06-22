@@ -48,7 +48,6 @@ const categoryConfig = {
     }
   },
   async addCategoriesAdmin(category_name, photo) {
-    alert(`Name: ${category_name} photo: ${photo}`);
     try {
       const response = await HTTP.post(
         `${API_URL}/add-categories`,

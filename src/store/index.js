@@ -299,6 +299,7 @@ export default new Vuex.Store({
     },
 
     // *counts from an user based on his id
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to delete
     getAmountNotificationsNotReadById: state => id => {
       let count = 0;
       if (state.notifications.length) {
@@ -310,6 +311,7 @@ export default new Vuex.Store({
       }
       return count;
     },
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to delete
 
     getNotificationIndexById: state => id => {
       return state.notifications.findIndex(
@@ -379,8 +381,6 @@ export default new Vuex.Store({
     },
 
     getMyFollowsById: state => userId => {
-      // alert(userId)
-      // alert(state.followedItinerary.length)
       return state.followedItinerary.filter(
         following => following.id_user === userId
       );
@@ -441,7 +441,6 @@ export default new Vuex.Store({
     },
 
     getItineraryById: state => id => {
-      alert(state.itineraries.length);
       return state.itineraries.find(itinerary => itinerary.id === id);
     },
 
@@ -583,8 +582,6 @@ export default new Vuex.Store({
     },
 
     SET_ITINERARY_ID(state, payload) {
-      // localStorage.setItem("error", JSON.stringify(payload.itinerary.id_itinerary));
-      // alert(payload.itinerary.id_itinerary)
       state.itineraryID = payload.itinerary.id_itinerary;
     },
 
@@ -731,7 +728,6 @@ export default new Vuex.Store({
     },
 
     SET_IDENTITY_SELECTED(state, payload) {
-      // alert("here");
       state.identity = payload.identity;
       localStorage.setItem("identity", JSON.stringify(state.identity));
     },
@@ -904,7 +900,6 @@ export default new Vuex.Store({
     },
 
     SET_USER_POSTS(state, payload) {
-      alert("payload" + payload.response.length);
       state.userPosts = payload.response;
     },
 
@@ -963,7 +958,6 @@ export default new Vuex.Store({
 
     SET_EDIT_IDENTITY(state, payload) {
       state.editIdentityId = payload.editIdentityId;
-      // alert(payload.editIdentityId);
     },
 
     SET_EDIT_IDENTITY_ADMIN(state, payload) {

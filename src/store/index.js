@@ -5,6 +5,7 @@ import itineraryService from "@/api/itineraries.config";
 import identityService from "@/api/identities.config";
 import categoryService from "@/api/categories.config";
 import commentService from "@/api/comments.config";
+import notificationService from "@/api/notifications.config";
 
 import mainConfig from "@/api/main.config";
 
@@ -1294,8 +1295,35 @@ export default new Vuex.Store({
     //  delete
     async deleteFavorite({ commit }) {
       commit("SET_REGISTER_STATUS", await identityService.removeFavorite());
-    }
+    },
     // * Favorites
+
+    // todo
+    // * notifications
+    // get by users
+    async getAllUserNotifications({ commit }) {
+      commit(
+        "SET_NOTIFICATIONS",
+        await notificationService.getAllNotificationByUserId()
+      );
+    },
+    // add
+    async addNewNotification({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await notificationService.addNotification()
+      );
+    },
+
+    //  delete
+    async deleteNotification({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await notificationService.removeNotification()
+      );
+    }
+    // * notifications
+    // todo
   },
   modules: {}
 });

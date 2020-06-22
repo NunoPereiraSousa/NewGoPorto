@@ -53,7 +53,7 @@ export default {
       getLoggedUser: "getLoggedUser"
     })
   },
-  created() {
+  async created() {
     this.setStorage();
 
     if (JSON.parse(localStorage.getItem("loggedUser"))) {
@@ -590,14 +590,12 @@ export default {
       // }
       // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-      // todo
       try {
         await this.$store.dispatch("getAllFavorite");
       } catch (err) {
         alert(err);
         return err;
       }
-      // todo
 
       try {
         await this.$store.dispatch("allItineraries");
@@ -612,6 +610,14 @@ export default {
         alert(err);
         return err;
       }
+      // todo
+      try {
+        await this.$store.dispatch("getAllUserNotifications");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+      // todo
 
       // getNumFollowers
       // if (JSON.parse(localStorage.getItem("itineraries"))) {

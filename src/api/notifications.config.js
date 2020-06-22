@@ -70,12 +70,12 @@ const notificationConfig = {
       );
       if (response.status == 200) {
         return {
-          identity: response.data,
+          notifications: response.data,
           resStatus: response.status
         };
       } else {
         return {
-          identity: [],
+          notifications: [],
           resStatus: response.status
         };
       }

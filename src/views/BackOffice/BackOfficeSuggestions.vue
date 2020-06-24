@@ -225,11 +225,38 @@ export default {
     }
   },
   methods: {
-    acceptSuggestion(id_suggestion, id_user) {
-      // let responseValue = 1;
-
-      alert(id_suggestion, id_user);
-
+    async acceptSuggestion(id_suggestion, id_user) {
+      // sets the new notification data and the datas of the suggestion that is going to be updated
+      this.$store.commit("SET_NOTIFICATION_DATA", {
+        id_notif: null,
+        id_user: id_user,
+        id_suggestion: id_suggestion,
+        answer: "Suggestion accepted!",
+        id_status: "1"
+      });
+      //  updates the suggestion that was made by the user
+      try {
+        await this.$store.dispatch("updateSuggestion");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+      // Add a new notification to the system
+      try {
+        await this.$store.dispatch("addNewNotification");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+      // Get all the suggestions
+      try {
+        await this.$store.dispatch("getAllSuggestions");
+        this.suggestions = this.getSuggestions;
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+      // Alerts the admin of his action
       this.$snotify.success("Suggestion accepted!", "Done", {
         timeout: 2000,
         showProgressBar: false,
@@ -237,9 +264,38 @@ export default {
         pauseOnHover: true
       });
     },
-    refuseSuggestion(id_suggestion, id_user) {
-      // let responseValue = 2;
-      alert(id_suggestion, id_user);
+    async refuseSuggestion(id_suggestion, id_user) {
+      // sets the new notification data and the datas of the suggestion that is going to be updated
+      this.$store.commit("SET_NOTIFICATION_DATA", {
+        id_notif: null,
+        id_user: id_user,
+        id_suggestion: id_suggestion,
+        answer: "Suggestion regected!",
+        id_status: "2"
+      });
+      //  updates the suggestion that was made by the user
+      try {
+        await this.$store.dispatch("updateSuggestion");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+      // Add a new notification to the system
+      try {
+        await this.$store.dispatch("addNewNotification");
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+      // Get all the suggestions
+      try {
+        await this.$store.dispatch("getAllSuggestions");
+        this.suggestions = this.getSuggestions;
+      } catch (err) {
+        alert(err);
+        return err;
+      }
+
       this.$snotify.warning("Suggestion not accepted!", "Done", {
         timeout: 2000,
         showProgressBar: false,

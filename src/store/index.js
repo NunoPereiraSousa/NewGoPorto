@@ -137,7 +137,8 @@ export default new Vuex.Store({
       id_notif: null,
       id_user: null,
       id_suggestion: null,
-      answer: null
+      answer: null,
+      id_status: null
     }
     // Todo --new
   },
@@ -780,6 +781,7 @@ export default new Vuex.Store({
       state.notificationData.id_user = payload.id_user;
       state.notificationData.id_suggestion = payload.id_suggestion;
       state.notificationData.answer = payload.answer;
+      state.notificationData.id_status = payload.id_status;
     },
     // todo
 
@@ -1350,10 +1352,21 @@ export default new Vuex.Store({
     // Todo
     //* Suggestions
 
-    // SET_SUGGESTION
+    // Get
     async getAllSuggestions({ commit }) {
       commit("SET_SUGGESTION", await suggestionService.getAllSuggestions());
+    },
+
+    async updateSuggestion({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await suggestionService.updateSuggestion(
+          this.state.notificationData.id_suggestion,
+          this.state.notificationData.id_status
+        )
+      );
     }
+
     //* suggestions
 
     // todo

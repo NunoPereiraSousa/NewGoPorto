@@ -16,7 +16,7 @@ const suggestionConfig = {
       const response = await HTTP.put(
         `${API_URL}/suggestions/update/${id_suggestion}`,
         {
-          id_status: id_status
+          status: id_status
         },
         {
           headers
@@ -33,7 +33,6 @@ const suggestionConfig = {
 
   //*Get all not reader notification by user id
   async getAllSuggestions() {
-    alert("here");
     try {
       const response = await HTTP.get(`${API_URL}/suggestions`, {
         headers

@@ -211,126 +211,126 @@ export default {
 
       //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 
-      if (JSON.parse(localStorage.getItem("suggestions"))) {
-        this.$store.commit("SET_SUGGESTION", {
-          suggestions: JSON.parse(localStorage.getItem("suggestions"))
-        });
-      } else {
-        this.$store.commit("SET_SUGGESTION", {
-          suggestions: [
-            {
-              id: 1,
-              category: "monuments",
-              name: "Morro Garden",
-              content: "",
-              date: "27/01/2020",
-              photo: "",
-              status: "accepted",
-              userId: 4,
-              username: "NunoPereiraSousa"
-            },
-            {
-              id: 2,
-              category: "sports",
-              name: "Rio Ave Stadium",
-              content: "",
-              date: "25/01/2020",
-              photo: "",
-              status: "accepted",
-              userId: 4,
-              username: "NunoPereiraSousa"
-            },
-            {
-              id: 3,
-              category: "beach",
-              name: "Praia da Memória",
-              content: "",
-              date: "28/01/2020",
-              photo: "",
-              status: "accepted",
-              userId: 4,
-              username: "NunoPereiraSousa"
-            },
-            {
-              id: 4,
-              category: "beach",
-              name: "Praia de Moreiró",
-              content: "",
-              date: "22/01/2020",
-              photo: "",
-              status: "accepted",
-              userId: 4,
-              username: "NunoPereiraSousa"
-            },
-            {
-              id: 5,
-              category: "beach",
-              name: "Praia de Lavadores",
-              content: "",
-              date: "20/01/2020",
-              photo: "",
-              status: "accepted",
-              userId: 4,
-              username: "NunoPereiraSousa"
-            },
-            {
-              id: 6,
-              category: "beach",
-              name: "Praia das Sereias",
-              content: "",
-              date: "30/01/2020",
-              photo: "",
-              status: "accepted",
-              userId: 1,
-              username: "NunoPereiraSousa"
-            },
-            {
-              id: 7,
-              category: "beach",
-              name: "Praia do Mindelo",
-              content: "",
-              date: "31/01/2020",
-              photo: "",
-              status: "accepted",
-              userId: 2,
-              username: "Titas"
-            },
-            {
-              id: 8,
-              category: "beach",
-              name: "Praia de Matosinhos",
-              content: "",
-              date: "29/01/2020",
-              photo: "",
-              status: "accepted",
-              userId: 2,
-              username: "NunoPereiraSousa"
-            },
-            {
-              id: 9,
-              category: "beach",
-              name: "Passeio Alegre Garden",
-              content: "",
-              date: "30/01/2020",
-              photo: "",
-              status: "not-accepted",
-              userId: 2,
-              username: "Titas"
-            },
-            {
-              id: 10,
-              category: "beach",
-              name: "Morro Garden",
-              content: "",
-              date: "30/01/2020",
-              photo: "",
-              status: "not-accepted",
-              userId: 4,
-              username: "NunoPereiraSousa"
-            }
-          ]
-        });
-      }
+      // if (JSON.parse(localStorage.getItem("suggestions"))) {
+      //   this.$store.commit("SET_SUGGESTION", {
+      //     suggestions: JSON.parse(localStorage.getItem("suggestions"))
+      //   });
+      // } else {
+      //   this.$store.commit("SET_SUGGESTION", {
+      //     suggestions: [
+      //       {
+      //         id: 1,
+      //         category: "monuments",
+      //         name: "Morro Garden",
+      //         content: "",
+      //         date: "27/01/2020",
+      //         photo: "",
+      //         status: "accepted",
+      //         userId: 4,
+      //         username: "NunoPereiraSousa"
+      //       },
+      //       {
+      //         id: 2,
+      //         category: "sports",
+      //         name: "Rio Ave Stadium",
+      //         content: "",
+      //         date: "25/01/2020",
+      //         photo: "",
+      //         status: "accepted",
+      //         userId: 4,
+      //         username: "NunoPereiraSousa"
+      //       },
+      //       {
+      //         id: 3,
+      //         category: "beach",
+      //         name: "Praia da Memória",
+      //         content: "",
+      //         date: "28/01/2020",
+      //         photo: "",
+      //         status: "accepted",
+      //         userId: 4,
+      //         username: "NunoPereiraSousa"
+      //       },
+      //       {
+      //         id: 4,
+      //         category: "beach",
+      //         name: "Praia de Moreiró",
+      //         content: "",
+      //         date: "22/01/2020",
+      //         photo: "",
+      //         status: "accepted",
+      //         userId: 4,
+      //         username: "NunoPereiraSousa"
+      //       },
+      //       {
+      //         id: 5,
+      //         category: "beach",
+      //         name: "Praia de Lavadores",
+      //         content: "",
+      //         date: "20/01/2020",
+      //         photo: "",
+      //         status: "accepted",
+      //         userId: 4,
+      //         username: "NunoPereiraSousa"
+      //       },
+      //       {
+      //         id: 6,
+      //         category: "beach",
+      //         name: "Praia das Sereias",
+      //         content: "",
+      //         date: "30/01/2020",
+      //         photo: "",
+      //         status: "accepted",
+      //         userId: 1,
+      //         username: "NunoPereiraSousa"
+      //       },
+      //       {
+      //         id: 7,
+      //         category: "beach",
+      //         name: "Praia do Mindelo",
+      //         content: "",
+      //         date: "31/01/2020",
+      //         photo: "",
+      //         status: "accepted",
+      //         userId: 2,
+      //         username: "Titas"
+      //       },
+      //       {
+      //         id: 8,
+      //         category: "beach",
+      //         name: "Praia de Matosinhos",
+      //         content: "",
+      //         date: "29/01/2020",
+      //         photo: "",
+      //         status: "accepted",
+      //         userId: 2,
+      //         username: "NunoPereiraSousa"
+      //       },
+      //       {
+      //         id: 9,
+      //         category: "beach",
+      //         name: "Passeio Alegre Garden",
+      //         content: "",
+      //         date: "30/01/2020",
+      //         photo: "",
+      //         status: "not-accepted",
+      //         userId: 2,
+      //         username: "Titas"
+      //       },
+      //       {
+      //         id: 10,
+      //         category: "beach",
+      //         name: "Morro Garden",
+      //         content: "",
+      //         date: "30/01/2020",
+      //         photo: "",
+      //         status: "not-accepted",
+      //         userId: 4,
+      //         username: "NunoPereiraSousa"
+      //       }
+      //     ]
+      //   });
+      // }
 
       // if (JSON.parse(localStorage.getItem("comments"))) {
       //   this.$store.commit("SET_COMMENTS", {

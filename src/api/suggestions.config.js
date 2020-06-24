@@ -33,8 +33,9 @@ const suggestionConfig = {
 
   //*Get all not reader notification by user id
   async getAllSuggestions() {
+    alert("here");
     try {
-      const response = await HTTP.get(`${API_URL}//suggestions`, {
+      const response = await HTTP.get(`${API_URL}/suggestions`, {
         headers
       });
       if (response.status == 200) {

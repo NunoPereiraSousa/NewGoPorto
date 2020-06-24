@@ -6,6 +6,7 @@ import identityService from "@/api/identities.config";
 import categoryService from "@/api/categories.config";
 import commentService from "@/api/comments.config";
 import notificationService from "@/api/notifications.config";
+import suggestionService from "@/api/suggestions.config";
 
 import mainConfig from "@/api/main.config";
 
@@ -757,11 +758,12 @@ export default new Vuex.Store({
       state.suggestions.push(payload);
       localStorage.setItem("suggestions", JSON.stringify(state.suggestions));
     },
-
+    // Todo
     SET_SUGGESTION(state, payload) {
       state.suggestions = payload.suggestions;
       localStorage.setItem("suggestions", JSON.stringify(state.suggestions));
     },
+    // Todo
 
     NEW_NOTIFICATION(state, payload) {
       state.notifications.push(payload);
@@ -1341,8 +1343,19 @@ export default new Vuex.Store({
           this.state.notificationData.id_notif
         )
       );
-    }
+    },
     // * notifications
+    // todo
+
+    // Todo
+    //* Suggestions
+
+    // SET_SUGGESTION
+    async getAllSuggestions({ commit }) {
+      commit("SET_SUGGESTION", await suggestionService.getAllSuggestions());
+    }
+    //* suggestions
+
     // todo
   },
   modules: {}

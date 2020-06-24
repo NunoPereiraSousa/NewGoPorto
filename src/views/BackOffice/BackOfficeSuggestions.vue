@@ -70,20 +70,23 @@
                   <th scope="col">Reject</th>
                 </tr>
               </thead>
-              <tbody v-for="suggestion in filterByStatus" :key="suggestion.id">
+              <tbody
+                v-for="suggestion in filterByStatus"
+                :key="suggestion.id_suggestion"
+              >
                 <tr v-if="suggestion.status === 'pendant'">
-                  <td>{{ suggestion.id }}</td>
+                  <td>{{ suggestion.id_suggestion }}</td>
                   <td>{{ suggestion.username }}</td>
                   <td id="name">
                     {{
-                      suggestion.name.charAt(0).toUpperCase() +
-                        suggestion.name.slice(1)
+                      suggestion.new_identity.charAt(0).toUpperCase() +
+                        suggestion.new_identity.slice(1)
                     }}
                   </td>
                   <td>
                     {{
-                      suggestion.category.charAt(0).toUpperCase() +
-                        suggestion.category.slice(1)
+                      suggestion.category_name.charAt(0).toUpperCase() +
+                        suggestion.category_name.slice(1)
                     }}
                   </td>
                   <td>
@@ -93,9 +96,7 @@
                           suggestion.content.slice(1)
                       }}
                     </div>
-                    <div v-else>
-                      -----
-                    </div>
+                    <div v-else>-----</div>
                   </td>
                   <td>
                     {{
@@ -107,7 +108,12 @@
                     <button
                       type="button"
                       class="btn btn-primary table text-center"
-                      @click="acceptSuggestion(suggestion.id)"
+                      @click="
+                        acceptSuggestion(
+                          suggestion.id_suggestion,
+                          suggestion.id_user
+                        )
+                      "
                     >
                       <i
                         class="fas fa-check"
@@ -118,7 +124,12 @@
                   <td>
                     <button
                       class="btn btn-primary table text-center"
-                      @click="refuseSuggestion(suggestion.id)"
+                      @click="
+                        refuseSuggestion(
+                          suggestion.id_suggestion,
+                          suggestion.id_user
+                        )
+                      "
                     >
                       <i
                         class="fa fa-times"
@@ -128,18 +139,18 @@
                   </td>
                 </tr>
                 <tr v-else>
-                  <td>{{ suggestion.id }}</td>
+                  <td>{{ suggestion.id_suggestion }}</td>
                   <td>{{ suggestion.username }}</td>
                   <td>
                     {{
-                      suggestion.name.charAt(0).toUpperCase() +
-                        suggestion.name.slice(1)
+                      suggestion.new_identity.charAt(0).toUpperCase() +
+                        suggestion.new_identity.slice(1)
                     }}
                   </td>
                   <td>
                     {{
-                      suggestion.category.charAt(0).toUpperCase() +
-                        suggestion.category.slice(1)
+                      suggestion.category_name.charAt(0).toUpperCase() +
+                        suggestion.category_name.slice(1)
                     }}
                   </td>
                   <td>
@@ -149,9 +160,7 @@
                           suggestion.content.slice(1)
                       }}
                     </div>
-                    <div class="text-center" v-else>
-                      -----
-                    </div>
+                    <div class="text-center" v-else>-----</div>
                   </td>
                   <td>
                     {{
@@ -194,14 +203,14 @@ export default {
       filterCategory: ""
     };
   },
-  created() {
-    this.$store.commit("SET_SUGGESTION", {
-      suggestions: JSON.parse(localStorage.getItem("suggestions"))
-    });
-    this.$store.commit("SET_NOTIFICATIONS", {
-      notifications: JSON.parse(localStorage.getItem("notifications"))
-    });
-    this.suggestions = this.getSuggestions;
+  async created() {
+    try {
+      await this.$store.dispatch("getAllSuggestions");
+      this.suggestions = this.getSuggestions;
+    } catch (err) {
+      alert(err);
+      return err;
+    }
   },
   computed: {
     ...mapGetters([
@@ -216,57 +225,26 @@ export default {
     }
   },
   methods: {
-    acceptSuggestion(id) {
-      if (
-        this.suggestions[this.getSuggestionIndexById(id)].status === "pendant"
-      ) {
-        this.suggestions[this.getSuggestionIndexById(id)].status = "accepted";
-        this.$snotify.success("Suggestion accepted!", "Done", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
-        });
-      }
+    acceptSuggestion(id_suggestion, id_user) {
+      // let responseValue = 1;
 
-      this.$store.commit("SET_SUGGESTION", {
-        suggestions: this.suggestions
-      });
+      alert(id_suggestion, id_user);
 
-      this.$store.commit("NEW_NOTIFICATION", {
-        id: this.getSuggestionByIds(id).id,
-        userId: this.getSuggestionByIds(id).userId,
-        relatedTo: this.getSuggestionByIds(id).name,
-        sugestionDate: this.getSuggestionByIds(id).date,
-        answear: "Your sugestion was accepted",
-        status: "not-read"
+      this.$snotify.success("Suggestion accepted!", "Done", {
+        timeout: 2000,
+        showProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true
       });
     },
-    refuseSuggestion(id) {
-      if (
-        this.suggestions[this.getSuggestionIndexById(id)].status === "pendant"
-      ) {
-        this.suggestions[this.getSuggestionIndexById(id)].status =
-          "not-accepted";
-        this.$snotify.warning("Suggestion not accepted!", "Done", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
-        });
-      }
-
-      this.$store.commit("SET_SUGGESTION", {
-        suggestions: this.suggestions
-      });
-
-      this.$store.commit("NEW_NOTIFICATION", {
-        id: this.getSuggestionByIds(id).id,
-        userId: this.getSuggestionByIds(id).userId,
-        relatedTo: this.getSuggestionByIds(id).name,
-        sugestionDate: this.getSuggestionByIds(id).date,
-        answear: "Your sugestion was not accepted",
-        status: "not-read"
+    refuseSuggestion(id_suggestion, id_user) {
+      // let responseValue = 2;
+      alert(id_suggestion, id_user);
+      this.$snotify.warning("Suggestion not accepted!", "Done", {
+        timeout: 2000,
+        showProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true
       });
     },
     compareCategory(a, b) {

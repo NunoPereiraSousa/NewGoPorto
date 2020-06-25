@@ -22,6 +22,8 @@ import BackOfficeCatalog from "@/views/BackOffice/BackOfficeCatalog.vue";
 import BackOfficeSuggestions from "@/views/BackOffice/BackOfficeSuggestions.vue";
 import BackOfficeRoutes from "@/views/BackOffice/BackOfficeRoutes.vue";
 
+import ErrorPage from "@/views/ErrorPage.vue";
+
 import store from "../store/index.js";
 Vue.use(VueRouter);
 
@@ -617,6 +619,15 @@ const routes = [
           next();
         }
       }
+    }
+  },
+  {
+    path: "/errorPage",
+    name: "errorPage",
+    component: ErrorPage,
+    meta: {
+      requireAuth: false,
+      mustBeAdmin: false
     }
   }
 ];

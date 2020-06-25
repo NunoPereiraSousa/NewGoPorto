@@ -58,7 +58,7 @@ export default {
       loggedUser: ""
     };
   },
-  created() {
+  async created() {
     if (JSON.parse(localStorage.getItem("loggedUser"))) {
       this.$store.commit(
         "SET_LOGGED_USER",
@@ -67,6 +67,13 @@ export default {
     } else {
       this.$store.commit("SET_LOGGED_USER_LOG_OUT", { loggedUser: "" });
     }
+
+    // try {
+    //   await this.$store.dispatch("allUsers");
+    // } catch (err) {
+    //   alert(err);
+    //   return err;
+    // }
 
     this.$store.commit("SET_IN_LOG_IN_AND_REG", { bool: true });
     this.setStorage();

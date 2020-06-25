@@ -563,6 +563,10 @@ export default new Vuex.Store({
 
     SET_REGISTER_STATUS(state, payload) {
       state.resStatus = payload.resStatus;
+      // alert(state.resStatus)
+      // if (state.resStatus >= 500) {
+
+      // }
     },
     //!
 

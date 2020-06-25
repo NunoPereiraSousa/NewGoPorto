@@ -621,21 +621,6 @@ export default {
     })
   },
   async created() {
-    // this.$store.commit("SET_USERS", {
-    //   users: JSON.parse(localStorage.getItem("users"))
-    // });
-
-    // this.$store.commit(
-    //   "SET_LOGGED_USER",
-    //   JSON.parse(localStorage.getItem("loggedUser"))
-    // );
-
-    // if (JSON.parse(localStorage.getItem("notifications"))) {
-    //   this.$store.commit("SET_NOTIFICATIONS", {
-    //     notifications: JSON.parse(localStorage.getItem("notifications"))
-    //   });
-    // }
-
     // todo
     try {
       await this.$store.dispatch("getAllUserNotifications");
@@ -655,6 +640,7 @@ export default {
   methods: {
     logOut() {
       this.$store.commit("SET_LOGGED_USER_LOG_OUT", { loggedUser: "" });
+      this.$store.commit("SET_TOKEN", { token: null });
       this.$router.push({ name: "sign-in" });
     },
     async checkNotification(id) {

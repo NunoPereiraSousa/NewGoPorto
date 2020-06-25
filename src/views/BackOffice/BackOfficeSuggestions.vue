@@ -304,16 +304,17 @@ export default {
       });
     },
     compareCategory(a, b) {
-      if (a.category < b.category) return -1;
-      if (a.category > b.category) return 1;
+      if (a.category_name < b.category_name) return -1;
+      if (a.category_name > b.category_name) return 1;
       else return 0;
     },
     orderByCategory() {
       this.suggestions.sort(this.compareCategory);
     },
     compareName(a, b) {
-      if (a.name.toLowerCase() < b.name.toLowerCase()) return -1;
-      if (a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+      if (a.new_identity.toLowerCase() < b.new_identity.toLowerCase())
+        return -1;
+      if (a.new_identity.toLowerCase() > b.new_identity.toLowerCase()) return 1;
       else return 0;
     },
     orderByName() {

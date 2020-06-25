@@ -101,7 +101,7 @@ export default {
                 closeOnClick: true,
                 pauseOnHover: true
               });
-            } else if (this.loggedUser[0].id_user_type == 2) {
+            } else if (this.loggedUser[0].id_user_type == 1) {
               this.resetForm();
               this.$router.push({ name: "loading" }); // *CHANGES THE LOCATION
             } else {

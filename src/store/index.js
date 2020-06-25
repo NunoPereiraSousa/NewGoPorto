@@ -530,23 +530,19 @@ export default new Vuex.Store({
   mutations: {
     NEW_USER(state, payload) {
       state.users.push(payload);
-      localStorage.setItem("users", JSON.stringify(state.users));
+      // localStorage.setItem("users", JSON.stringify(state.users));
     },
 
     SET_USERS(state, payload) {
       state.users = payload.users;
-      localStorage.setItem("users", JSON.stringify(state.users));
+      // localStorage.setItem("users", JSON.stringify(state.users));
     },
 
     //!
     SET_LOGGED_USER(state, payload) {
       state.loggedUser = payload;
-      localStorage.setItem("loggedUser", JSON.stringify(state.loggedUser));
+      // localStorage.setItem("loggedUser", JSON.stringify(state.loggedUser));
     },
-    // SET_LOGGED_USER_PROFILE(state, payload) {
-    //   state.loggedUser = payload;
-    //   localStorage.setItem("loggedUser", JSON.stringify(state.loggedUser));
-    // },
 
     // *NEW TO CONNECT
 
@@ -559,8 +555,10 @@ export default new Vuex.Store({
       state.token = payload.token;
       state.resStatus = payload.resStatus;
 
+      // ! Important
       localStorage.setItem("token", JSON.stringify(payload.token));
       localStorage.setItem("loggedUser", JSON.stringify(payload.loggedUser));
+      // ! Important
     },
 
     SET_REGISTER_STATUS(state, payload) {
@@ -570,12 +568,14 @@ export default new Vuex.Store({
 
     SET_LOGGED_USER_LOG_OUT(state, payload) {
       state.loggedUser = payload.loggedUser;
-      localStorage.setItem("loggedUser", JSON.stringify(state.loggedUser));
+      // localStorage.setItem("loggedUser", JSON.stringify(state.loggedUser));
     },
 
+    // !Very important
     SET_IN_LOG_IN_AND_REG(state, payload) {
       state.inLogInAndReg = payload.bool;
     },
+    // !Very important
 
     // * itineraries
     // Todo --------------------
@@ -602,13 +602,13 @@ export default new Vuex.Store({
 
     NEW_ITINERARY(state, payload) {
       state.itineraries.push(payload);
-      localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
+      // localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
     },
 
     SET_ITINERARIES(state, payload) {
       state.itineraries = payload.itineraries;
       state.resStatus = payload.resStatus;
-      localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
+      // localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
     },
     SET_FULL_ITINERARIES(state, payload) {
       let fullItineraries = [];
@@ -652,13 +652,11 @@ export default new Vuex.Store({
       }
       state.itineraries = fullItineraries;
       state.resStatus = payload.resStatus;
-      localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
-    },
 
-    // NEW_SET_ITINERARIES(state, payload) {
-    //   state.itineraries = payload.itineraries;
-    //   localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
-    // },
+      // ! Very Important
+      localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
+      // ! Very Important
+    },
 
     SET_SELECTED_ITINERARY(state, payload) {
       state.selectedItinerary = payload;
@@ -668,58 +666,10 @@ export default new Vuex.Store({
       );
     },
 
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to  be removed
-    ADD_FOLLOW(state, payload) {
-      // *obs : payload = id
-      let index = 0;
-      index = state.itineraries.findIndex(
-        itinerary => itinerary.id === payload.id
-      );
-      state.itineraries[index].fallowedCount++;
-      localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
-
-      state.followedItinerary.push({
-        itineraryId: payload.id,
-        userId: payload.userId,
-        title: state.itineraries[index].title
-      });
-      localStorage.setItem(
-        "followedItinerary",
-        JSON.stringify(state.followedItinerary)
-      );
-    },
-    REMOVE_FOLLOW(state, payload) {
-      // *obs : payload.id
-      let index = 0;
-      index = state.itineraries.findIndex(
-        itinerary => itinerary.id === payload.id
-      );
-      state.itineraries[index].fallowedCount--;
-      localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
-
-      state.followedItinerary = state.followedItinerary.filter(following => {
-        let itineraryConf = true;
-        let userConfirm = true;
-
-        if (following.userId == payload.userId) {
-          itineraryConf = false;
-        }
-        if (following.itineraryId == payload.id) {
-          userConfirm = false;
-        }
-        return itineraryConf || userConfirm;
-      });
-
-      localStorage.setItem(
-        "followedItinerary",
-        JSON.stringify(state.followedItinerary)
-      );
-    },
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to  be removed
-
     // todo -----------------------------------------
     SET_FOLLOWS(state, payload) {
       state.followedItinerary = payload.followedItinerary;
+      // important
       localStorage.setItem(
         "followedItinerary",
         JSON.stringify(state.followedItinerary)
@@ -727,51 +677,52 @@ export default new Vuex.Store({
     },
     // todo -----------------------------------------
 
-    // *itineraries
+    // *itineraries >
 
     SET_IDENTITY(state, payload) {
       state.identities = payload.identities;
       state.resStatus = payload.resStatus;
-      localStorage.setItem("identities", JSON.stringify(state.identities));
+      // localStorage.setItem("identities", JSON.stringify(state.identities));
     },
 
     NEW_IDENTITY(state, payload) {
       state.identities.push(payload);
-      localStorage.setItem("identities", JSON.stringify(state.identities));
+      // localStorage.setItem("identities", JSON.stringify(state.identities));
     },
 
     SET_IDENTITY_SELECTED(state, payload) {
       state.identity = payload.identity;
-      localStorage.setItem("identity", JSON.stringify(state.identity));
+      // localStorage.setItem("identity", JSON.stringify(state.identity));
     },
 
     SET_IDENTITY_SELECTED_ID(state, payload) {
       state.identity_id = payload;
       localStorage.setItem("identity_id", JSON.stringify(state.identity_id));
     },
-
+    // !<Important
     SET_IDENTITY_SELECTED_PROTECTION(state, payload) {
       state.identity = payload.identity;
       localStorage.setItem("identity", JSON.stringify(state.identity));
     },
+    // !Important>
 
     NEW_SUGGESTION(state, payload) {
       state.suggestions.push(payload);
-      localStorage.setItem("suggestions", JSON.stringify(state.suggestions));
+      // localStorage.setItem("suggestions", JSON.stringify(state.suggestions));
     },
     // Todo
     SET_SUGGESTION(state, payload) {
       state.suggestions = payload.suggestions;
-      localStorage.setItem("suggestions", JSON.stringify(state.suggestions));
+      // localStorage.setItem("suggestions", JSON.stringify(state.suggestions));
     },
     // Todo
 
     NEW_NOTIFICATION(state, payload) {
       state.notifications.push(payload);
-      localStorage.setItem(
-        "notifications",
-        JSON.stringify(state.notifications)
-      );
+      // localStorage.setItem(
+      //   "notifications",
+      //   JSON.stringify(state.notifications)
+      // );
     },
 
     // todo
@@ -787,10 +738,10 @@ export default new Vuex.Store({
 
     SET_NOTIFICATIONS(state, payload) {
       state.notifications = payload.notifications;
-      localStorage.setItem(
-        "notifications",
-        JSON.stringify(state.notifications)
-      );
+      // localStorage.setItem(
+      //   "notifications",
+      //   JSON.stringify(state.notifications)
+      // );
     },
 
     NEW_COMMENT(state, payload) {
@@ -807,7 +758,7 @@ export default new Vuex.Store({
 
     SET_COMMENTS(state, payload) {
       state.comments = payload.comments;
-      localStorage.setItem("comments", JSON.stringify(state.comments));
+      // localStorage.setItem("comments", JSON.stringify(state.comments));
     },
 
     CHANGE_COMMENT_PHOTO_BY_USER(state, payload) {
@@ -817,51 +768,58 @@ export default new Vuex.Store({
             comment.userPhoto = payload.photo;
           }
         }
-        localStorage.setItem("comments", JSON.stringify(state.comments));
+        // localStorage.setItem("comments", JSON.stringify(state.comments));
       }
     },
 
     SET_VISITED_USER(state, payload) {
       state.visitedUser = payload.user;
       state.resStatus = payload.resStatus;
-      localStorage.setItem("visitedUser", JSON.stringify(state.visitedUser));
+      // localStorage.setItem("visitedUser", JSON.stringify(state.visitedUser));
     },
     SET_VISITED_USER_ID(state, payload) {
       state.visitedUserId = payload;
+      // ! Very Important
       localStorage.setItem(
         "visitedUserId",
         JSON.stringify(state.visitedUserId)
       );
+      // ! Very Important
     },
 
     SET_VISITED_USER_PROTECTION(state, payload) {
       state.visitedUser = payload.user;
-      localStorage.setItem("visitedUser", JSON.stringify(state.visitedUser));
+      // localStorage.setItem("visitedUser", JSON.stringify(state.visitedUser));
     },
 
     SET_MONUMENTS_SELECTED_CATEGORY(state, payload) {
       state.category = payload.category;
+      //! Very Important
       localStorage.setItem("selectedCategory", JSON.stringify(state.category));
+      //! Very Important
     },
 
+    //  !To delete
     SET_COUNTRIES(state, payload) {
       state.category = payload.countries;
       localStorage.setItem("countries", JSON.stringify(state.countries));
     },
+    //  !To delete
+
     // TODO
     SET_FAVORITES_LIST(state, payload) {
       state.favoritesList = payload.list;
-      localStorage.setItem(
-        "favoritesList",
-        JSON.stringify(state.favoritesList)
-      );
+      // localStorage.setItem(
+      //   "favoritesList",
+      //   JSON.stringify(state.favoritesList)
+      // );
     },
     // TODO
 
     // * Categories Setters
     NEW_CATEGORY(state, payload) {
       state.categories.push(payload);
-      localStorage.setItem("categories", JSON.stringify(state.categories));
+      // localStorage.setItem("categories", JSON.stringify(state.categories));
     },
 
     SET_CATEGORIES(state, payload) {
@@ -872,18 +830,18 @@ export default new Vuex.Store({
 
     NEW_EMAIL(state, payload) {
       state.emails.push(payload);
-      localStorage.setItem("emails", JSON.stringify(state.emails));
+      // localStorage.setItem("emails", JSON.stringify(state.emails));
     },
 
     SET_EMAILS(state, payload) {
       state.emails = payload.emails;
-      localStorage.setItem("emails", JSON.stringify(state.emails));
+      // localStorage.setItem("emails", JSON.stringify(state.emails));
     },
 
     //* publications setters
     SET_PUBLICATIONS(state, payload) {
       state.publications = payload.publications;
-      localStorage.setItem("publications", JSON.stringify(state.publications));
+      // localStorage.setItem("publications", JSON.stringify(state.publications));
     },
 
     // ?

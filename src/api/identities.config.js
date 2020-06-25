@@ -27,7 +27,7 @@ const identityConfig = {
         };
       }
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -43,7 +43,7 @@ const identityConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      // localStorage.setItem("error", JSON.stringify(err.response.data.error));
       return err;
     }
   },
@@ -56,9 +56,6 @@ const identityConfig = {
     lng,
     image
   ) {
-    alert(
-      `editIdentityId: ${editIdentityId} \nName: ${name} \ninformation: ${information} \nid_category: ${category_name} \nlat: ${lat} \nlng: ${lng} \nphoto: ${image} `
-    );
     try {
       const response = await HTTP.put(
         `${API_URL}/identities/update/${editIdentityId}`,
@@ -79,14 +76,11 @@ const identityConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response));
+      // localStorage.setItem("error", JSON.stringify(err.response));
       return err;
     }
   },
   async addIdentitiesAdmin(name, information, category_name, lat, lng, image) {
-    alert(
-      `Name: ${name} \ninformation: ${information} \ncategory_name: ${category_name} \nlat: ${lat} \nlng: ${lng} \nphoto: ${image} `
-    );
     try {
       const response = await HTTP.post(
         `${API_URL}/add-identities`,
@@ -106,13 +100,12 @@ const identityConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response));
+      // localStorage.setItem("error", JSON.stringify(err.response));
       return err;
     }
   },
   async getIdentityById() {
     let identity_id = JSON.parse(localStorage.getItem("identity_id"));
-    alert(identity_id);
     try {
       const response = await HTTP.get(`${API_URL}/identities/${identity_id}`, {
         headers
@@ -129,7 +122,7 @@ const identityConfig = {
         };
       }
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -153,7 +146,7 @@ const identityConfig = {
         };
       }
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -163,8 +156,6 @@ const identityConfig = {
   async addFavorite() {
     let user = JSON.parse(localStorage.getItem("loggedUser"));
     let identity_id = JSON.parse(localStorage.getItem("identity_id"));
-
-    alert("something " + identity_id);
 
     try {
       const response = await HTTP.post(
@@ -204,7 +195,7 @@ const identityConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      // localStorage.setItem("error", JSON.stringify(err.response.data.error));
       return err;
     }
   }

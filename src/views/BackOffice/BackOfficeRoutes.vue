@@ -57,11 +57,11 @@
                   {{ itinerary.name }}
                 </h5>
                 <p class="lead pt-3 pl-4 text-left">
-                  <span class="font-weight-bold">User: </span>
+                  <span class="font-weight-bold">User:</span>
                   {{ itinerary.username }}
                 </p>
                 <p class="lead pt-3 pl-4 text-left">
-                  <span class="font-weight-bold">Follows: </span>
+                  <span class="font-weight-bold">Follows:</span>
                   {{ itinerary.num_shares }}
                 </p>
                 <div
@@ -101,6 +101,14 @@ export default {
     this.$store.commit("SET_ITINERARIES", {
       itineraries: JSON.parse(localStorage.getItem("itineraries"))
     });
+
+    //! <This is very Important, it is triggerd When the Server goes down
+    if (JSON.parse(localStorage.getItem("error"))) {
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
+    }
+    //! This is very Important, it is triggerd When the Server goes down>
     this.itineraries = this.getItineraries;
   },
   methods: {

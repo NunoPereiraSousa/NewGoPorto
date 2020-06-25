@@ -28,7 +28,7 @@ const commentConfig = {
         };
       }
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -51,7 +51,7 @@ const commentConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response));
+      // localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   }

@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Itineraries </span>
+            <span>Itineraries</span>
             <span>Catalog</span>
           </h2>
         </div>
@@ -37,6 +37,14 @@ export default {
     };
   },
   created() {
+    //! <This is very Important, it is triggerd When the Server goes down
+    if (JSON.parse(localStorage.getItem("error"))) {
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
+    }
+    //! This is very Important, it is triggerd When the Server goes down>
+
     this.$store.commit("SET_ITINERARIES", {
       itineraries: JSON.parse(localStorage.getItem("itineraries"))
     });

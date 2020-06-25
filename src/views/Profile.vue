@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser.username }} </span>
+            <span>{{ loggedUser.username }}</span>
             <span>Bio</span>
           </h2>
         </div>
@@ -91,7 +91,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser.username }} </span>
+            <span>{{ loggedUser.username }}</span>
             <span>Shares</span>
           </h2>
         </div>
@@ -145,7 +145,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Suggest </span>
+            <span>Suggest</span>
             <span>Places</span>
           </h2>
         </div>
@@ -353,13 +353,13 @@ export default {
       );
     }
 
-    if (JSON.parse(localStorage.getItem("publications"))) {
-      this.$store.commit("SET_PUBLICATIONS", {
-        publications: JSON.parse(localStorage.getItem("publications"))
-      });
+    // if (JSON.parse(localStorage.getItem("publications"))) {
+    //   this.$store.commit("SET_PUBLICATIONS", {
+    //     publications: JSON.parse(localStorage.getItem("publications"))
+    //   });
 
-      this.myPublications = this.getPublicationByUser(this.loggedUser.id);
-    }
+    //   this.myPublications = this.getPublicationByUser(this.loggedUser.id);
+    // }
 
     this.categories = this.getCategories;
 
@@ -367,9 +367,19 @@ export default {
       await this.$store.dispatch("userPosts");
       this.myPublications = this.getUserPosts;
     } catch (err) {
-      alert(err);
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
       return err;
     }
+
+    //! <This is very Important, it is triggerd When the Server goes down
+    if (JSON.parse(localStorage.getItem("error"))) {
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
+    }
+    //! This is very Important, it is triggerd When the Server goes down>
   },
   computed: {
     ...mapGetters({
@@ -477,8 +487,19 @@ export default {
         this.$store.commit("SET_LOGGED_USER", [this.loggedUser]);
         alert("Done editing");
       } catch (err) {
+        if (JSON.parse(localStorage.getItem("error")) == 500) {
+          this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+        }
         return err;
       }
+
+      //! <This is very Important, it is triggerd When the Server goes down
+      if (JSON.parse(localStorage.getItem("error"))) {
+        if (JSON.parse(localStorage.getItem("error")) == 500) {
+          this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+        }
+      }
+      //! This is very Important, it is triggerd When the Server goes down>
 
       // if (this.permition == false) {
       //   alert("Email Already Taken");
@@ -583,14 +604,6 @@ export default {
         } catch (err) {
           return err;
         }
-        this.allPublications.push({
-          id: this.getPublicationsLastId,
-          userId: this.loggedUser.id,
-          content: this.newPublication,
-          username: this.loggedUser.username,
-          date: this.getCurrentDate(),
-          block: 1
-        });
 
         // this.$store.commit("SET_PUBLICATIONS", {
         //   publications: this.allPublications
@@ -603,9 +616,19 @@ export default {
           await this.$store.dispatch("userPosts");
           this.myPublications = this.getUserPosts;
         } catch (err) {
-          alert(err);
+          if (JSON.parse(localStorage.getItem("error")) == 500) {
+            this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+          }
           return err;
         }
+
+        //! <This is very Important, it is triggerd When the Server goes down
+        if (JSON.parse(localStorage.getItem("error"))) {
+          if (JSON.parse(localStorage.getItem("error")) == 500) {
+            this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+          }
+        }
+        //! This is very Important, it is triggerd When the Server goes down>
       }
     },
     getCurrentDateTime() {
@@ -622,17 +645,9 @@ export default {
       return dateTime;
     },
     async deletePublication(id) {
-      // this.allPublications = this.getPublications;
-      // this.allPublications = this.allPublications.filter(
-      //   publication => publication.id != id
-      // );
-
       this.$store.commit("SET_DELETE_POST", {
         deletePostId: id
       });
-
-      alert("ID: " + id);
-
       try {
         await this.$store.dispatch("deletePost");
         alert("Deleted");
@@ -640,11 +655,23 @@ export default {
         return err;
       }
 
-      // this.$store.commit("SET_PUBLICATIONS", {
-      //   publications: this.allPublications
-      // });
+      try {
+        await this.$store.dispatch("userPosts");
+        this.myPublications = this.getUserPosts;
+      } catch (err) {
+        if (JSON.parse(localStorage.getItem("error")) == 500) {
+          this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+        }
+        return err;
+      }
 
-      // this.myPublications = this.getPublicationByUser(this.loggedUser.id);
+      //! <This is very Important, it is triggerd When the Server goes down
+      if (JSON.parse(localStorage.getItem("error"))) {
+        if (JSON.parse(localStorage.getItem("error")) == 500) {
+          this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+        }
+      }
+      //! This is very Important, it is triggerd When the Server goes down>
     },
     confirmEmailTaken() {
       this.permition = true;

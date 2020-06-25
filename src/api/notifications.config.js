@@ -12,7 +12,6 @@ let headers = {
 const notificationConfig = {
   // *"Remove" notification
   async removeNotification(id_notif) {
-    alert(id_notif);
     try {
       const response = await HTTP.put(
         `${API_URL}/notifications/update`,
@@ -27,7 +26,7 @@ const notificationConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      // localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -51,7 +50,7 @@ const notificationConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      // localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -79,7 +78,7 @@ const notificationConfig = {
         };
       }
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   }

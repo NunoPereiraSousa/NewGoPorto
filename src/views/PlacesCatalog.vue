@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Places </span>
+            <span>Places</span>
             <span>Catalog</span>
           </h2>
         </div>
@@ -80,9 +80,17 @@ export default {
       try {
         await this.$store.dispatch("allIdentities");
       } catch (err) {
-        alert(err);
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
         return err;
       }
+
+      //! <This is very Important, it is triggerd When the Server goes down
+      if (JSON.parse(localStorage.getItem("error"))) {
+        if (JSON.parse(localStorage.getItem("error")) == 500) {
+          this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+        }
+      }
+      //! This is very Important, it is triggerd When the Server goes down>
 
       this.selectedCategory = this.getIdentitiesSelectedCategory;
       this.identities = this.getIdentitiesByCategory(this.selectedCategory);

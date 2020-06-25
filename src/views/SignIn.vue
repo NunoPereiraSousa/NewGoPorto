@@ -59,6 +59,14 @@ export default {
     };
   },
   async created() {
+    //! <This is very Important, it is triggerd When the Server goes down
+    if (JSON.parse(localStorage.getItem("error"))) {
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
+    }
+    //! This is very Important, it is triggerd When the Server goes down>
+
     if (JSON.parse(localStorage.getItem("loggedUser"))) {
       this.$store.commit(
         "SET_LOGGED_USER",
@@ -68,12 +76,11 @@ export default {
       this.$store.commit("SET_LOGGED_USER_LOG_OUT", { loggedUser: "" });
     }
 
-    // try {
-    //   await this.$store.dispatch("allUsers");
-    // } catch (err) {
-    //   alert(err);
-    //   return err;
-    // }
+    try {
+      await this.$store.dispatch("allUsers");
+    } catch (err) {
+      this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+    }
 
     this.$store.commit("SET_IN_LOG_IN_AND_REG", { bool: true });
     this.setStorage();
@@ -129,6 +136,13 @@ export default {
           }
         } catch (err) {
           alert("Something went wrong try again please");
+          //! <This is very Important, it is triggerd When the Server goes down
+          if (JSON.parse(localStorage.getItem("error"))) {
+            if (JSON.parse(localStorage.getItem("error")) == 500) {
+              this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+            }
+          }
+          //! This is very Important, it is triggerd When the Server goes down>
         }
       } else {
         alert("fill in the fields");

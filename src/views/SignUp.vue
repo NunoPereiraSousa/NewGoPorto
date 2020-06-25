@@ -248,6 +248,13 @@ export default {
               alert(`${resStatus.message}`);
             } else {
               alert("Something went wrong, please try againr");
+              //! <This is very Important, it is triggerd When the Server goes down
+              if (JSON.parse(localStorage.getItem("error"))) {
+                if (JSON.parse(localStorage.getItem("error")) == 500) {
+                  this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+                }
+              }
+              //! This is very Important, it is triggerd When the Server goes down>
             }
           }
         }

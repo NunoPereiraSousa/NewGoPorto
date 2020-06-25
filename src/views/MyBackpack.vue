@@ -102,20 +102,26 @@ export default {
     try {
       await this.$store.dispatch("getAllFollowedItinerary");
     } catch (err) {
-      alert(err);
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
       return err;
     }
     try {
       await this.$store.dispatch("allItineraries");
     } catch (err) {
-      alert(err);
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
       return err;
     }
 
     try {
       await this.$store.dispatch("allFullItineraries");
     } catch (err) {
-      alert(err);
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
       return err;
     }
 
@@ -123,9 +129,19 @@ export default {
     try {
       await this.$store.dispatch("getAllFavorite");
     } catch (err) {
-      alert(err);
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
       return err;
     }
+
+    //! <This is very Important, it is triggerd When the Server goes down
+    if (JSON.parse(localStorage.getItem("error"))) {
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
+    }
+    //! This is very Important, it is triggerd When the Server goes down>
     // todo
 
     this.loggedUser = this.getLoggedUser;
@@ -133,7 +149,6 @@ export default {
     this.myfavouriteList = this.getMyFavorites(this.loggedUser[0].id_user);
     //!!!!!!!!!!!!!!!
     this.myFollows = this.getMyFollowsById(this.loggedUser[0].id_user);
-    // alert(this.myFollows.length);
   },
   methods: {
     saveIdentity(id) {
@@ -147,7 +162,6 @@ export default {
     },
 
     folowItinerary(id) {
-      alert(id);
       this.itinerary = this.getItineraryById(id);
       this.$store.commit("SET_SELECTED_ITINERARY", this.itinerary);
       this.$router.push({

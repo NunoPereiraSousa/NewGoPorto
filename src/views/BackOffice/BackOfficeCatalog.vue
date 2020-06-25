@@ -180,7 +180,7 @@
               </div>
               <div class="form-group pb-3">
                 <select class="form-control" v-model="form.category_name">
-                  <option value="">Choose the identity category</option>
+                  <option value>Choose the identity category</option>
                   <option
                     v-for="category in categories"
                     :key="category.id_category"
@@ -446,6 +446,14 @@ export default {
       alert(err);
       return err;
     }
+
+    //! <This is very Important, it is triggerd When the Server goes down
+    if (JSON.parse(localStorage.getItem("error"))) {
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
+    }
+    //! This is very Important, it is triggerd When the Server goes down>
 
     this.identities = this.getIdentities;
     this.categories = this.getCategories;

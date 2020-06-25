@@ -28,7 +28,7 @@
           data-aos-once="true"
           data-aos-easing="ease"
         >
-          Please choose a section that follows the pages we have!
+          Something went wrong !!! Please try again later...
         </h4>
       </div>
     </div>
@@ -36,7 +36,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+  created() {
+    localStorage.setItem("identity_id", JSON.stringify(""));
+    localStorage.setItem("categories", JSON.stringify([]));
+    localStorage.setItem("itineraries", JSON.stringify([]));
+    localStorage.setItem("followedItinerary", JSON.stringify([]));
+    localStorage.setItem("error", JSON.stringify(null));
+    localStorage.setItem("error", JSON.stringify(""));
+    localStorage.setItem("token", JSON.stringify(""));
+    localStorage.setItem("loggedUser", JSON.stringify(""));
+  }
+};
 </script>
 
 <style lang="scss" scoped>

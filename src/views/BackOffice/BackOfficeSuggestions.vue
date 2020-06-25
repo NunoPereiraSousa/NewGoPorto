@@ -208,9 +208,17 @@ export default {
       await this.$store.dispatch("getAllSuggestions");
       this.suggestions = this.getSuggestions;
     } catch (err) {
-      alert(err);
+      this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
       return err;
     }
+
+    //! <This is very Important, it is triggerd When the Server goes down
+    if (JSON.parse(localStorage.getItem("error"))) {
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
+    }
+    //! This is very Important, it is triggerd When the Server goes down>
   },
   computed: {
     ...mapGetters([
@@ -292,9 +300,19 @@ export default {
         await this.$store.dispatch("getAllSuggestions");
         this.suggestions = this.getSuggestions;
       } catch (err) {
-        alert(err);
+        if (JSON.parse(localStorage.getItem("error")) == 500) {
+          this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+        }
         return err;
       }
+
+      //! <This is very Important, it is triggerd When the Server goes down
+      if (JSON.parse(localStorage.getItem("error"))) {
+        if (JSON.parse(localStorage.getItem("error")) == 500) {
+          this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+        }
+      }
+      //! This is very Important, it is triggerd When the Server goes down>
 
       this.$snotify.warning("Suggestion not accepted!", "Done", {
         timeout: 2000,

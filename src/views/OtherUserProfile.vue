@@ -121,24 +121,40 @@ export default {
       await this.$store.dispatch("getVisitedUserProfile");
       this.visitedUser = this.getVisitedUser;
     } catch (err) {
-      alert(err);
+      // alert(err);
       return err;
     }
 
-    if (JSON.parse(localStorage.getItem("publications"))) {
-      this.$store.commit("SET_PUBLICATIONS", {
-        publications: JSON.parse(localStorage.getItem("publications"))
-      });
+    //! <This is very Important, it is triggerd When the Server goes down
+    if (JSON.parse(localStorage.getItem("error"))) {
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
     }
+    //! This is very Important, it is triggerd When the Server goes down>
+
+    // if (JSON.parse(localStorage.getItem("publications"))) {
+    //   this.$store.commit("SET_PUBLICATIONS", {
+    //     publications: JSON.parse(localStorage.getItem("publications"))
+    //   });
+    // }
 
     try {
       await this.$store.dispatch("VisitedUserPosts");
       this.visitedUserPublications = this.getUserPosts;
       alert(`${this.visitedUserPublications[0].content} here`);
     } catch (err) {
-      alert(err);
+      // alert(err);
       return err;
     }
+
+    //! <This is very Important, it is triggerd When the Server goes down
+    if (JSON.parse(localStorage.getItem("error"))) {
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
+    }
+    //! This is very Important, it is triggerd When the Server goes down>
 
     this.Form.id = this.visitedUser.id;
     this.Form.name = this.visitedUser.name;

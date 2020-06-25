@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Trip </span>
+            <span>Trip</span>
             <span>Details</span>
           </h2>
         </div>
@@ -38,7 +38,7 @@
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
                 </p>
-              </div> -->
+              </div>-->
               <!-- // Location -->
             </div>
             <div class="form-row align-items-center">
@@ -67,7 +67,7 @@
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
                 </p>
-              </div> -->
+              </div>-->
               <!-- // Trip Title -->
             </div>
             <div class="form-row align-items-center">
@@ -96,7 +96,7 @@
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
                 </p>
-              </div> -->
+              </div>-->
               <!-- // Number Kids -->
             </div>
             <div class="form-row align-items-center">
@@ -125,7 +125,7 @@
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
                 </p>
-              </div> -->
+              </div>-->
               <!-- // Number Adults -->
             </div>
             <div class="form-row align-items-center">
@@ -158,7 +158,7 @@
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
                 </p>
-              </div> -->
+              </div>-->
               <!-- // Food -->
             </div>
           </form>
@@ -169,7 +169,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Choose </span>
+            <span>Choose</span>
             <span>Places to Visit</span>
           </h2>
         </div>
@@ -287,17 +287,28 @@ export default {
     try {
       await this.$store.dispatch("allCategories");
     } catch (err) {
-      alert(err);
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
       return err;
     }
 
     try {
       await this.$store.dispatch("allIdentities");
     } catch (err) {
-      alert(err);
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
       return err;
     }
 
+    //! <This is very Important, it is triggerd When the Server goes down
+    if (JSON.parse(localStorage.getItem("error"))) {
+      if (JSON.parse(localStorage.getItem("error")) == 500) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      }
+    }
+    //! This is very Important, it is triggerd When the Server goes down>
     // this.itineraries = this.getItineraries;
     // this.identities = this.getIdentities;
     // this.loggedUser = this.getLoggedUser;
@@ -403,7 +414,6 @@ export default {
           try {
             await this.$store.dispatch("itineraryLastId");
           } catch (err) {
-            alert(err);
             return err;
           }
 
@@ -414,7 +424,6 @@ export default {
               await this.$store.dispatch("addIdentityItinerary");
               finalise = true;
             } catch (err) {
-              alert(err);
               return err;
             }
           }
@@ -423,7 +432,13 @@ export default {
         if (finalise) {
           this.seeItinerary();
         }
-
+        //! <This is very Important, it is triggerd When the Server goes down
+        if (JSON.parse(localStorage.getItem("error"))) {
+          if (JSON.parse(localStorage.getItem("error")) == 500) {
+            this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+          }
+        }
+        //! This is very Important, it is triggerd When the Server goes down>
         // this.$store.commit("NEW_ITINERARY", myItinerary);
       }
     },

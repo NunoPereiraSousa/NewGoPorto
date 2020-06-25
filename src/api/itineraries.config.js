@@ -31,7 +31,7 @@ const itineraryConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      // localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -52,7 +52,7 @@ const itineraryConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      // localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -74,7 +74,7 @@ const itineraryConfig = {
         };
       }
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -98,7 +98,7 @@ const itineraryConfig = {
         };
       }
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -114,7 +114,7 @@ const itineraryConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      // localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -135,7 +135,7 @@ const itineraryConfig = {
         };
       }
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -157,7 +157,7 @@ const itineraryConfig = {
         };
       }
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -181,7 +181,7 @@ const itineraryConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      // localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -203,7 +203,7 @@ const itineraryConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      // localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   }

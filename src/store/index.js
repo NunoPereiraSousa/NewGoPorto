@@ -176,11 +176,13 @@ export default new Vuex.Store({
       return state.loggedUser;
     },
 
+    // Todo
     getResStatus: state => {
       let status = state.resStatus;
       state.resStatus = null;
       return status;
     },
+    // Todo
 
     getNAdmins: state => {
       return state.users.filter(user => user.id_user_type === 1).length;
@@ -535,6 +537,8 @@ export default new Vuex.Store({
 
     SET_USERS(state, payload) {
       state.users = payload.users;
+      state.resStatus = payload.resStatus;
+      // alert("PayloadStatus" + state.resStatus)
       // localStorage.setItem("users", JSON.stringify(state.users));
     },
 

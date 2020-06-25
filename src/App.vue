@@ -24,9 +24,13 @@
       <Footer />
     </div>
     <div v-else>
-      <Navbar />
+      <div v-if="this.$route.name !== 'errorPage'">
+        <Navbar />
+      </div>
       <router-view></router-view>
-      <Footer />
+      <div v-if="this.$route.name !== 'errorPage'">
+        <Footer />
+      </div>
     </div>
   </div>
 </template>
@@ -73,7 +77,7 @@ export default {
       try {
         await this.$store.dispatch("allCategories");
       } catch (err) {
-        alert(err);
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
         return err;
       }
 
@@ -83,7 +87,7 @@ export default {
       try {
         await this.$store.dispatch("allUsers");
       } catch (err) {
-        alert(err);
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
         return err;
       }
 
@@ -94,21 +98,21 @@ export default {
       try {
         await this.$store.dispatch("getAllFavorite");
       } catch (err) {
-        alert(err);
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
         return err;
       }
 
       try {
         await this.$store.dispatch("allItineraries");
       } catch (err) {
-        alert(err);
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
         return err;
       }
 
       try {
         await this.$store.dispatch("allFullItineraries");
       } catch (err) {
-        alert(err);
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
         return err;
       }
 
@@ -117,7 +121,7 @@ export default {
       try {
         await this.$store.dispatch("allIdentities");
       } catch (err) {
-        alert(err);
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
         return err;
       }
 

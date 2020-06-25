@@ -26,7 +26,7 @@ const suggestionConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      // localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -49,7 +49,7 @@ const suggestionConfig = {
         };
       }
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   }

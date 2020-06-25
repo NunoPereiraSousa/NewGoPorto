@@ -19,9 +19,9 @@ const mainConfig = {
           headers
         }
       );
-      for (const data of response.data) {
-        alert(data);
-      }
+      // for (const data of response.data) {
+      //   alert(data);
+      // }
       return response;
 
       //   if (response.status == 200) {

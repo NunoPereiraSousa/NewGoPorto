@@ -628,6 +628,10 @@ const routes = [
     meta: {
       requireAuth: false,
       mustBeAdmin: false
+    },
+    beforeEnter: (to, from, next) => {
+      localStorage.setItem("error", JSON.stringify(""));
+      next();
     }
   }
 ];

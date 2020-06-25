@@ -127,7 +127,7 @@ const userConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -144,7 +144,7 @@ const userConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      // localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -161,7 +161,7 @@ const userConfig = {
         response: response.data
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -177,7 +177,7 @@ const userConfig = {
         response: response.data
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -208,7 +208,7 @@ const userConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      // localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -229,7 +229,7 @@ const userConfig = {
         };
       }
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -264,7 +264,7 @@ const userConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -280,7 +280,7 @@ const userConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -299,7 +299,7 @@ const userConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data));
+      // localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },
@@ -335,7 +335,6 @@ const userConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      alert(err);
       return err;
     }
   },
@@ -358,7 +357,7 @@ const userConfig = {
         };
       }
     } catch (err) {
-      localStorage.setItem("error", JSON.stringify(err.response.data.error));
+      localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   }

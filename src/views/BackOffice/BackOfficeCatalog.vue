@@ -436,12 +436,17 @@ export default {
     };
   },
   async created() {
-    this.$store.commit("SET_IDENTITY", {
-      identities: JSON.parse(localStorage.getItem("identities"))
-    });
+    try {
+      await this.$store.dispatch("allIdentities");
+      this.identities = this.getIdentities;
+    } catch (err) {
+      this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      return err;
+    }
 
     try {
       await this.$store.dispatch("allCategories");
+      this.categories = this.getCategories;
     } catch (err) {
       alert(err);
       return err;
@@ -454,9 +459,6 @@ export default {
       }
     }
     //! This is very Important, it is triggerd When the Server goes down>
-
-    this.identities = this.getIdentities;
-    this.categories = this.getCategories;
   },
   computed: {
     ...mapGetters([
@@ -504,19 +506,13 @@ export default {
         } catch (err) {
           return err;
         }
-        // this.form.id = this.getIdentityLastId;
-        // this.$store.commit("NEW_IDENTITY", {
-        //   id: this.form.id,
-        //   name: this.form.name,
-        //   information: this.form.information,
-        //   category: this.form.category,
-        //   image: this.form.image,
-        //   webite_link: this.form.webite_link,
-        //   kids_allowed: this.form.kids_allowed,
-        //   rating: this.rating,
-        //   lat: this.lat,
-        //   lng: this.lng
-        // });
+        try {
+          await this.$store.dispatch("allIdentities");
+          this.identities = this.getIdentities;
+        } catch (err) {
+          this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+          return err;
+        }
         this.$snotify.success("Added successfully", "Done", {
           timeout: 2000,
           showProgressBar: false,
@@ -546,30 +542,14 @@ export default {
         alert(err);
         return err;
       }
-      // this.identities = this.identities.filter(identity => identity.id !== id);
-      // this.$store.commit("SET_IDENTITY", {
-      //   identities: this.identities
-      // });
 
-      // this.itineraries = this.getItineraries;
-
-      // // alert(this.getItineraries.length);
-
-      // // *Delete in the itineraries the identities that have been already delected based on the id
-      // for (const itinerarie of this.itineraries) {
-      //   itinerarie.Visitelocations = itinerarie.Visitelocations.filter(
-      //     location => location.id !== id
-      //   );
-      // }
-
-      // // * Delete itineraries with no places to visite
-      // this.itineraries = this.itineraries.filter(
-      //   itinerary => itinerary.Visitelocations.length !== 0
-      // );
-
-      // this.$store.commit("SET_ITINERARIES", {
-      //   itineraries: this.itineraries
-      // });
+      try {
+        await this.$store.dispatch("allIdentities");
+        this.identities = this.getIdentities;
+      } catch (err) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+        return err;
+      }
 
       this.$snotify.success("Removed successfully", "Done", {
         timeout: 2000,
@@ -614,36 +594,15 @@ export default {
       } catch (err) {
         return err;
       }
-      // this.identities[
-      //   this.getIdentityById(this.form.editId)
-      // ].name = this.form.name;
-      // this.identities[
-      //   this.getIdentityById(this.form.editId)
-      // ].information = this.form.information;
-      // this.identities[
-      //   this.getIdentityById(this.form.editId)
-      // ].category = this.form.category;
-      // this.identities[
-      //   this.getIdentityById(this.form.editId)
-      // ].image = this.form.image;
-      // this.identities[
-      //   this.getIdentityById(this.form.editId)
-      // ].webite_link = this.form.webite_link;
-      // this.identities[
-      //   this.getIdentityById(this.form.editId)
-      // ].kids_allowed = this.form.kids_allowed;
 
-      // this.identities[
-      //   this.getIdentityById(this.form.editId)
-      // ].lat = this.form.lat;
+      try {
+        await this.$store.dispatch("allIdentities");
+        this.identities = this.getIdentities;
+      } catch (err) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+        return err;
+      }
 
-      // this.identities[
-      //   this.getIdentityById(this.form.editId)
-      // ].lng = this.form.lng;
-
-      // this.$store.commit("SET_IDENTITY", {
-      //   identities: this.identities
-      // });
       this.$snotify.success("Edited successfully", "Done", {
         timeout: 2000,
         showProgressBar: false,
@@ -653,12 +612,6 @@ export default {
     },
     async addCategory() {
       if (!this.getCategoryByName(this.categoryForm.category_name)) {
-        // this.categoryForm.id = this.getCategoriesLastId;
-        // this.$store.commit("NEW_CATEGORY", {
-        //   id: this.categoryForm.id,
-        //   name: this.categoryForm.categoryName,
-        //   img: this.form.img
-        // });
         this.$store.commit("SET_NEW_CATEGORY", {
           category_name: this.categoryForm.category_name,
           photo: this.categoryForm.photo
@@ -670,6 +623,15 @@ export default {
           alert(err);
           return err;
         }
+
+        try {
+          await this.$store.dispatch("allCategories");
+          this.categories = this.getCategories;
+        } catch (err) {
+          alert(err);
+          return err;
+        }
+
         this.clearCategoryForm();
       } else {
         this.clearCategoryForm();
@@ -697,48 +659,22 @@ export default {
         alert(err);
         return err;
       }
-      // this.categories = this.getCategories;
 
-      // this.categories = this.categories.filter(
-      //   category => category.name !== this.form.category
-      // );
-
-      // this.$store.commit("SET_CATEGORIES", {
-      //   categories: this.categories
-      // });
-      // this.categories = this.getCategories;
-
-      // this.identitiesController = this.getIdentities;
-
-      // this.identitiesController = this.identitiesController.filter(
-      //   identity => identity.category !== this.form.category
-      // );
-
-      // this.$store.commit("SET_IDENTITY", {
-      //   identities: this.identitiesController
-      // });
-
-      // this.identities = this.getIdentities;
-
-      // this.itineraries = this.getItineraries;
-
-      // // alert(this.getItineraries.length);
-
-      // // *Delete in the itineraries the identities that have been already delected
-      // for (const itinerarie of this.itineraries) {
-      //   itinerarie.Visitelocations = itinerarie.Visitelocations.filter(
-      //     location => location.category !== this.form.category
-      //   );
+      // try {
+      //   await this.$store.dispatch("allIdentities");
+      //   this.identities = this.getIdentities;
+      // } catch (err) {
+      //   this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      //   return err;
       // }
 
-      // // * Delete itineraries with no places to visite
-      // this.itineraries = this.itineraries.filter(
-      //   itinerary => itinerary.Visitelocations.length !== 0
-      // );
-
-      // this.$store.commit("SET_ITINERARIES", {
-      //   itineraries: this.itineraries
-      // });
+      try {
+        await this.$store.dispatch("allCategories");
+        this.categories = this.getCategories;
+      } catch (err) {
+        alert(err);
+        return err;
+      }
 
       // // SET_ITINERARIES;
 

@@ -83,7 +83,7 @@ export default {
     }
 
     this.$store.commit("SET_IN_LOG_IN_AND_REG", { bool: true });
-    this.setStorage();
+    // this.setStorage(); -- This is unecessary
   },
   methods: {
     async signInForm() {
@@ -115,7 +115,7 @@ export default {
                 closeOnClick: true,
                 pauseOnHover: true
               });
-            } else if (this.loggedUser[0].id_user_type == 1) {
+            } else if (this.loggedUser[0].id_user_type == 2) {
               this.resetForm();
               this.$router.push({ name: "loading" }); // *CHANGES THE LOCATION
             } else {

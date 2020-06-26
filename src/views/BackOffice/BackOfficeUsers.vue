@@ -54,21 +54,15 @@
             </button>
           </div>
           <div class="row pt-1 cardsRow mx-auto">
-            <div class="col-4" v-for="user in users" :key="user.id">
+            <div class="col-4" v-for="user in users" :key="user.id_user">
               <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                  <h5 class="card-title text-center">
-                    {{ user.username }}
-                  </h5>
+                  <h5 class="card-title text-center">{{ user.username }}</h5>
                   <div v-if="user.id_user_type === 1">
-                    <p class="lead pt-3 pb-4 text-center">
-                      Administrator
-                    </p>
+                    <p class="lead pt-3 pb-4 text-center">Administrator</p>
                   </div>
                   <div v-else>
-                    <p class="lead pt-3 pb-4 text-center">
-                      Normal User
-                    </p>
+                    <p class="lead pt-3 pb-4 text-center">Normal User</p>
                   </div>
                   <div
                     class="pt-1 d-flex justify-content-around"
@@ -363,17 +357,17 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
                 <p class="lead">
-                  <span class="font-weight-bold">Nº of Suggestions: </span>
+                  <span class="font-weight-bold">Nº of Suggestions:</span>
                   {{ getSuggestionsByUser(userId).length }}.
                 </p>
                 <p class="lead">
                   <span class="font-weight-bold"
-                    >Nº of Itineraries Generated:
-                  </span>
+                    >Nº of Itineraries Generated:</span
+                  >
                   {{ getItinerariesByUser(userId).length }}.
                 </p>
                 <p class="lead">
-                  <span class="font-weight-bold">Nº of Comments: </span>
+                  <span class="font-weight-bold">Nº of Comments:</span>
                   {{ getCommentsByUser(userId).length }}.
                 </p>
                 <button
@@ -431,19 +425,18 @@ export default {
       userId: ""
     };
   },
-  created() {
-    this.$store.commit("SET_USERS", {
-      users: JSON.parse(localStorage.getItem("users"))
-    });
+  async created() {
+    try {
+      await this.$store.dispatch("allUsers");
+    } catch (err) {
+      this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+      return err;
+    }
 
-    this.$store.commit(
-      "SET_LOGGED_USER",
-      JSON.parse(localStorage.getItem("loggedUser"))
-    );
-
-    this.$store.commit("SET_COMMENTS", {
-      comments: JSON.parse(localStorage.getItem("comments"))
-    });
+    // this.$store.commit(
+    //   "SET_LOGGED_USER",
+    //   JSON.parse(localStorage.getItem("loggedUser"))
+    // );
 
     this.users = this.getUsers;
     this.suggestions = this.getSuggestionsByUser;
@@ -521,10 +514,14 @@ export default {
         return err;
       }
 
-      // this.users = this.users.filter(user => user.id !== id);
-      // this.$store.commit("SET_USERS", {
-      //   users: this.users
-      // });
+      try {
+        await this.$store.dispatch("allUsers");
+        this.users = this.getUsers;
+      } catch (err) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+        return err;
+      }
+
       $(function() {
         $("#modal").modal("toggle");
       });
@@ -536,21 +533,7 @@ export default {
       });
     },
     editUser(id) {
-      // const user = this.users.filter(user => user.id === id)[0];
-      // this.$store.commit("SET_EDIT_USER", {
-      //   editUserId: id
-      // });
       this.form.editId = id;
-      alert("ID: " + this.form.editId);
-      // this.form.name = user.name;
-      // this.form.surname = user.surname;
-      // this.form.username = user.username;
-      // this.form.email = user.email;
-      // this.form.age = user.age;
-      // this.form.description = user.description;
-      // this.form.photo = user.photo;
-      // this.form.id_user_type = user.id_user_type;
-      // this.form.password = user.password;
     },
     async updateUser() {
       this.$store.commit("SET_EDIT_USER_ADMIN", {
@@ -567,33 +550,18 @@ export default {
 
       try {
         await this.$store.dispatch("editUser");
-        alert("User Edited");
+        // alert("User Edited");
       } catch (err) {
         return err;
       }
-      // this.users[
-      //   this.getIndexById(this.form.editId)
-      // ].username = this.form.username;
-      // this.users[this.getIndexById(this.form.editId)].name = this.form.name;
-      // this.users[
-      //   this.getIndexById(this.form.editId)
-      // ].surname = this.form.surname;
-      // this.users[this.getIndexById(this.form.editId)].email = this.form.email;
-      // this.users[this.getIndexById(this.form.editId)].age = this.form.age;
-      // this.users[
-      //   this.getIndexById(this.form.editId)
-      // ].description = this.form.description;
-      // this.users[this.getIndexById(this.form.editId)].photo = this.form.photo;
-      // this.users[this.getIndexById(this.form.editId)].id_user_type = parseInt(
-      //   this.form.id_user_type
-      // );
-      // this.users[
-      //   this.getIndexById(this.form.editId)
-      // ].password = this.form.password;
 
-      // this.$store.commit("SET_USERS", {
-      //   users: this.users
-      // });
+      try {
+        await this.$store.dispatch("allUsers");
+        this.users = this.getUsers;
+      } catch (err) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+        return err;
+      }
       this.clearForm();
     },
     async blockUser(id) {
@@ -618,22 +586,18 @@ export default {
 
       try {
         await this.$store.dispatch("blockUser");
-        alert("Blocked");
+        // alert("Blocked");
       } catch (err) {
         return err;
       }
-      // alert(this.users[this.getIndexById(id)].block)
 
-      // localStorage.setItem("block", JSON.stringify(block));
-      // if (this.users[this.getIndexById(id)].block == 1) {
-      //   this.users[this.getIndexById(id)].block = 0;
-      // } else {
-      //   this.users[this.getIndexById(id)].block = 1;
-      // }
-
-      // this.$store.commit("SET_USERS", {
-      //   users: this.users
-      // });
+      try {
+        await this.$store.dispatch("allUsers");
+        this.users = this.getUsers;
+      } catch (err) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+        return err;
+      }
     },
     compareType(a, b) {
       if (a.id_user_type < b.id_user_type) return -1;

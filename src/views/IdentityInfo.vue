@@ -6,7 +6,7 @@
         <div class="position-absolute" id="aboveImage">
           <div class="row">
             <div class="col-12 position-absolute">
-              <h2>{{ identity.name }}</h2>
+              <h2 id="identityName">{{ identity.name }}</h2>
               <a href="#" id="backpackAddBtn" @click="addTobackpack()">
                 <i
                   class="fas fa-hiking d-inline-block"

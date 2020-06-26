@@ -241,7 +241,8 @@ export default new Vuex.Store({
 
     getIdentitiesByCategory: state => category => {
       return state.identities.filter(
-        identity => identity.category_name == category.toLowerCase()
+        identity =>
+          identity.category_name.toLowerCase() == category.toLowerCase()
       );
     },
 

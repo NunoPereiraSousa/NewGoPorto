@@ -11,7 +11,7 @@
       </div>
       <div class="row">
         <div class="col-lg-6 col-12">
-          <form @submit.prevent="renderMap" class="form-inline mb-4">
+          <form @submit.prevent="renderMap" class="form-inline mb-3">
             <select
               class="form-control text-uppercase w-50 mr-5"
               id="transportation"
@@ -28,7 +28,7 @@
         </div>
         <div class="col-lg-6 col-12">
           <button
-            class="btn btn-primary"
+            class="btn btn-primary asd"
             type="submit"
             data-toggle="modal"
             data-target="#details"
@@ -465,5 +465,25 @@ export default {
   overflow-y: scroll;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+}
+
+@media only screen and (min-width: 375px) and (max-height: 822px) and (orientation: portrait) {
+  .container {
+    h2 {
+      margin: 1em 1em;
+    }
+    form {
+      margin: 1em 1em;
+      select {
+        margin-bottom: 1em;
+      }
+    }
+    .btn.asd {
+      margin: 0em 0.8em 1em;
+    }
+    .map2 {
+      margin: 1em 1em;
+    }
+  }
 }
 </style>

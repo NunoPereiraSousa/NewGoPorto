@@ -1,5 +1,62 @@
-import { mount } from "@vue/test-utils";
+import { mount, shallowMount } from "@vue/test-utils";
 import CategoryCard from "@/components/CategoryCard.vue";
+import ItineraryCard from "@/components/ItineraryCard.vue";
+
+// import navbar from "@/components/Navbar.vue";
+// import home from "../../src/views/PlacesCatalog.vue";
+
+// import routes from '@/routes'
+// import VueRouter from 'vue-router'
+// import {
+//   mockRouterComponents
+// } from 'vue-test-utils-helpers'
+
+// !Import the store
+// import store from "../../src/store/index";
+// !Import vue X
+import Vue from "vue";
+import Vuex from "vuex";
+Vue.use(Vuex);
+
+let fakeStore = new Vuex.Store({
+  state: {
+    users: [],
+    loggedUser: "",
+    identities: [],
+    itineraries: [
+      {
+        id: 1,
+        name: "Classic",
+        kids: 4,
+        adults: 5,
+        food: true,
+        Visitelocations: [
+          {
+            id: 1,
+            name: "Clérigos Tower",
+            information:
+              "The Clérigos Church (Portuguese: Igreja dos Clérigos) is a Baroque church in the city of Porto, in Portugal. Its tall bell tower, the Torre dos Clérigos, can be seen from various points of the city and is one of its most characteristic symbols.",
+            category: "Monuments",
+            image: "",
+            webite_link: "",
+            kids_allowed: "",
+            rating: 0,
+            lat: 41.1457,
+            lng: -8.6146
+          }
+        ],
+        userId: 3,
+        username: "Jacobbb",
+        followedCount: 0
+      }
+    ]
+  },
+  getters: {
+    getItineraryById: state => id => {
+      return state.itineraries.find(itinerary => itinerary.id === id);
+    }
+  }
+});
 
 describe("CategoryCard.vue", () => {
   it("Check if the image and the title are passed by props", () => {
@@ -20,4 +77,38 @@ describe("CategoryCard.vue", () => {
     const wrapper = mount(CategoryCard);
     expect(wrapper.find("img").isVisible()).toBe(true);
   });
+
+  it("Check if title appears", () => {
+    const wrapper = mount(CategoryCard);
+    expect(wrapper.find("p").isVisible()).toBe(true);
+  });
+
+  it("Check if the id is passed by props", async () => {
+    const passed_id = 1;
+    const wrapper = shallowMount(
+      ItineraryCard,
+      {
+        store: fakeStore
+      },
+      {
+        propsData: {
+          id: passed_id
+        }
+      }
+    );
+    expect(wrapper.props().id).toBe(passed_id);
+  });
 });
+
+// describe("ItineraryCard.vue", () => {
+
+//   // it("Check image existence", () => {
+//   //   const wrapper = mount(CategoryCard);
+//   //   expect(wrapper.find("img").isVisible()).toBe(true);
+//   // });
+
+//   // it("Check if title appears", () => {
+//   //   const wrapper = mount(CategoryCard);
+//   //   expect(wrapper.find("p").isVisible()).toBe(true);
+//   // });
+// });

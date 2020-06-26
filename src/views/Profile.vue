@@ -39,6 +39,7 @@
                   class="form-control d-inline-block"
                   placeholder="Name"
                   v-model="editForm.name"
+                  id="name"
                 />
                 <button type="submit" class="btn btn-primary save">
                   <i class="far fa-save"></i>

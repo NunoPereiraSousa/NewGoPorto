@@ -339,7 +339,6 @@ export default {
   async created() {
     this.loggedUser = this.getLoggedUser;
     this.loggedUser = this.loggedUser[0];
-    alert(this.loggedUser);
 
     this.user = this.getUserById(this.loggedUser);
     this.users = this.getUsers;

@@ -652,6 +652,8 @@ export default {
         deleteCategory: this.deleteCategoryName
       });
 
+      alert(this.deleteCategoryName);
+
       try {
         await this.$store.dispatch("deleteCategory");
         alert("Deleted");
@@ -660,13 +662,13 @@ export default {
         return err;
       }
 
-      // try {
-      //   await this.$store.dispatch("allIdentities");
-      //   this.identities = this.getIdentities;
-      // } catch (err) {
-      //   this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
-      //   return err;
-      // }
+      try {
+        await this.$store.dispatch("allIdentities");
+        this.identities = this.getIdentities;
+      } catch (err) {
+        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+        return err;
+      }
 
       try {
         await this.$store.dispatch("allCategories");

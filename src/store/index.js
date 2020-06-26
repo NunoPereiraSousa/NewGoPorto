@@ -106,7 +106,9 @@ export default new Vuex.Store({
       lng: null,
       image: null
     },
+    // Todo -Delete Category
     deleteCategory: null,
+    // Todo -Delete Category
     newCategoryForm: {
       category_name: null,
       photo: null

@@ -9,6 +9,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import Snotify, { SnotifyPosition } from "vue-snotify";
 import axios from "axios";
+import Notifications from "vue-notification";
 
 const HTTP = axios.create({
   baseURL: "https://goporto.herokuapp.com"
@@ -24,6 +25,7 @@ const options = {
 
 Vue.component("star-rating", StarRating);
 Vue.use(Snotify, options);
+Vue.use(Notifications);
 
 Vue.config.productionTip = false;
 

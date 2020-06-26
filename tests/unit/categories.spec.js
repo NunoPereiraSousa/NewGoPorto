@@ -30,23 +30,26 @@ Vue.use(Vuex);
 
 let mocked = new Vuex.Store({
   state: {
-    loggedUser: {
-      id_user: 134,
-      name: "hacker1",
-      email: "haker0@gmail.com",
-      photo: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD",
-      id_user_type: 1,
-      block: 0,
-      username: "haker0",
-      location: "China",
-      password: "$2a$10$2ULPA2h3dtpeUbUSAKLjkeMGSiud1ElHDoE/FjdBaRiepK0inzIii",
-      birth: "20-05-1999"
-    }
+    loggedUser: [
+      {
+        id_user: 134,
+        name: "hacker1",
+        email: "haker0@gmail.com",
+        photo: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD",
+        id_user_type: 1,
+        block: 0,
+        username: "haker0",
+        location: "China",
+        password:
+          "$2a$10$2ULPA2h3dtpeUbUSAKLjkeMGSiud1ElHDoE/FjdBaRiepK0inzIii",
+        birth: "20-05-1999"
+      }
+    ]
   }
 });
 
-describe("CategoryCard.vue", () => {
-  test("Check image existence", () => {
+describe("Profile.vue", () => {
+  test("Check if name is hacker1", () => {
     const wrapper = mount(Profile, { store: mocked });
     expect(wrapper.find("#name").text()).toEqual("hacker1");
   });

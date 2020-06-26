@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser.username }}</span>
+            <span>{{ loggedUser[0].username }} </span>
             <span>Bio</span>
           </h2>
         </div>
@@ -92,7 +92,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser.username }}</span>
+            <span>{{ loggedUser[0].username }} </span>
             <span>Shares</span>
           </h2>
         </div>
@@ -374,13 +374,11 @@ export default {
       return err;
     }
 
-    //! <This is very Important, it is triggerd When the Server goes down
-    if (JSON.parse(localStorage.getItem("error"))) {
-      if (JSON.parse(localStorage.getItem("error")) == 500) {
-        this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
-      }
-    }
-    //! This is very Important, it is triggerd When the Server goes down>
+    // if (JSON.parse(localStorage.getItem("error"))) {
+    //   if (JSON.parse(localStorage.getItem("error")) == 500) {
+    //     this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+    //   }
+    // }
   },
   computed: {
     ...mapGetters({

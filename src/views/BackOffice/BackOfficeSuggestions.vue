@@ -212,13 +212,11 @@ export default {
       return err;
     }
 
-    //! <This is very Important, it is triggerd When the Server goes down
     if (JSON.parse(localStorage.getItem("error"))) {
       if (JSON.parse(localStorage.getItem("error")) == 500) {
         this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
       }
     }
-    //! This is very Important, it is triggerd When the Server goes down>
   },
   computed: {
     ...mapGetters([
@@ -234,7 +232,6 @@ export default {
   },
   methods: {
     async acceptSuggestion(id_suggestion, id_user) {
-      // sets the new notification data and the datas of the suggestion that is going to be updated
       this.$store.commit("SET_NOTIFICATION_DATA", {
         id_notif: null,
         id_user: id_user,
@@ -242,38 +239,52 @@ export default {
         answer: "Suggestion accepted!",
         id_status: "1"
       });
-      //  updates the suggestion that was made by the user
       try {
         await this.$store.dispatch("updateSuggestion");
       } catch (err) {
-        alert(err);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
-      // Add a new notification to the system
       try {
         await this.$store.dispatch("addNewNotification");
       } catch (err) {
-        alert(err);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
-      // Get all the suggestions
       try {
         await this.$store.dispatch("getAllSuggestions");
         this.suggestions = this.getSuggestions;
       } catch (err) {
-        alert(err);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
-      // Alerts the admin of his action
-      this.$snotify.success("Suggestion accepted!", "Done", {
-        timeout: 2000,
-        showProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true
+      this.$notify({
+        group: "foo",
+        type: "success",
+        title: "Suggestion <b> Accepted </b>",
+        text: "The suggstion list was updated successfully!",
+        duration: 5000
       });
     },
     async refuseSuggestion(id_suggestion, id_user) {
-      // sets the new notification data and the datas of the suggestion that is going to be updated
       this.$store.commit("SET_NOTIFICATION_DATA", {
         id_notif: null,
         id_user: id_user,
@@ -281,21 +292,30 @@ export default {
         answer: "Suggestion regected!",
         id_status: "2"
       });
-      //  updates the suggestion that was made by the user
       try {
         await this.$store.dispatch("updateSuggestion");
       } catch (err) {
-        alert(err);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
-      // Add a new notification to the system
       try {
         await this.$store.dispatch("addNewNotification");
       } catch (err) {
-        alert(err);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
-      // Get all the suggestions
       try {
         await this.$store.dispatch("getAllSuggestions");
         this.suggestions = this.getSuggestions;
@@ -306,19 +326,18 @@ export default {
         return err;
       }
 
-      //! <This is very Important, it is triggerd When the Server goes down
       if (JSON.parse(localStorage.getItem("error"))) {
         if (JSON.parse(localStorage.getItem("error")) == 500) {
           this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
         }
       }
-      //! This is very Important, it is triggerd When the Server goes down>
 
-      this.$snotify.warning("Suggestion not accepted!", "Done", {
-        timeout: 2000,
-        showProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true
+      this.$notify({
+        group: "foo",
+        type: "success",
+        title: "Suggestion <b> Not Accepted </b>",
+        text: "The suggstion list was updated successfully!",
+        duration: 5000
       });
     },
     compareCategory(a, b) {

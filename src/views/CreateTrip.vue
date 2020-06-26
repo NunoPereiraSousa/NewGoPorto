@@ -349,35 +349,27 @@ export default {
       let newItineraryBool = true;
 
       if (this.interestPoints.length == 0) {
-        this.$snotify.warning(
-          "You must at list chose one place to Visit",
-          "Oh...",
-          {
-            timeout: 2000,
-            showProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-          }
-        );
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: "You must at list chose one place to Visit",
+          duration: 5000
+        });
         newItineraryBool = false;
-        alert("Must put something here bro");
       }
       if (this.form.kids == "") {
         this.form.kids = 0;
       }
 
       if (this.form.adults < 1) {
-        this.$snotify.warning(
-          "You must at least have one adult in this trip",
-          "Oh...",
-          {
-            timeout: 2000,
-            showProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-          }
-        );
-        alert("adult number mus be bigger then 0 bro");
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: "You must at least have one adult in this trip",
+          duration: 5000
+        });
         newItineraryBool = false;
       }
 
@@ -407,23 +399,42 @@ export default {
           await this.$store.dispatch("addItinerary");
           next = true;
         } catch (err) {
-          alert(err);
+          this.$notify({
+            group: "foo",
+            type: "error",
+            title: "Oops",
+            text: `${err}`,
+            duration: 5000
+          });
           return err;
         }
         if (next) {
           try {
             await this.$store.dispatch("itineraryLastId");
           } catch (err) {
+            this.$notify({
+              group: "foo",
+              type: "error",
+              title: "Oops",
+              text: `${err}`,
+              duration: 5000
+            });
             return err;
           }
 
           for (const place of this.interestPoints) {
-            // alert(place.id_identity);
             this.$store.commit("SET_IN_IDENTITY_ID", place.id_identity);
             try {
               await this.$store.dispatch("addIdentityItinerary");
               finalise = true;
             } catch (err) {
+              this.$notify({
+                group: "foo",
+                type: "error",
+                title: "Oops",
+                text: `${err}`,
+                duration: 5000
+              });
               return err;
             }
           }
@@ -432,25 +443,27 @@ export default {
         if (finalise) {
           this.seeItinerary();
         }
-        //! <This is very Important, it is triggerd When the Server goes down
         if (JSON.parse(localStorage.getItem("error"))) {
           if (JSON.parse(localStorage.getItem("error")) == 500) {
             this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
           }
         }
-        //! This is very Important, it is triggerd When the Server goes down>
         // this.$store.commit("NEW_ITINERARY", myItinerary);
       }
     },
-
-    //  todo ---------------------
     async seeItinerary() {
       let progress = false;
       try {
         await this.$store.dispatch("allItineraries");
         progress = true;
       } catch (err) {
-        alert(err);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
       if (progress) {
@@ -463,16 +476,17 @@ export default {
             name: "my-trip"
           });
         } catch (err) {
-          alert(err);
+          this.$notify({
+            group: "foo",
+            type: "error",
+            title: "Oops",
+            text: `${err}`,
+            duration: 5000
+          });
           return err;
         }
       }
-
-      alert("I am here bro progress"); //! this must be delited
     },
-
-    //  todo ---------------------
-
     compareCategory(a, b) {
       if (a.category < b.category) {
         return 1;
@@ -492,16 +506,16 @@ export default {
     addOrRemoveToList(id, categ) {
       this.identityIsSelected(id); //Todo obs : validate if the place is already chosen or not
 
-      //  first Part  - if the place is inside
       if (this.addValidation == true) {
         this.interestPoints = this.interestPoints.filter(
           identity => identity.id_identity != id
         );
-        this.$snotify.warning("Place Removed", "Alright...", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
+        this.$notify({
+          group: "foo",
+          type: "success",
+          title: "Place <b> Removed </b>",
+          text: "Make sure you add one back 😄",
+          duration: 5000
         });
 
         // Comnfirms if there is  still in the list places from the category of the one that has been removed
@@ -514,10 +528,7 @@ export default {
         }
 
         this.addValidation = false;
-      }
-
-      // Second part - if the place is not inside
-      else {
+      } else {
         let myIdentity = this.getIdentityByIds(id);
         this.interestPoints.push(myIdentity);
 

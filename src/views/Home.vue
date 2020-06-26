@@ -45,7 +45,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Know More About</span>
+            <span>Know More About </span>
             <span>Porto</span>
           </h2>
         </div>
@@ -71,7 +71,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Most Followed</span>
+            <span>Most Followed </span>
             <span>Itineraries</span>
           </h2>
         </div>
@@ -135,35 +135,6 @@ export default {
       alert(err);
       return err;
     }
-
-    this.$notify({
-      // (optional)
-      // Name of the notification holder
-      group: "foo",
-
-      // (optional)
-      // Class that will be assigned to the notification
-      type: "warn",
-
-      // (optional)
-      // Title (will be wrapped in div.notification-title)
-      title: "This is title",
-
-      // Content (will be wrapped in div.notification-content)
-      text: "This is <b> content </b>",
-
-      // (optional)
-      // Overrides default/provided duration
-      duration: 10000,
-
-      // (optional)
-      // Overrides default/provided animation speed
-      speed: 1000
-
-      // (optional)
-      // Data object that can be used in your template
-      // data: {}
-    });
 
     this.$store.commit("SET_ITINERARIES", {
       itineraries: JSON.parse(localStorage.getItem("itineraries"))

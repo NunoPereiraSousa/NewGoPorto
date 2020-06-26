@@ -102,18 +102,15 @@ export default {
       itineraries: JSON.parse(localStorage.getItem("itineraries"))
     });
 
-    //! <This is very Important, it is triggerd When the Server goes down
     if (JSON.parse(localStorage.getItem("error"))) {
       if (JSON.parse(localStorage.getItem("error")) == 500) {
         this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
       }
     }
-    //! This is very Important, it is triggerd When the Server goes down>
     this.itineraries = this.getItineraries;
   },
   methods: {
     async removeItinerary(id) {
-      // alert(id)
       if (confirm(`Wanna remove?`)) {
         this.$store.commit("SET_DELETE_ROUTE", {
           deleteRouteId: id
@@ -121,7 +118,6 @@ export default {
 
         try {
           await this.$store.dispatch("deleteRoute");
-          alert("Deleted");
         } catch (err) {
           alert(err);
           return err;
@@ -131,6 +127,14 @@ export default {
         );
         this.$store.commit("SET_ITINERARIES", {
           itineraries: this.itineraries
+        });
+
+        this.$notify({
+          group: "foo",
+          type: "success",
+          title: "Itinerary <b> Removed </b>",
+          text: "The list is now updated.",
+          duration: 5000
         });
       }
     },

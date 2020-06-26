@@ -11,7 +11,7 @@
           data-aos-once="true"
           data-aos-easing="ease"
         >
-          Error
+          Error 500
         </h1>
         <hr
           data-aos="fade-up"
@@ -30,17 +30,21 @@
         >
           Something went wrong !!! Please try again later...
         </h4>
-      </div>
-
-      <div class="Col-6">
         <button
           type="button"
           @click="connect()"
-          name
-          id
-          class="btn btn-primary"
+          class="btn btn-primary mt-5"
+          data-aos="fade-up"
+          data-aos-duration="800"
+          data-aos-delay="2100"
+          data-aos-once="true"
+          data-aos-easing="ease"
         >
-          Reconnect to the Server
+          <i class="fas fa-chevron-right pr-4" style="font-size: 0.8em;"></i>
+          Reconnect to the Server<i
+            class="fas fa-chevron-left pl-4"
+            style="font-size: 0.8em;"
+          ></i>
         </button>
       </div>
     </div>
@@ -88,8 +92,34 @@ export default {
     background: #f0f0f0;
   }
   h4 {
-    color: #e9d496;
+    color: #5085a5;
     font-weight: 500;
   }
+  .btn {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    text-decoration: none;
+    border-radius: 15px;
+    font-size: 1.3em;
+    letter-spacing: 0.02em;
+    font-family: "Geared Slab";
+    color: #fefefa;
+    padding: 0.15rem 2rem;
+    background: rgba(54, 54, 54, 0.95);
+    text-transform: uppercase;
+  }
+}
+
+.btn.active.focus,
+.btn.active:focus,
+.btn.focus,
+.btn.focus:active,
+.btn:active:focus,
+.btn:focus {
+  outline: none;
+  box-shadow: none;
 }
 </style>

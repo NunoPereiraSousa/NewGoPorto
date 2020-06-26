@@ -59,13 +59,11 @@ export default {
     };
   },
   async created() {
-    //! <This is very Important, it is triggerd When the Server goes down
     if (JSON.parse(localStorage.getItem("error"))) {
       if (JSON.parse(localStorage.getItem("error")) == 500) {
         this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
       }
     }
-    //! This is very Important, it is triggerd When the Server goes down>
 
     if (JSON.parse(localStorage.getItem("loggedUser"))) {
       this.$store.commit(
@@ -83,7 +81,6 @@ export default {
     }
 
     this.$store.commit("SET_IN_LOG_IN_AND_REG", { bool: true });
-    // this.setStorage(); -- This is unecessary
   },
   methods: {
     async signInForm() {
@@ -109,43 +106,50 @@ export default {
                 input: this.emailOrUsername,
                 password: this.password
               });
-              this.$snotify.error("The user it temporarly blocked", "Oh...", {
-                timeout: 2000,
-                showProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true
+              this.$notify({
+                group: "foo",
+                type: "error",
+                title: "User <b> Blocked </b>",
+                text: "The user it temporarly blocked.",
+                duration: 5000
               });
             } else if (this.loggedUser[0].id_user_type == 2) {
               this.resetForm();
               this.$router.push({ name: "loading" }); // *CHANGES THE LOCATION
             } else {
-              this.$router.push({ name: "adminLandingPage" }); // !CHANGES THE LOCATION
+              this.$router.push({ name: "adminLandingPage" });
             }
           } else {
-            alert("User not found");
-            this.$snotify.error(
-              "The email, username or password is incorret",
-              "Oh...",
-              {
-                timeout: 2000,
-                showProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true
-              }
-            );
+            this.$notify({
+              group: "foo",
+              type: "error",
+              title: "User <b> Not Found </b>",
+              text: "The user does not exist...",
+              duration: 5000
+            });
           }
         } catch (err) {
-          alert("Something went wrong try again please");
-          //! <This is very Important, it is triggerd When the Server goes down
+          this.$notify({
+            group: "foo",
+            type: "error",
+            title: "Oops",
+            text: `${err}`,
+            duration: 5000
+          });
           if (JSON.parse(localStorage.getItem("error"))) {
             if (JSON.parse(localStorage.getItem("error")) == 500) {
               this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
             }
           }
-          //! This is very Important, it is triggerd When the Server goes down>
         }
       } else {
-        alert("fill in the fields");
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: "Fill all the inputs please!",
+          duration: 5000
+        });
       }
     },
     //

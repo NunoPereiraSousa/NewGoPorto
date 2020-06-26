@@ -448,17 +448,21 @@ export default {
       await this.$store.dispatch("allCategories");
       this.categories = this.getCategories;
     } catch (err) {
-      alert(err);
+      this.$notify({
+        group: "foo",
+        type: "error",
+        title: "Oops",
+        text: `${err}`,
+        duration: 5000
+      });
       return err;
     }
 
-    //! <This is very Important, it is triggerd When the Server goes down
     if (JSON.parse(localStorage.getItem("error"))) {
       if (JSON.parse(localStorage.getItem("error")) == 500) {
         this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
       }
     }
-    //! This is very Important, it is triggerd When the Server goes down>
   },
   computed: {
     ...mapGetters([
@@ -502,7 +506,6 @@ export default {
         });
         try {
           await this.$store.dispatch("newIdentity");
-          alert("Identity added");
         } catch (err) {
           return err;
         }
@@ -513,20 +516,22 @@ export default {
           this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
           return err;
         }
-        this.$snotify.success("Added successfully", "Done", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
+        this.$notify({
+          group: "foo",
+          type: "success",
+          title: "Added <b> Successfully </b>",
+          text: "The list is now updated.",
+          duration: 5000
         });
         this.clearForm();
       } else {
         this.clearForm();
-        this.$snotify.error("The identity was already added!", "Error", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: "The identity was already added.",
+          duration: 5000
         });
       }
     },
@@ -537,9 +542,14 @@ export default {
 
       try {
         await this.$store.dispatch("deleteIdentity");
-        alert("Deleted");
       } catch (err) {
-        alert(err);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
 
@@ -551,11 +561,12 @@ export default {
         return err;
       }
 
-      this.$snotify.success("Removed successfully", "Done", {
-        timeout: 2000,
-        showProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true
+      this.$notify({
+        group: "foo",
+        type: "success",
+        title: "Identity <b> Removed </b>",
+        text: "The list is now updated.",
+        duration: 5000
       });
     },
     function(id) {
@@ -590,7 +601,6 @@ export default {
       });
       try {
         await this.$store.dispatch("editIdentity");
-        alert("Identity Edited");
       } catch (err) {
         return err;
       }
@@ -603,11 +613,12 @@ export default {
         return err;
       }
 
-      this.$snotify.success("Edited successfully", "Done", {
-        timeout: 2000,
-        showProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true
+      this.$notify({
+        group: "foo",
+        type: "success",
+        title: "Edited <b> Successfully </b>",
+        text: "The list was updated successfully!",
+        duration: 5000
       });
     },
     async addCategory() {
@@ -618,9 +629,21 @@ export default {
         });
         try {
           await this.$store.dispatch("newCategory");
-          alert("Category added");
+          this.$notify({
+            group: "foo",
+            type: "success",
+            title: "Category <b> Added </b>",
+            text: "One more category to the list!",
+            duration: 5000
+          });
         } catch (err) {
-          alert(err);
+          this.$notify({
+            group: "foo",
+            type: "error",
+            title: "Oops",
+            text: `${err}`,
+            duration: 5000
+          });
           return err;
         }
 
@@ -628,7 +651,13 @@ export default {
           await this.$store.dispatch("allCategories");
           this.categories = this.getCategories;
         } catch (err) {
-          alert(err);
+          this.$notify({
+            group: "foo",
+            type: "error",
+            title: "Oops",
+            text: `${err}`,
+            duration: 5000
+          });
           return err;
         }
 
@@ -642,23 +671,29 @@ export default {
           pauseOnHover: true
         });
       }
-
-      // todo (ideia de ultima hora)
-      // *Fazer com que as categorias adicionadas afectam areas na plataforma
     },
 
     async removeCategory() {
       this.$store.commit("SET_DELETE_CATEGORY", {
         deleteCategory: this.deleteCategoryName
       });
-
-      alert(this.deleteCategoryName);
-
       try {
         await this.$store.dispatch("deleteCategory");
-        alert("Deleted");
+        this.$notify({
+          group: "foo",
+          type: "success",
+          title: "Category <b> Removed </b>",
+          text: "The list is now updated.",
+          duration: 5000
+        });
       } catch (err) {
-        alert(err);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
 
@@ -674,7 +709,13 @@ export default {
         await this.$store.dispatch("allCategories");
         this.categories = this.getCategories;
       } catch (err) {
-        alert(err);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
 

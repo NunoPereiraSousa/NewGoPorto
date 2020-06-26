@@ -121,17 +121,21 @@ export default {
       await this.$store.dispatch("getVisitedUserProfile");
       this.visitedUser = this.getVisitedUser;
     } catch (err) {
-      // alert(err);
+      this.$notify({
+        group: "foo",
+        type: "error",
+        title: "Oops",
+        text: `${err}`,
+        duration: 5000
+      });
       return err;
     }
 
-    //! <This is very Important, it is triggerd When the Server goes down
     if (JSON.parse(localStorage.getItem("error"))) {
       if (JSON.parse(localStorage.getItem("error")) == 500) {
         this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
       }
     }
-    //! This is very Important, it is triggerd When the Server goes down>
 
     // if (JSON.parse(localStorage.getItem("publications"))) {
     //   this.$store.commit("SET_PUBLICATIONS", {
@@ -142,19 +146,21 @@ export default {
     try {
       await this.$store.dispatch("VisitedUserPosts");
       this.visitedUserPublications = this.getUserPosts;
-      alert(`${this.visitedUserPublications[0].content} here`);
     } catch (err) {
-      // alert(err);
+      this.$notify({
+        group: "foo",
+        type: "error",
+        title: "Oops",
+        text: `${err}`,
+        duration: 5000
+      });
       return err;
     }
-
-    //! <This is very Important, it is triggerd When the Server goes down
     if (JSON.parse(localStorage.getItem("error"))) {
       if (JSON.parse(localStorage.getItem("error")) == 500) {
         this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
       }
     }
-    //! This is very Important, it is triggerd When the Server goes down>
 
     this.Form.id = this.visitedUser.id;
     this.Form.name = this.visitedUser.name;
@@ -162,14 +168,11 @@ export default {
     this.Form.email = this.visitedUser.email;
     this.Form.image = this.visitedUser.photo;
     this.Form.location = this.visitedUser.location;
-
-    // this.getUserPublications();
   },
   computed: {
     ...mapGetters({
       getVisitedUser: "getVisitedUser",
       getUserPosts: "getUserPosts",
-      // todo
       getPublicationsLastId: "getPublicationsLastId",
       getPublications: "getPublications",
       getPublicationByUser: "getPublicationByUser"

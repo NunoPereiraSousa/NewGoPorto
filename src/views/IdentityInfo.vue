@@ -201,23 +201,25 @@ export default {
     });
   },
   async created() {
-    // !<get itinerary
     try {
       await this.$store.dispatch("getIdentity");
     } catch (err) {
-      alert(err);
+      this.$notify({
+        group: "foo",
+        type: "error",
+        title: "Oops",
+        text: `${err}`,
+        duration: 5000
+      });
       return err;
     }
-    // !get itinerary>
 
-    // !get comments
     try {
       await this.$store.dispatch("getCommentsIdIdentity");
     } catch (err) {
       alert(err);
       return err;
     }
-    // !get comments
 
     // if (JSON.parse(localStorage.getItem("users"))) {
     //   this.$store.commit("SET_USERS", {
@@ -236,14 +238,11 @@ export default {
     //     list: JSON.parse(localStorage.getItem("favoritesList"))
     //   });
     // }
-    //  *important
     this.loggedUser = this.getLoggedUser;
     this.identity = this.getIdentity;
-    //  *important
 
-    // * important
     this.comments = this.getCommentsByIdentity(this.identity.id);
-    // *important
+
     this.favouritesList = this.getFavoritesList;
     this.identities = this.getIdentities;
     this.renderMap();
@@ -268,10 +267,6 @@ export default {
     }
   },
   methods: {
-    // async getItinerary() {},
-
-    // async getCommentsIdIdentity() {},
-
     renderMap() {
       const location = new google.maps.LatLng(
         this.identity.lat,
@@ -329,24 +324,35 @@ export default {
       try {
         await this.$store.dispatch("addNewComment");
       } catch (err) {
-        alert(err);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
-      this.$snotify.success("Comment successfully sent!", "Done", {
-        timeout: 2000,
-        showProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true
+      this.$notify({
+        group: "foo",
+        type: "success",
+        title: "Comment <b> Posted </b>",
+        text: "Thank you for your feedback",
+        duration: 5000
       });
       this.form.content = "";
-      // !get comments
       try {
         await this.$store.dispatch("getCommentsIdIdentity");
       } catch (err) {
-        alert(err);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
-      // !get comments
 
       this.comments = this.getCommentsByIdentity(this.identity.id);
     },
@@ -376,36 +382,45 @@ export default {
           JSON.parse(localStorage.getItem("identity_id"))
         )
       ) {
-        alert("ali po");
-        this.$snotify.success("Added to your favourites!", "Done", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
+        this.$notify({
+          group: "foo",
+          type: "success",
+          title: "Added to your <b> Favourites </b>",
+          text: "Thank you for your feedback",
+          duration: 5000
         });
 
         try {
           await this.$store.dispatch("addNewFavorite");
         } catch (err) {
-          alert(err);
+          this.$notify({
+            group: "foo",
+            type: "error",
+            title: "Oops",
+            text: `${err}`,
+            duration: 5000
+          });
           return err;
         }
       } else {
-        this.$snotify.warning(
-          "The identity was removed from your 'favorites' list!",
-          "Done",
-          {
-            timeout: 2000,
-            showProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-          }
-        );
+        this.$notify({
+          group: "foo",
+          type: "success",
+          title: "Place removed to your <b> Favourites </b>",
+          text: "Your list was updated successfully",
+          duration: 5000
+        });
 
         try {
           await this.$store.dispatch("deleteFavorite");
         } catch (err) {
-          alert(err);
+          this.$notify({
+            group: "foo",
+            type: "error",
+            title: "Oops",
+            text: `${err}`,
+            duration: 5000
+          });
           return err;
         }
       }
@@ -414,13 +429,15 @@ export default {
         await this.$store.dispatch("getAllFavorite");
         this.favouritesList = this.getFavoritesList;
       } catch (err) {
-        alert(err);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
-
-      // this.$store.commit("SET_FAVORITES_LIST", {
-      //   list: this.favouritesList
-      // });
     }
   }
 };

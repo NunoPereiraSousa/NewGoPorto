@@ -118,14 +118,26 @@ export default {
       try {
         await this.$store.dispatch("addNewFollowedItinerary");
       } catch (err) {
-        alert(err);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
 
       try {
         await this.$store.dispatch("getAllFollowedItinerary");
       } catch (err) {
-        alert(err);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
       this.form.followedCount = this.getNumFollowers(id);
@@ -140,14 +152,26 @@ export default {
       try {
         await this.$store.dispatch("deleteFollowedItinerary");
       } catch (err) {
-        alert(err);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
 
       try {
         await this.$store.dispatch("getAllFollowedItinerary");
       } catch (err) {
-        alert(err);
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
 
@@ -169,20 +193,21 @@ export default {
       // this.$store.commit("SET_SELECTED_ITINERARY", this.itinerary);
       if (this.getFollowByIds(id, this.getLoggedUser[0].id_user)) {
         this.downFollow(id);
-
-        this.$snotify.warning("Itierary unfollow!", "Done", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
+        this.$notify({
+          group: "foo",
+          type: "success",
+          title: "Itinerary <b> Unfollowed </b>",
+          text: "This itinerary was removed from your list",
+          duration: 5000
         });
       } else {
         this.upFollow(id);
-        this.$snotify.success("Itierary followed!", "Done", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
+        this.$notify({
+          group: "foo",
+          type: "success",
+          title: "Itinerary <b> Followed </b>",
+          text: "This itinerary was added to your list",
+          duration: 5000
         });
       }
       this.buttonTextDefiner();

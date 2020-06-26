@@ -135,19 +135,15 @@ export default {
       return err;
     }
 
-    //! <This is very Important, it is triggerd When the Server goes down
     if (JSON.parse(localStorage.getItem("error"))) {
       if (JSON.parse(localStorage.getItem("error")) == 500) {
         this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
       }
     }
-    //! This is very Important, it is triggerd When the Server goes down>
-    // todo
 
     this.loggedUser = this.getLoggedUser;
 
     this.myfavouriteList = this.getMyFavorites(this.loggedUser[0].id_user);
-    //!!!!!!!!!!!!!!!
     this.myFollows = this.getMyFollowsById(this.loggedUser[0].id_user);
   },
   methods: {
@@ -166,6 +162,13 @@ export default {
       this.$store.commit("SET_SELECTED_ITINERARY", this.itinerary);
       this.$router.push({
         name: "myTrip"
+      });
+      this.$notify({
+        group: "foo",
+        type: "success",
+        title: "Itinerary <b> Followed </b>",
+        text: "This itinerary was added to your list",
+        duration: 5000
       });
     }
   },

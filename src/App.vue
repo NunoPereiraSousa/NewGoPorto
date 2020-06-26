@@ -35,7 +35,11 @@
     <notifications
       group="foo"
       classes="vue-notification"
-      position="bottom right"
+      position="top right"
+      animation-type="velocity"
+      speed="1000"
+      closeOnClick="true"
+      max="1"
     />
   </div>
 </template>
@@ -179,51 +183,33 @@ body {
   flex-direction: column;
   height: 100%;
 }
-// .my-style {
-//   // Style of the notification itself
-//   font-size: 30px;
-//   .notification-title {
-//     // Style for title line
-//   }
 
-//   .notification-content {
-//     // Style for content
-//     font-size: 30px;
-//   }
-
-//   &.my-type {
-//     /*
-//     Style for specific type of notification, will be applied when you
-//     call notification with "type" parameter:
-//     this.$notify({ type: 'my-type', message: 'Foo' })
-//     */
-//   }
-// }
 .vue-notification {
-  padding: 10px;
-  margin: 0 5px 5px;
-
-  font-size: 12px;
-
-  color: #ffffff;
-  background: #44a4fc;
-  border-left: 5px solid #187fe7;
+  padding: 20px !important;
+  font-size: 16px !important;
+  color: #fefefa !important;
+  background: #44a4fc !important;
+  border-left: 5px solid #187fe7 !important;
 
   &.warn {
     background: #5085a5 !important;
-    border-left-color: #f48a06;
+    border-left-color: #e9d496 !important;
     font-size: 16px;
-    margin-bottom: 2em;
+    margin-top: 6em;
   }
 
   &.error {
-    background: #e54d42;
-    border-left-color: #b82e24;
+    background: #e54d42 !important;
+    border-left-color: #b82e24 !important;
+    font-size: 16px;
+    margin-top: 6em;
   }
 
   &.success {
-    background: #68cd86;
-    border-left-color: #42a85f;
+    background: #5085a5 !important;
+    border-left-color: #e9d496 !important;
+    font-size: 16px;
+    margin-top: 6em;
   }
 }
 </style>

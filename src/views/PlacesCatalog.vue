@@ -84,13 +84,11 @@ export default {
         return err;
       }
 
-      //! <This is very Important, it is triggerd When the Server goes down
       if (JSON.parse(localStorage.getItem("error"))) {
         if (JSON.parse(localStorage.getItem("error")) == 500) {
           this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
         }
       }
-      //! This is very Important, it is triggerd When the Server goes down>
 
       this.selectedCategory = this.getIdentitiesSelectedCategory;
       this.identities = this.getIdentitiesByCategory(this.selectedCategory);
@@ -112,10 +110,7 @@ export default {
   },
   methods: {
     saveIdentity(id) {
-      // TODO
-      // alert(id);
       this.identity = this.getIdentityByIds(id);
-      // alert(`name:${this.identity.name}`);
       this.$store.commit("SET_IDENTITY_SELECTED_ID", id);
       this.$router.push({
         name: "identity-info",

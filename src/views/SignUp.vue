@@ -245,25 +245,36 @@ export default {
           let resStatus = this.$store.getters.getResStatus;
           if (resStatus !== null) {
             if (resStatus.status === 400) {
-              alert(`${resStatus.message}`);
+              this.$notify({
+                group: "foo",
+                type: "error",
+                title: "Oops",
+                text: `${resStatus.message}`,
+                duration: 5000
+              });
             } else {
-              alert("Something went wrong, please try againr");
-              //! <This is very Important, it is triggerd When the Server goes down
+              this.$notify({
+                group: "foo",
+                type: "error",
+                title: "Oops",
+                text: "Something is wrong, please try again later...",
+                duration: 5000
+              });
               if (JSON.parse(localStorage.getItem("error"))) {
                 if (JSON.parse(localStorage.getItem("error")) == 500) {
                   this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
                 }
               }
-              //! This is very Important, it is triggerd When the Server goes down>
             }
           }
         }
       } else {
-        this.$snotify.info("Please, fill all the inputs to proceed", "Oh...", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: "Please, fill all the inputs to proceed",
+          duration: 5000
         });
       }
     },

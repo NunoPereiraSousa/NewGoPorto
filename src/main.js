@@ -10,6 +10,7 @@ import "aos/dist/aos.css";
 import Snotify, { SnotifyPosition } from "vue-snotify";
 import axios from "axios";
 import Notifications from "vue-notification";
+import velocity from "velocity-animate";
 
 const HTTP = axios.create({
   baseURL: "https://goporto.herokuapp.com"
@@ -25,7 +26,7 @@ const options = {
 
 Vue.component("star-rating", StarRating);
 Vue.use(Snotify, options);
-Vue.use(Notifications);
+Vue.use(Notifications, { velocity });
 
 Vue.config.productionTip = false;
 

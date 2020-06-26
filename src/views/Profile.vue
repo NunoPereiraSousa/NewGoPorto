@@ -388,11 +388,7 @@ export default {
       getSuggestionByName: "getSuggestionByName",
       getUsers: "getUsers",
       getLoggedUser: "getLoggedUser",
-
-      // *Email Edition confirm
       getUserByInput: "getUserByInput",
-
-      // todo
       getPublicationsLastId: "getPublicationsLastId",
       getPublications: "getPublications",
       getPublicationByUser: "getPublicationByUser",
@@ -423,7 +419,13 @@ export default {
         try {
           await this.$store.dispatch("addSuggestion");
         } catch (err) {
-          alert(err);
+          this.$notify({
+            group: "foo",
+            type: "error",
+            title: "Oops",
+            text: `${err}`,
+            duration: 5000
+          });
           return err;
         }
         // this.form.id = this.getSuggestionsLastId;
@@ -438,23 +440,22 @@ export default {
         //   userId: this.loggedUser.id,
         //   username: this.loggedUser.username
         // });
-        this.$snotify.success("Suggestion successfully sent!", "Done", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
+
+        this.$notify({
+          group: "foo",
+          type: "success",
+          title: "Suggestion <b> Sent </b>",
+          text: "Thank you for your support!",
+          duration: 5000
         });
       } else {
-        this.$snotify.info(
-          `Someone already suggested ${this.form.name}. But thank you for the support!`,
-          "Oh...",
-          {
-            timeout: 2000,
-            showProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-          }
-        );
+        this.$notify({
+          group: "foo",
+          type: "success",
+          title: "Oh...",
+          text: `Someone already suggested ${this.form.name}. But thank you for the support!`,
+          duration: 5000
+        });
       }
       this.clearForm();
     },
@@ -481,11 +482,9 @@ export default {
       this.loggedUser.birth = this.editForm.birth;
       this.loggedUser.email = this.editForm.email;
       this.loggedUser.photo = this.editForm.image;
-      // this.$store.commit("SET_LOGGED_USER", this.loggedUser);
       try {
         await this.$store.dispatch("editProfile");
         this.$store.commit("SET_LOGGED_USER", [this.loggedUser]);
-        alert("Done editing");
       } catch (err) {
         if (JSON.parse(localStorage.getItem("error")) == 500) {
           this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
@@ -493,13 +492,11 @@ export default {
         return err;
       }
 
-      //! <This is very Important, it is triggerd When the Server goes down
       if (JSON.parse(localStorage.getItem("error"))) {
         if (JSON.parse(localStorage.getItem("error")) == 500) {
           this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
         }
       }
-      //! This is very Important, it is triggerd When the Server goes down>
 
       // if (this.permition == false) {
       //   alert("Email Already Taken");
@@ -567,16 +564,13 @@ export default {
       reader.readAsDataURL(file);
     },
     nofitication() {
-      this.$snotify.info(
-        "Your suggestion was accepted! Thank you for the reminder!",
-        "Oh...",
-        {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
-        }
-      );
+      this.$notify({
+        group: "foo",
+        type: "success",
+        title: "Suggestion <b> Accepted </b>",
+        text: "Thank you for the reminder!",
+        duration: 5000
+      });
     },
     clearForm() {
       this.form.category = "";
@@ -587,10 +581,15 @@ export default {
 
     async addPublication() {
       this.allPublications = this.getPublications;
-      // alert(this.getPublications.length)
 
       if (this.newPublication === "") {
-        alert("Please write something before publishing");
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: "Make sure you write something please.",
+          duration: 5000
+        });
       } else {
         this.$store.commit("SET_NEW_POST", {
           userId: this.loggedUser.id_user,
@@ -600,8 +599,14 @@ export default {
         });
         try {
           await this.$store.dispatch("addPost");
-          alert("Posted");
         } catch (err) {
+          this.$notify({
+            group: "foo",
+            type: "error",
+            title: "Oops",
+            text: `${err}`,
+            duration: 5000
+          });
           return err;
         }
 
@@ -622,13 +627,11 @@ export default {
           return err;
         }
 
-        //! <This is very Important, it is triggerd When the Server goes down
         if (JSON.parse(localStorage.getItem("error"))) {
           if (JSON.parse(localStorage.getItem("error")) == 500) {
             this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
           }
         }
-        //! This is very Important, it is triggerd When the Server goes down>
       }
     },
     getCurrentDateTime() {
@@ -650,8 +653,21 @@ export default {
       });
       try {
         await this.$store.dispatch("deletePost");
-        alert("Deleted");
+        this.$notify({
+          group: "foo",
+          type: "success",
+          title: "Delected <b> Successfully </b>",
+          text: "There's no going back now.",
+          duration: 5000
+        });
       } catch (err) {
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: `${err}`,
+          duration: 5000
+        });
         return err;
       }
 
@@ -665,13 +681,11 @@ export default {
         return err;
       }
 
-      //! <This is very Important, it is triggerd When the Server goes down
       if (JSON.parse(localStorage.getItem("error"))) {
         if (JSON.parse(localStorage.getItem("error")) == 500) {
           this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
         }
       }
-      //! This is very Important, it is triggerd When the Server goes down>
     },
     confirmEmailTaken() {
       this.permition = true;

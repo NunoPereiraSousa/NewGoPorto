@@ -433,11 +433,6 @@ export default {
       return err;
     }
 
-    // this.$store.commit(
-    //   "SET_LOGGED_USER",
-    //   JSON.parse(localStorage.getItem("loggedUser"))
-    // );
-
     this.users = this.getUsers;
     this.suggestions = this.getSuggestionsByUser;
     this.comments = this.getCommentsByUser;
@@ -472,7 +467,6 @@ export default {
         });
         try {
           await this.$store.dispatch("addUsersAdmin");
-          alert("User Added");
         } catch (err) {
           return err;
         }
@@ -490,15 +484,23 @@ export default {
         //   blocked: this.form.blocked,
         //   password: this.form.password
         // });
+        this.$notify({
+          group: "foo",
+          type: "success",
+          title: "User <b> Added </b>",
+          text: "The user list was updated successfully!",
+          duration: 5000
+        });
         this.clearForm();
       } else {
-        this.clearForm();
-        this.$snotify.error("Error", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
+        this.$notify({
+          group: "foo",
+          type: "error",
+          title: "Oops",
+          text: "Something wrong happened...",
+          duration: 5000
         });
+        this.clearForm();
       }
     },
     async removeUser(id) {
@@ -508,7 +510,6 @@ export default {
 
       try {
         await this.$store.dispatch("deleteUser");
-        alert("Deleted");
       } catch (err) {
         alert(err);
         return err;
@@ -525,11 +526,12 @@ export default {
       $(function() {
         $("#modal").modal("toggle");
       });
-      this.$snotify.success("Removed successfully", "Done", {
-        timeout: 2000,
-        showProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true
+      this.$notify({
+        group: "foo",
+        type: "success",
+        title: "User <b> Removed </b>",
+        text: "The user list was updated successfully!",
+        duration: 5000
       });
     },
     editUser(id) {
@@ -550,7 +552,6 @@ export default {
 
       try {
         await this.$store.dispatch("editUser");
-        // alert("User Edited");
       } catch (err) {
         return err;
       }
@@ -562,6 +563,13 @@ export default {
         this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
         return err;
       }
+      this.$notify({
+        group: "foo",
+        type: "success",
+        title: "User <b> Edited </b>",
+        text: "The user list was updated successfully!",
+        duration: 5000
+      });
       this.clearForm();
     },
     async blockUser(id) {
@@ -577,8 +585,6 @@ export default {
         block = "0";
       }
 
-      //block ? 0 : 1
-
       this.$store.commit("SET_BLOCK_USER", {
         blockUserId: id,
         block: block
@@ -586,7 +592,6 @@ export default {
 
       try {
         await this.$store.dispatch("blockUser");
-        // alert("Blocked");
       } catch (err) {
         return err;
       }
@@ -598,6 +603,13 @@ export default {
         this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
         return err;
       }
+      this.$notify({
+        group: "foo",
+        type: "success",
+        title: "User <b> Blocked </b>",
+        text: "The user list was updated successfully!",
+        duration: 5000
+      });
     },
     compareType(a, b) {
       if (a.id_user_type < b.id_user_type) return -1;
@@ -617,9 +629,6 @@ export default {
       this.users.sort(this.compareName);
     },
     userHistory(id) {
-      // this.$store.commit("SET_DELETE_USER", {
-      //   deletePostId: id
-      // });
       this.userId = id;
     },
     clearForm() {

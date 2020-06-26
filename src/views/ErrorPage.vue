@@ -31,6 +31,18 @@
           Something went wrong !!! Please try again later...
         </h4>
       </div>
+
+      <div class="Col-6">
+        <button
+          type="button"
+          @click="connect()"
+          name
+          id
+          class="btn btn-primary"
+        >
+          Reconnect to the Server
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -46,6 +58,19 @@ export default {
     localStorage.setItem("error", JSON.stringify(""));
     localStorage.setItem("token", JSON.stringify(""));
     localStorage.setItem("loggedUser", JSON.stringify(""));
+  },
+  methods: {
+    connect() {
+      localStorage.setItem("identity_id", JSON.stringify(""));
+      localStorage.setItem("categories", JSON.stringify([]));
+      localStorage.setItem("itineraries", JSON.stringify([]));
+      localStorage.setItem("followedItinerary", JSON.stringify([]));
+      localStorage.setItem("error", JSON.stringify(null));
+      localStorage.setItem("error", JSON.stringify(""));
+      localStorage.setItem("token", JSON.stringify(""));
+      localStorage.setItem("loggedUser", JSON.stringify(""));
+      this.$router.push({ name: "sign-in" });
+    }
   }
 };
 </script>

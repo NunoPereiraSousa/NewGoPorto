@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser[0].username }} </span>
+            <span>{{ loggedUser.username }} </span>
             <span>Bio</span>
           </h2>
         </div>
@@ -92,7 +92,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser[0].username }} </span>
+            <span>{{ loggedUser.username }} </span>
             <span>Shares</span>
           </h2>
         </div>
@@ -339,6 +339,7 @@ export default {
   async created() {
     this.loggedUser = this.getLoggedUser;
     this.loggedUser = this.loggedUser[0];
+    alert(this.loggedUser);
 
     this.user = this.getUserById(this.loggedUser);
     this.users = this.getUsers;
@@ -427,18 +428,6 @@ export default {
           });
           return err;
         }
-        // this.form.id = this.getSuggestionsLastId;
-        // this.$store.commit("NEW_SUGGESTION", {
-        //   id: this.form.id,
-        //   category: this.form.category,
-        //   name: this.form.name,
-        //   content: this.form.content,
-        //   date: this.getCurrentDate(),
-        //   photo: this.form.photo,
-        //   status: "pendant",
-        //   userId: this.loggedUser.id,
-        //   username: this.loggedUser.username
-        // });
 
         this.$notify({
           group: "foo",

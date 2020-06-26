@@ -29,7 +29,6 @@ import { mapGetters } from "vuex";
 export default {
   name: "itineariesCatalog",
   components: { ItineraryCard },
-
   data: function() {
     return {
       itineraries: [],

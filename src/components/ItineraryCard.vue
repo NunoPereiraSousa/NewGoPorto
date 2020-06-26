@@ -63,9 +63,7 @@ export default {
         userName: "",
         followedCount: 0
       },
-
       buttonText: "Follow",
-
       mylist: "",
       myCategories: [],
       itinerary: "",
@@ -80,6 +78,14 @@ export default {
       getLoggedUser: "getLoggedUser",
       getNumFollowers: "getNumFollowers"
     })
+  },
+  created() {
+    this.itinerary = this.getItineraryById(this.id);
+    this.form.title = this.itinerary.name;
+    this.form.userName = this.itinerary.username;
+    this.form.followedCount = this.getNumFollowers(this.id);
+    this.createList();
+    this.buttonTextDefiner();
   },
   methods: {
     createList() {
@@ -177,7 +183,6 @@ export default {
 
       this.form.followedCount = this.getNumFollowers(id);
     },
-
     buttonTextDefiner() {
       if (this.getFollowByIds(this.id, this.getLoggedUser.id)) {
         this.buttonText =
@@ -187,7 +192,6 @@ export default {
           "<i class='far fa-thumbs-up' style='color: #363636; font-size: 1.1em;'></i>";
       }
     },
-
     followItinerary(id) {
       // this.itinerary = this.getItineraryById(id);
       // this.$store.commit("SET_SELECTED_ITINERARY", this.itinerary);
@@ -221,14 +225,6 @@ export default {
         name: "my-trip"
       });
     }
-  },
-  created() {
-    this.itinerary = this.getItineraryById(this.id);
-    this.form.title = this.itinerary.name;
-    this.form.userName = this.itinerary.username;
-    this.form.followedCount = this.getNumFollowers(this.id);
-    this.createList();
-    this.buttonTextDefiner();
   }
 };
 </script>

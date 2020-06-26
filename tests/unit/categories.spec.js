@@ -82,8 +82,10 @@ describe("CategoryCard.vue", () => {
     const wrapper = mount(CategoryCard);
     expect(wrapper.find("p").isVisible()).toBe(true);
   });
+});
 
-  it("Check if the id is passed by props", async () => {
+describe("ItineraryCard.vue", () => {
+  it("Check if the id is passed by props", () => {
     const passed_id = 1;
     const wrapper = shallowMount(
       ItineraryCard,
@@ -99,16 +101,3 @@ describe("CategoryCard.vue", () => {
     expect(wrapper.props().id).toBe(passed_id);
   });
 });
-
-// describe("ItineraryCard.vue", () => {
-
-//   // it("Check image existence", () => {
-//   //   const wrapper = mount(CategoryCard);
-//   //   expect(wrapper.find("img").isVisible()).toBe(true);
-//   // });
-
-//   // it("Check if title appears", () => {
-//   //   const wrapper = mount(CategoryCard);
-//   //   expect(wrapper.find("p").isVisible()).toBe(true);
-//   // });
-// });

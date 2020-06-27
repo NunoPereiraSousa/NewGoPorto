@@ -122,7 +122,7 @@ export default {
                 text: "The user it temporarly blocked.",
                 duration: 5000
               });
-            } else if (this.loggedUser[0].id_user_type == 2) {
+            } else if (this.loggedUser[0].id_user_type == 1) {
               try {
                 await this.$store.dispatch("getAllFavorite");
               } catch (err) {

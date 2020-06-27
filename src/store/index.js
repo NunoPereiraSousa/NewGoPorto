@@ -548,7 +548,7 @@ export default new Vuex.Store({
     //!
     SET_LOGGED_USER(state, payload) {
       state.loggedUser = payload;
-      // localStorage.setItem("loggedUser", JSON.stringify(state.loggedUser));
+      localStorage.setItem("loggedUser", JSON.stringify(state.loggedUser));
     },
 
     // *NEW TO CONNECT
@@ -1024,6 +1024,8 @@ export default new Vuex.Store({
     async getVisitedUserProfile({ commit }) {
       commit("SET_VISITED_USER", await userService.getUserById());
     },
+
+    //  Todo Adjust
     async editProfile({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
@@ -1036,6 +1038,23 @@ export default new Vuex.Store({
         )
       );
     },
+    // Todo Adjust
+
+    // Todo  now
+    async editProfileNormalUser({ commit }) {
+      commit(
+        "SET_REGISTER_STATUS",
+        await userService.editProfileNormalUser(
+          this.state.editProfileForm.name,
+          this.state.editProfileForm.location,
+          this.state.editProfileForm.birth,
+          this.state.editProfileForm.email,
+          this.state.editProfileForm.photo
+        )
+      );
+    },
+    // Todo now
+
     async addPost({ commit }) {
       commit(
         "SET_REGISTER_STATUS",

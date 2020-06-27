@@ -87,6 +87,10 @@ const userConfig = {
     }
   },
   async editProfile(name, location, birth, email, photo) {
+    alert(name);
+    alert(location);
+    alert(birth);
+    alert(email);
     try {
       const response = await HTTP.put(
         `${API_URL}/users/update/${user_id[0].id_user}`,
@@ -105,9 +109,36 @@ const userConfig = {
         resStatus: response.status
       };
     } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data));
       return err;
     }
   },
+
+  // Todo
+  async editProfileNormalUser(name, location, birth, email, photo) {
+    try {
+      const response = await HTTP.put(
+        `${API_URL}/users/profileUpdate/${user_id[0].id_user}`,
+        {
+          name: name,
+          location: location,
+          birth: birth,
+          email: email,
+          photo: photo
+        },
+        {
+          headers
+        }
+      );
+      return {
+        resStatus: response.status
+      };
+    } catch (err) {
+      localStorage.setItem("error", JSON.stringify(err.response.data));
+      return err;
+    }
+  },
+  // Todo
   async addPost(userId, content, date) {
     // let dateFormat = date.split("/");
     // date = `${dateFormat[2]}-${dateFormat[1]}-${dateFormat[0]}`;

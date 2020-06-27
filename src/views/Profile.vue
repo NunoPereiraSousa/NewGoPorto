@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser.username }} </span>
+            <span>{{ loggedUser.username }}</span>
             <span>Bio</span>
           </h2>
         </div>
@@ -92,7 +92,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>{{ loggedUser.username }} </span>
+            <span>{{ loggedUser.username }}</span>
             <span>Shares</span>
           </h2>
         </div>
@@ -470,20 +470,11 @@ export default {
       this.loggedUser.email = this.editForm.email;
       this.loggedUser.photo = this.editForm.image;
       try {
-        await this.$store.dispatch("editProfile");
-        this.$store.commit("SET_LOGGED_USER", [this.loggedUser]);
+        await this.$store.dispatch("editProfileNormalUser");
       } catch (err) {
-        if (JSON.parse(localStorage.getItem("error")) == 500) {
-          this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
-        }
         return err;
       }
-
-      if (JSON.parse(localStorage.getItem("error"))) {
-        if (JSON.parse(localStorage.getItem("error")) == 500) {
-          this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
-        }
-      }
+      this.$store.commit("SET_LOGGED_USER", [this.loggedUser]);
 
       // if (this.permition == false) {
       //   alert("Email Already Taken");

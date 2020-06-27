@@ -256,6 +256,7 @@
                       class="form-control"
                       placeholder="Username"
                       v-model="form.username"
+                      disabled
                     />
                   </div>
                   <div class="form-group">
@@ -319,6 +320,7 @@
                       type="text"
                       class="form-control"
                       placeholder="Password"
+                      disabled
                       v-model="form.password"
                     />
                   </div>
@@ -448,7 +450,8 @@ export default {
       "getNBlockedUsers",
       "getSuggestionsByUser",
       "getCommentsByUser",
-      "getItinerariesByUser"
+      "getItinerariesByUser",
+      "getUserById"
     ])
   },
   methods: {
@@ -536,6 +539,16 @@ export default {
     },
     editUser(id) {
       this.form.editId = id;
+      let userData = this.getUserById(this.form.editId);
+
+      this.form.id_user_type = userData.id_user_type;
+      this.form.name = userData.id_user_type;
+      this.form.username = userData.username;
+      this.form.password = userData.password;
+      this.form.email = userData.email;
+      this.form.photo = userData.photo;
+      this.form.location = userData.location;
+      this.form.birth = userData.birth;
     },
     async updateUser() {
       this.$store.commit("SET_EDIT_USER_ADMIN", {

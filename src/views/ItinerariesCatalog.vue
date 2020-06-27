@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Itineraries</span>
+            <span>Itineraries </span>
             <span>Catalog</span>
           </h2>
         </div>

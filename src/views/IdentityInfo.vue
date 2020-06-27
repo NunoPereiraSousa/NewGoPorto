@@ -610,7 +610,8 @@ a:hover {
       background-color: #ebecec;
     }
     #commentImg {
-      width: 80%;
+      width: 70%;
+      height: 5em;
       border-radius: 6px;
     }
   }

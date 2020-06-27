@@ -184,7 +184,7 @@ export default {
       this.form.followedCount = this.getNumFollowers(id);
     },
     buttonTextDefiner() {
-      if (this.getFollowByIds(this.id, this.getLoggedUser.id)) {
+      if (this.getFollowByIds(this.id, this.getLoggedUser[0].id_user)) {
         this.buttonText =
           "<i class='far fa-thumbs-down' style='color: #363636; font-size: 1.1em;'></i>";
       } else {

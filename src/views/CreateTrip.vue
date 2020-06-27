@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Trip</span>
+            <span>Trip </span>
             <span>Details</span>
           </h2>
         </div>
@@ -169,7 +169,7 @@
       <div class="row">
         <div class="col-12 text-left">
           <h2>
-            <span>Choose</span>
+            <span>Choose </span>
             <span>Places to Visit</span>
           </h2>
         </div>

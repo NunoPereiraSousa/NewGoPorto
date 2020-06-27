@@ -46,6 +46,7 @@
               type="text"
               class="form-control mx-auto mt-4 w-75"
               id="searchBar"
+              name="searchBar"
               placeholder="Search By Name"
               v-model="search"
             />

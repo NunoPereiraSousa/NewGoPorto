@@ -8,21 +8,11 @@ import AboutUs from "../../src/views/AboutUs.vue";
 import OurTeam from "../../src/views/OurTeam.vue";
 import ErrorPage from "../../src/views/ErrorPage.vue";
 import AdminNavbar from "@/components/AdminNavBar.vue";
-
-// import routes from '@/routes'
-// import VueRouter from 'vue-router'
-// import {
-//   mockRouterComponents
-// } from 'vue-test-utils-helpers'
-
-// !Import the store
-// import store from "../../src/store/index";
-// !Import vue X
 import Vue from "vue";
 import Vuex from "vuex";
 Vue.use(Vuex);
 
-let fakeStore = new Vuex.Store({
+let store = new Vuex.Store({
   state: {
     users: [],
     loggedUser: "",
@@ -128,13 +118,12 @@ describe("CategoryCard.vue", () => {
     expect(wrapper.find("p").isVisible()).toBe(true);
   });
 
-  // !Working with problem
   it("Check if the id is passed by props in Itinerary Card", () => {
     const passed_id = 1;
     const wrapper = shallowMount(
       ItineraryCard,
       {
-        store: fakeStore
+        store: store
       },
       {
         propsData: {
@@ -144,15 +133,12 @@ describe("CategoryCard.vue", () => {
     );
     expect(wrapper.props().id).toBe(passed_id);
   });
-  // !
 });
 
-// Working with problems
-//*Navbar testes
 describe("Navbar.vue", () => {
   test("Expect the navbar to have an dropDown", async () => {
     const wrapper = shallowMount(Navbar, {
-      store: fakeStore
+      store: store
     });
     await wrapper.setData({
       user: {
@@ -172,18 +158,14 @@ describe("Navbar.vue", () => {
     expect(wrapper.find("p").isVisible()).toBe(false);
   });
 });
-// *Navbar testes
 
-// *Home
 describe("Home.vue", () => {
   test("Expect Home to show Porto's Image", async () => {
     const wrapper = mount(Home);
     expect(wrapper.find("img").exists()).toBe(false);
   });
 });
-// *Home
 
-// *Footer
 describe("Footer.vue", () => {
   test("Check if footer is well formed", async () => {
     const wrapper = mount(Footer);
@@ -195,9 +177,7 @@ describe("Footer.vue", () => {
     expect(wrapper.find(".col-lg-6.col-sm-12").exists()).toBe(true);
   });
 });
-// *Footer
 
-// *Admin navbar
 describe("AdminNavbar.vue", () => {
   test(" confirm that there is a logout Button", async () => {
     const wrapper = mount(AdminNavbar);
@@ -209,18 +189,14 @@ describe("AdminNavbar.vue", () => {
     expect(wrapper.find("img").exists()).toBe(true);
   });
 });
-// *Admin Navbar
 
-// *About us
 describe("AboutUs.vue", () => {
   test(" confirm if it says who we are", async () => {
     const wrapper = mount(AboutUs);
     expect(wrapper.find("p.lead.text-justify").exists()).toBe(true);
   });
 });
-// *About us
 
-// *ourTeam
 describe("OurTeam.vue", () => {
   test(" confirm if the team is showed", async () => {
     const wrapper = mount(OurTeam);
@@ -234,13 +210,10 @@ describe("OurTeam.vue", () => {
     expect(wrapper.find("img").exists()).toBe(true);
   });
 });
-//  *ourTeam
 
-// *ErrorPage
 describe("ErrorPage.vue", () => {
   test("confirm reconnect button", async () => {
     const wrapper = mount(ErrorPage);
     expect(wrapper.find("button").exists()).toBe(true);
   });
 });
-//  *ErrorPage

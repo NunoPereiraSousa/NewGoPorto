@@ -34,7 +34,7 @@ export default {
     this.$notify({
       group: "foo",
       type: "success",
-      title: "Hello, <b> Welcome </b>",
+      title: "Hello, Welcome!",
       text: "Enjoy GoPorto!",
       duration: 2900
     });

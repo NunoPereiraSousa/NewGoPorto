@@ -473,7 +473,7 @@ export default {
           let selected = this.getItineraryById(id);
           this.$store.commit("SET_SELECTED_ITINERARY", selected);
           this.$router.push({
-            name: "my-trip"
+            name: "loading-itinerary"
           });
         } catch (err) {
           this.$notify({

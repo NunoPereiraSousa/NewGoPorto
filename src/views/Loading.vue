@@ -31,6 +31,13 @@ import $ from "jquery";
 
 export default {
   created() {
+    this.$notify({
+      group: "foo",
+      type: "success",
+      title: "Hello, <b> Welcome </b>",
+      text: "Enjoy GoPorto!",
+      duration: 2900
+    });
     setTimeout(() => this.$router.push({ path: "/home" }), 3000);
   },
   mounted() {

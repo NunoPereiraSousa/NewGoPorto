@@ -62,7 +62,7 @@
                 </p>
                 <p class="lead pt-3 pl-4 text-left">
                   <span class="font-weight-bold">Follows:</span>
-                  {{ itinerary.num_shares }}
+                  {{ itinerary.followedCount }}
                 </p>
                 <div
                   class="pt-3 pl-4 d-flex justify-content-start"

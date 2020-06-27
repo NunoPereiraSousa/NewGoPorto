@@ -436,7 +436,7 @@ export default new Vuex.Store({
 
     getItinerariesVotes: state => {
       const follows = state.itineraries.reduce(
-        (sum, itinerary) => sum + itinerary.num_shares,
+        (sum, itinerary) => sum + itinerary.followedCount,
         0
       );
       return follows;
@@ -444,8 +444,7 @@ export default new Vuex.Store({
 
     getItinerariesNPeople: state => {
       const persons = state.itineraries.reduce(
-        (sum, itinerary) =>
-          sum + parseInt(itinerary.adults_num) + itinerary.kids_num,
+        (sum, itinerary) => sum + parseInt(itinerary.adults) + itinerary.kids,
         0
       );
       return persons;

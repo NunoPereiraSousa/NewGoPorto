@@ -59,6 +59,15 @@ export default {
     };
   },
   async created() {
+    localStorage.setItem("identity_id", JSON.stringify(""));
+    localStorage.setItem("categories", JSON.stringify([]));
+    localStorage.setItem("itineraries", JSON.stringify([]));
+    localStorage.setItem("followedItinerary", JSON.stringify([]));
+    localStorage.setItem("error", JSON.stringify(null));
+    localStorage.setItem("error", JSON.stringify(""));
+    localStorage.setItem("token", JSON.stringify(""));
+    localStorage.setItem("loggedUser", JSON.stringify(""));
+
     if (JSON.parse(localStorage.getItem("error"))) {
       if (JSON.parse(localStorage.getItem("error")) == 500) {
         this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
@@ -114,9 +123,51 @@ export default {
                 duration: 5000
               });
             } else if (this.loggedUser[0].id_user_type == 2) {
+              try {
+                await this.$store.dispatch("getAllFavorite");
+              } catch (err) {
+                this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+                return err;
+              }
+
+              try {
+                await this.$store.dispatch("allItineraries");
+              } catch (err) {
+                this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+                return err;
+              }
+
+              try {
+                await this.$store.dispatch("allFullItineraries");
+              } catch (err) {
+                this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+                return err;
+              }
+
               this.resetForm();
               this.$router.push({ name: "loading" }); // *CHANGES THE LOCATION
             } else {
+              try {
+                await this.$store.dispatch("getAllFavorite");
+              } catch (err) {
+                this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+                return err;
+              }
+
+              try {
+                await this.$store.dispatch("allItineraries");
+              } catch (err) {
+                this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+                return err;
+              }
+
+              try {
+                await this.$store.dispatch("allFullItineraries");
+              } catch (err) {
+                this.$router.push({ name: "errorPage" }); // *CHANGES THE LOCATION
+                return err;
+              }
+
               this.$router.push({ name: "adminLandingPage" });
             }
           } else {

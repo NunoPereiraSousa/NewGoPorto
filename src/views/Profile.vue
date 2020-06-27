@@ -587,6 +587,13 @@ export default {
           });
           return err;
         }
+        this.$notify({
+          group: "foo",
+          type: "success",
+          title: "Post <b> Successfully Done </b>",
+          text: "New post added to your profile!",
+          duration: 5000
+        });
 
         // this.$store.commit("SET_PUBLICATIONS", {
         //   publications: this.allPublications

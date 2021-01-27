@@ -114,7 +114,6 @@ const itineraryConfig = {
         resStatus: response.status
       };
     } catch (err) {
-      // localStorage.setItem("error", JSON.stringify(500));
       return err;
     }
   },

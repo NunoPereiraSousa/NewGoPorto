@@ -1,14 +1,13 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import userService from "@/api/users.config";
-import itineraryService from "@/api/itineraries.config";
-import identityService from "@/api/identities.config";
 import categoryService from "@/api/categories.config";
 import commentService from "@/api/comments.config";
+import identityService from "@/api/identities.config";
+import itineraryService from "@/api/itineraries.config";
+import mainConfig from "@/api/main.config";
 import notificationService from "@/api/notifications.config";
 import suggestionService from "@/api/suggestions.config";
-
-import mainConfig from "@/api/main.config";
+import userService from "@/api/users.config";
+import Vue from "vue";
+import Vuex from "vuex";
 
 Vue.use(Vuex);
 
@@ -32,7 +31,7 @@ export default new Vuex.Store({
     visitedUserId: null,
     category: "Monuments",
     favoritesList: [],
-    followedItinerary: [], // follow system like on instagram,
+    followedItinerary: [],
     publications: [],
     loginForm: {
       input: null,
@@ -106,9 +105,7 @@ export default new Vuex.Store({
       lng: null,
       image: null
     },
-    // Todo -Delete Category
     deleteCategory: null,
-    // Todo -Delete Category
     newCategoryForm: {
       category_name: null,
       photo: null
@@ -121,7 +118,6 @@ export default new Vuex.Store({
       num_star: null
     },
     newItineraryInfo: {
-      // id_itinerary: null,
       name: null,
       kids_num: null,
       adults_num: null,
@@ -130,11 +126,8 @@ export default new Vuex.Store({
       num_shares: 0,
       block: 1
     },
-
     itineraryID: null,
     inIdentityId: null,
-
-    // Todo --new
     notificationData: {
       id_notif: null,
       id_user: null,
@@ -142,7 +135,6 @@ export default new Vuex.Store({
       answer: null,
       id_status: null
     }
-    // Todo --new
   },
   getters: {
     getUserById: state => id => {
@@ -178,13 +170,11 @@ export default new Vuex.Store({
       return state.loggedUser;
     },
 
-    // Todo
     getResStatus: state => {
       let status = state.resStatus;
       state.resStatus = null;
       return status;
     },
-    // Todo
 
     getNAdmins: state => {
       return state.users.filter(user => user.id_user_type === 1).length;
@@ -253,7 +243,6 @@ export default new Vuex.Store({
     getSuggestions: state => {
       return state.suggestions;
     },
-    // "My 2nd grate teacher once told me that I wouldn't be shit in life, HEHEH now she tells every body that I was her student"
 
     getSuggestionsLastId(state) {
       if (state.suggestions.length > 0) {
@@ -286,12 +275,9 @@ export default new Vuex.Store({
     getSuggestionIndexById: state => id => {
       return state.suggestions.findIndex(suggestion => suggestion.id == id);
     },
-    // todo
     getNotifications: state => {
       return state.notifications;
     },
-
-    // todo
 
     getNotificationsByUser: state => id => {
       return state.notifications.filter(suggestion => suggestion.userId === id);
@@ -303,7 +289,6 @@ export default new Vuex.Store({
       );
     },
 
-    // *counts from all users
     getAmountNotificationsNotRead: state => {
       let count = 0;
       if (state.notifications.length) {
@@ -316,8 +301,6 @@ export default new Vuex.Store({
       return count;
     },
 
-    // *counts from an user based on his id
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to delete
     getAmountNotificationsNotReadById: state => id => {
       let count = 0;
       if (state.notifications.length) {
@@ -329,7 +312,6 @@ export default new Vuex.Store({
       }
       return count;
     },
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to delete
 
     getNotificationIndexById: state => id => {
       return state.notifications.findIndex(
@@ -362,13 +344,11 @@ export default new Vuex.Store({
     getFavoritesList: state => {
       return state.favoritesList;
     },
-    // Todo
     getMyFavorites: state => userId => {
       return state.favoritesList.filter(
         favorite => favorite.id_user === userId
       );
     },
-    // todo
     getFavoriteByIds: state => (userId, identityId) => {
       return state.favoritesList.find(
         favorite =>
@@ -390,7 +370,6 @@ export default new Vuex.Store({
       });
     },
 
-    // *follows
     getFollowByIds: state => (itineraryId, userId) => {
       return state.followedItinerary.find(
         following =>
@@ -404,7 +383,6 @@ export default new Vuex.Store({
       );
     },
 
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     getNumFollowers: state => id => {
       let num = 0;
       for (const data of state.followedItinerary) {
@@ -414,9 +392,7 @@ export default new Vuex.Store({
       }
       return num;
     },
-    // *follows
 
-    // * Itineraries
     getItineraries: state => {
       return state.itineraries;
     },
@@ -428,11 +404,9 @@ export default new Vuex.Store({
       return 1;
     },
 
-    //  * new
     getNewItineraryId: state => {
       return state.itineraryID;
     },
-    // *new
 
     getItinerariesVotes: state => {
       const follows = state.itineraries.reduce(
@@ -465,7 +439,6 @@ export default new Vuex.Store({
       return state.itineraryId;
     },
 
-    // * Categories Getters
     getCategories: state => {
       return state.categories;
     },
@@ -483,14 +456,6 @@ export default new Vuex.Store({
       return 1;
     },
 
-    // getCategoryByName: state => name => {
-    //   return state.categories.find(
-    //     category => category.name.toLowerCase() === name.toLowerCase()
-    //   );
-    // },
-
-    // * Categories Getters>
-
     getEmails: state => {
       return state.emails;
     },
@@ -501,8 +466,6 @@ export default new Vuex.Store({
       }
       return 1;
     },
-
-    // * <publications getters
 
     getPublicationsLastId(state) {
       if (state.publications.length > 0) {
@@ -520,7 +483,6 @@ export default new Vuex.Store({
         publication => publication.userId === userId
       );
     },
-    // !in case of delete
     getPublicationIndexById: state => id => {
       return state.publications.findIndex(publication => publication.id === id);
     },
@@ -528,29 +490,21 @@ export default new Vuex.Store({
     getUserPosts: state => {
       return state.userPosts;
     }
-
-    // *publications getters>
   },
   mutations: {
     NEW_USER(state, payload) {
       state.users.push(payload);
-      // localStorage.setItem("users", JSON.stringify(state.users));
     },
 
     SET_USERS(state, payload) {
       state.users = payload.users;
       state.resStatus = payload.resStatus;
-      // alert("PayloadStatus" + state.resStatus)
-      // localStorage.setItem("users", JSON.stringify(state.users));
     },
 
-    //!
     SET_LOGGED_USER(state, payload) {
       state.loggedUser = payload;
       localStorage.setItem("loggedUser", JSON.stringify(state.loggedUser));
     },
-
-    // *NEW TO CONNECT
 
     SET_TOKEN(state, payload) {
       state.token = payload.token;
@@ -561,34 +515,21 @@ export default new Vuex.Store({
       state.token = payload.token;
       state.resStatus = payload.resStatus;
 
-      // ! Important
       localStorage.setItem("token", JSON.stringify(payload.token));
       localStorage.setItem("loggedUser", JSON.stringify(payload.loggedUser));
-      // ! Important
     },
 
     SET_REGISTER_STATUS(state, payload) {
       state.resStatus = payload.resStatus;
-      // alert(state.resStatus)
-      // if (state.resStatus >= 500) {
-
-      // }
     },
-    //!
 
     SET_LOGGED_USER_LOG_OUT(state, payload) {
       state.loggedUser = payload.loggedUser;
-      // localStorage.setItem("loggedUser", JSON.stringify(state.loggedUser));
     },
 
-    // !Very important
     SET_IN_LOG_IN_AND_REG(state, payload) {
       state.inLogInAndReg = payload.bool;
     },
-    // !Very important
-
-    // * itineraries
-    // Todo --------------------
 
     SET_NEW_ITINERARY_INFO(state, payload) {
       state.newItineraryInfo.name = payload.name;
@@ -608,17 +549,13 @@ export default new Vuex.Store({
       state.itineraryID = payload.itinerary.id_itinerary;
     },
 
-    // Todo ------------------
-
     NEW_ITINERARY(state, payload) {
       state.itineraries.push(payload);
-      // localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
     },
 
     SET_ITINERARIES(state, payload) {
       state.itineraries = payload.itineraries;
       state.resStatus = payload.resStatus;
-      // localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
     },
     SET_FULL_ITINERARIES(state, payload) {
       let fullItineraries = [];
@@ -635,8 +572,6 @@ export default new Vuex.Store({
           followedCount: this.getters.getNumFollowers(data.id_itinerary)
         };
         fullItineraries.push(object);
-
-        //  Todo Now
       }
 
       for (const itinerary of fullItineraries) {
@@ -663,9 +598,7 @@ export default new Vuex.Store({
       state.itineraries = fullItineraries;
       state.resStatus = payload.resStatus;
 
-      // ! Very Important
       localStorage.setItem("itineraries", JSON.stringify(state.itineraries));
-      // ! Very Important
     },
 
     SET_SELECTED_ITINERARY(state, payload) {
@@ -676,67 +609,47 @@ export default new Vuex.Store({
       );
     },
 
-    // todo -----------------------------------------
     SET_FOLLOWS(state, payload) {
       state.followedItinerary = payload.followedItinerary;
-      // important
       localStorage.setItem(
         "followedItinerary",
         JSON.stringify(state.followedItinerary)
       );
     },
-    // todo -----------------------------------------
-
-    // *itineraries >
 
     SET_IDENTITY(state, payload) {
       state.identities = payload.identities;
       state.resStatus = payload.resStatus;
-      // localStorage.setItem("identities", JSON.stringify(state.identities));
     },
 
     NEW_IDENTITY(state, payload) {
       state.identities.push(payload);
-      // localStorage.setItem("identities", JSON.stringify(state.identities));
     },
 
     SET_IDENTITY_SELECTED(state, payload) {
       state.identity = payload.identity;
-      // localStorage.setItem("identity", JSON.stringify(state.identity));
     },
 
     SET_IDENTITY_SELECTED_ID(state, payload) {
       state.identity_id = payload;
       localStorage.setItem("identity_id", JSON.stringify(state.identity_id));
     },
-    // !<Important
     SET_IDENTITY_SELECTED_PROTECTION(state, payload) {
       state.identity = payload.identity;
       localStorage.setItem("identity", JSON.stringify(state.identity));
     },
-    // !Important>
 
     NEW_SUGGESTION(state, payload) {
       state.suggestions.push(payload);
-      // localStorage.setItem("suggestions", JSON.stringify(state.suggestions));
     },
-    // Todo
     SET_SUGGESTION(state, payload) {
       state.suggestions = payload.suggestions;
-      // localStorage.setItem("suggestions", JSON.stringify(state.suggestions));
     },
-    // Todo
 
     NEW_NOTIFICATION(state, payload) {
       state.notifications.push(payload);
-      // localStorage.setItem(
-      //   "notifications",
-      //   JSON.stringify(state.notifications)
-      // );
     },
 
-    // todo
-    // Serves to add a notification and also remove and notification
     SET_NOTIFICATION_DATA(state, payload) {
       state.notificationData.id_notif = payload.id_notif;
       state.notificationData.id_user = payload.id_user;
@@ -744,19 +657,12 @@ export default new Vuex.Store({
       state.notificationData.answer = payload.answer;
       state.notificationData.id_status = payload.id_status;
     },
-    // todo
 
     SET_NOTIFICATIONS(state, payload) {
       state.notifications = payload.notifications;
-      // localStorage.setItem(
-      //   "notifications",
-      //   JSON.stringify(state.notifications)
-      // );
     },
 
     NEW_COMMENT(state, payload) {
-      // let loggedUserid_user = JSON.parse(localStorage.getItem("loggedUser"));
-
       state.newComment.date_hour = payload.date;
       state.newComment.id_user = state.loggedUser[0].id_user;
       state.newComment.id_identity = JSON.parse(
@@ -768,7 +674,6 @@ export default new Vuex.Store({
 
     SET_COMMENTS(state, payload) {
       state.comments = payload.comments;
-      // localStorage.setItem("comments", JSON.stringify(state.comments));
     },
 
     CHANGE_COMMENT_PHOTO_BY_USER(state, payload) {
@@ -778,58 +683,41 @@ export default new Vuex.Store({
             comment.userPhoto = payload.photo;
           }
         }
-        // localStorage.setItem("comments", JSON.stringify(state.comments));
       }
     },
 
     SET_VISITED_USER(state, payload) {
       state.visitedUser = payload.user;
       state.resStatus = payload.resStatus;
-      // localStorage.setItem("visitedUser", JSON.stringify(state.visitedUser));
     },
     SET_VISITED_USER_ID(state, payload) {
       state.visitedUserId = payload;
-      // ! Very Important
       localStorage.setItem(
         "visitedUserId",
         JSON.stringify(state.visitedUserId)
       );
-      // ! Very Important
     },
 
     SET_VISITED_USER_PROTECTION(state, payload) {
       state.visitedUser = payload.user;
-      // localStorage.setItem("visitedUser", JSON.stringify(state.visitedUser));
     },
 
     SET_MONUMENTS_SELECTED_CATEGORY(state, payload) {
       state.category = payload.category;
-      //! Very Important
       localStorage.setItem("selectedCategory", JSON.stringify(state.category));
-      //! Very Important
     },
 
-    //  !To delete
     SET_COUNTRIES(state, payload) {
       state.category = payload.countries;
       localStorage.setItem("countries", JSON.stringify(state.countries));
     },
-    //  !To delete
 
-    // TODO
     SET_FAVORITES_LIST(state, payload) {
       state.favoritesList = payload.list;
-      // localStorage.setItem(
-      //   "favoritesList",
-      //   JSON.stringify(state.favoritesList)
-      // );
     },
-    // TODO
 
-    // * Categories Setters
     NEW_CATEGORY(state, payload) {
       state.categories.push(payload);
-      // localStorage.setItem("categories", JSON.stringify(state.categories));
     },
 
     SET_CATEGORIES(state, payload) {
@@ -840,21 +728,16 @@ export default new Vuex.Store({
 
     NEW_EMAIL(state, payload) {
       state.emails.push(payload);
-      // localStorage.setItem("emails", JSON.stringify(state.emails));
     },
 
     SET_EMAILS(state, payload) {
       state.emails = payload.emails;
-      // localStorage.setItem("emails", JSON.stringify(state.emails));
     },
 
-    //* publications setters
     SET_PUBLICATIONS(state, payload) {
       state.publications = payload.publications;
-      // localStorage.setItem("publications", JSON.stringify(state.publications));
     },
 
-    // ?
     SET_LOGIN_FORM(state, payload) {
       state.loginForm.input = payload.input;
       state.loginForm.password = payload.password;
@@ -978,8 +861,6 @@ export default new Vuex.Store({
       state.newCategoryForm.category_name = payload.category_name;
       state.newCategoryForm.photo = payload.photo;
     }
-
-    // ?
   },
   actions: {
     async signIn({ commit }) {
@@ -1024,7 +905,6 @@ export default new Vuex.Store({
       commit("SET_VISITED_USER", await userService.getUserById());
     },
 
-    //  Todo Adjust
     async editProfile({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
@@ -1037,9 +917,6 @@ export default new Vuex.Store({
         )
       );
     },
-    // Todo Adjust
-
-    // Todo  now
     async editProfileNormalUser({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
@@ -1052,7 +929,6 @@ export default new Vuex.Store({
         )
       );
     },
-    // Todo now
 
     async addPost({ commit }) {
       commit(
@@ -1131,7 +1007,6 @@ export default new Vuex.Store({
         )
       );
     },
-    //* Itineraries
     async allItineraries({ commit }) {
       commit("SET_ITINERARIES", await itineraryService.getAllItineraries());
     },
@@ -1150,7 +1025,6 @@ export default new Vuex.Store({
       );
     },
 
-    // todo-----------------------------------------------------------------
     async addItinerary({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
@@ -1177,12 +1051,6 @@ export default new Vuex.Store({
     async itineraryLastId({ commit }) {
       commit("SET_ITINERARY_ID", await itineraryService.getItineraryLastId());
     },
-
-    // Todo---------------------------------------------------------------
-
-    //* Itineraries
-
-    //* Identities
     async allIdentities({ commit }) {
       commit("SET_IDENTITY", await identityService.getAllIdentities());
     },
@@ -1224,9 +1092,6 @@ export default new Vuex.Store({
         )
       );
     },
-    //* Identities
-
-    // * <comments
     async getCommentsIdIdentity({ commit }) {
       commit("SET_COMMENTS", await commentService.getCommentsByIdentityId());
     },
@@ -1243,9 +1108,6 @@ export default new Vuex.Store({
         )
       );
     },
-    // * comments>
-
-    //* Categories
     async allCategories({ commit }) {
       commit("SET_CATEGORIES", await categoryService.getAllCategories());
     },
@@ -1264,56 +1126,36 @@ export default new Vuex.Store({
         )
       );
     },
-    //* Categories
-
-    // * followed_itineraries
-    // get all
     async getAllFollowedItinerary({ commit }) {
       commit("SET_FOLLOWS", await itineraryService.getAllFollowedItinerary());
     },
-    // add
     async addNewFollowedItinerary({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
         await itineraryService.addFollowedIItinerary(this.state.itineraryID)
       );
     },
-
-    //  delete
     async deleteFollowedItinerary({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
         await itineraryService.removeFollowed(this.state.itineraryID)
       );
     },
-    // * followed_itineraries
-
-    // * Favorites
-    // get all
     async getAllFavorite({ commit }) {
       commit("SET_FAVORITES_LIST", await identityService.getAllFavorites());
     },
-    // add
     async addNewFavorite({ commit }) {
       commit("SET_REGISTER_STATUS", await identityService.addFavorite());
     },
-
-    //  delete
     async deleteFavorite({ commit }) {
       commit("SET_REGISTER_STATUS", await identityService.removeFavorite());
     },
-    // * Favorites
-
-    // todo
-    // * notifications
-    // get by users
     async getAllUserNotifications({ commit }) {
       commit(
         "SET_NOTIFICATIONS",
         await notificationService.getAllNotificationByUserId()
       );
     },
-    // add
     async addNewNotification({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
@@ -1324,7 +1166,6 @@ export default new Vuex.Store({
         )
       );
     },
-    //  delete
     async deleteNotification({ commit }) {
       commit(
         "SET_REGISTER_STATUS",
@@ -1333,13 +1174,6 @@ export default new Vuex.Store({
         )
       );
     },
-    // * notifications
-    // todo
-
-    // Todo
-    //* Suggestions
-
-    // Get
     async getAllSuggestions({ commit }) {
       commit("SET_SUGGESTION", await suggestionService.getAllSuggestions());
     },
@@ -1353,10 +1187,6 @@ export default new Vuex.Store({
         )
       );
     }
-
-    //* suggestions
-
-    // todo
   },
   modules: {}
 });

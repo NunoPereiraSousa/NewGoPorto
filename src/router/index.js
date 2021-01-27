@@ -1,30 +1,29 @@
+import AdminLandingPage from "@/views/BackOffice/AdminLandingPage.vue";
+import BackOfficeCatalog from "@/views/BackOffice/BackOfficeCatalog.vue";
+import BackOfficeRoutes from "@/views/BackOffice/BackOfficeRoutes.vue";
+import BackOfficeSuggestions from "@/views/BackOffice/BackOfficeSuggestions.vue";
+import BackOfficeUsers from "@/views/BackOffice/BackOfficeUsers.vue";
+import ErrorPage from "@/views/ErrorPage.vue";
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import SignIn from "../views/SignIn.vue";
-import SignUp from "../views/SignUp.vue";
+import store from "../store/index.js";
 import AboutUs from "../views/AboutUs.vue";
 import Contacts from "../views/Contacts.vue";
-import OurTeam from "../views/OurTeam.vue";
-import Profile from "../views/Profile.vue";
-import OtherUserProfile from "../views/OtherUserProfile.vue";
-import PlacesCatalog from "../views/PlacesCatalog.vue";
-import ItinerariesCatalog from "../views/ItinerariesCatalog.vue";
-import LoadingMap from "../views/LoadingMap.vue";
-import Loading from "../views/Loading.vue";
-import MyTrip from "../views/MyTrip.vue";
 import CreateTrip from "../views/CreateTrip.vue";
+import Home from "../views/Home.vue";
 import IdentityInfo from "../views/IdentityInfo.vue";
+import ItinerariesCatalog from "../views/ItinerariesCatalog.vue";
+import Loading from "../views/Loading.vue";
+import LoadingMap from "../views/LoadingMap.vue";
 import MyBackpack from "../views/MyBackpack.vue";
-import AdminLandingPage from "@/views/BackOffice/AdminLandingPage.vue";
-import BackOfficeUsers from "@/views/BackOffice/BackOfficeUsers.vue";
-import BackOfficeCatalog from "@/views/BackOffice/BackOfficeCatalog.vue";
-import BackOfficeSuggestions from "@/views/BackOffice/BackOfficeSuggestions.vue";
-import BackOfficeRoutes from "@/views/BackOffice/BackOfficeRoutes.vue";
+import MyTrip from "../views/MyTrip.vue";
+import OtherUserProfile from "../views/OtherUserProfile.vue";
+import OurTeam from "../views/OurTeam.vue";
+import PlacesCatalog from "../views/PlacesCatalog.vue";
+import Profile from "../views/Profile.vue";
+import SignIn from "../views/SignIn.vue";
+import SignUp from "../views/SignUp.vue";
 
-import ErrorPage from "@/views/ErrorPage.vue";
-
-import store from "../store/index.js";
 Vue.use(VueRouter);
 
 const routes = [
@@ -256,7 +255,6 @@ const routes = [
         });
       }
 
-      // let visited = store.getters.getVisitedUser;
       let loggedUser = store.getters.getLoggedUser;
 
       if (loggedUser == "") {

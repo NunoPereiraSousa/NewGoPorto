@@ -15,7 +15,7 @@
     "bootstrap": "^4.4.1",
     "core-js": "^3.4.4",
     "google-maps": "^3.3.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "popper.js": "^1.16.1",
     "sass": "^1.26.9",
     "velocity-animate": "^1.5.2",
